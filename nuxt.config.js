@@ -1,7 +1,7 @@
 const pkg = require('./package')
 const dotenv = require('dotenv')
 dotenv.config({ path: 'env.config' })
-const api = process.env.CREDIT_API_URL
+const api = process.env.CREDIT_API_URL || 'http://loan-portfolio-api.herokuapp.com/'
 
 module.exports = {
   mode: 'universal',

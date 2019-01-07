@@ -8,7 +8,7 @@ const app = express()
 dotenv.config({ path: 'env.config' })
 const host = process.env.CREDIT_CLIENT_HOST || process.env.HOST || '127.0.0.1'
 const port = process.env.CREDIT_CLIENT_PORT || process.env.PORT || 3000
-const api = process.env.CREDIT_API_URL
+const api = process.env.CREDIT_API_URL || 'http://loan-portfolio-api.herokuapp.com/'
 
 app.set('port', port)
 

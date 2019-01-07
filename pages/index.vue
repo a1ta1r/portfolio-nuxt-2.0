@@ -1,7 +1,6 @@
 <template>
   <section class="container">
     <div>
-      <logo/>
       <h1 class="title">
         portfolio-client-nuxt-2
       </h1>
@@ -23,12 +22,8 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
 
 export default {
-  components: {
-    Logo
-  },
   created() {
     this.$router.push('secure/admin')
   }
