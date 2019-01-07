@@ -79,3 +79,6 @@ dist
 
 # IDE
 .idea
+
+# Env variables substitution file
+env.config
