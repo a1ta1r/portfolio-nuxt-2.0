@@ -14,15 +14,18 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "cross-env": "^5.2.0",
-    "nuxt": "^2.0.0",
-    "express": "^4.16.3",
-    "element-ui": "^2.4.6",
     "@nuxtjs/axios": "^5.0.0",
-    "vue-chartjs": "^3.4.0",
     "@nuxtjs/moment": "^1.0.0",
+    "chart.js": "^2.7.2",
+    "cross-env": "^5.2.0",
     "dotenv": "^6.1.0",
-    "chart.js": "^2.7.2"
+    "element-ui": "^2.4.6",
+    "express": "^4.16.3",
+    "nuxt": "^2.0.0",
+    "vue-chartjs": "^3.4.0",
+    "vue-libs-simple-toggle": "^1.0.6",
+    "vuejs-datepicker": "^1.5.4",
+    "vee-validate": "^2.1.5"
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
