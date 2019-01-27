@@ -22,6 +22,7 @@
     "element-ui": "^2.4.6",
     "express": "^4.16.3",
     "nuxt": "^2.0.0",
+    "vee-validate": "^2.1.6",
     "vue-chartjs": "^3.4.0",
     "vue-libs-simple-toggle": "^1.0.6",
     "vuejs-datepicker": "^1.5.4",

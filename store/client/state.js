@@ -1,3 +1,5 @@
 export default {
-  user: 0
+  username: '',
+  password: '',
+  token: ''
 }

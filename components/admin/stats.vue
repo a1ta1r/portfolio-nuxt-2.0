@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-card class="box-card">
-      <div 
-        slot="header" 
+      <div
+        slot="header"
         class="clearfix">
         <span>Статистика по пользователям</span>
       </div>
@@ -14,22 +14,22 @@
         unlink-panels
         start-placeholder="Дата начала"
         end-placeholder="Дата окончания"/>
-      <el-button 
-        style="float: right; padding: 3px 0" 
-        class="el-icon-refresh" 
-        type="text" 
+      <el-button
+        style="float: right; padding: 3px 0"
+        class="el-icon-refresh"
+        type="text"
         @click="load_users_count"> Обновить</el-button>
       <!--<el-row>-->
       <!--<user-chart class="Chart" :chartData="this.totalData" :options=this.options></user-chart>-->
       <!--</el-row>-->
-      <el-row 
-        :gutter="20" 
+      <el-row
+        :gutter="20"
         style="margin-top: 10px;">
-        <el-col :span="12"><user-chart 
+        <el-col :span="12"><user-chart
           :chart-data="totalData"
           :options="options"
           class="Chart"/></el-col>
-        <el-col :span="12"><user-chart 
+        <el-col :span="12"><user-chart
           :chart-data="totalData_registered"
           :options="options_registered"
           class="Chart"/></el-col>
@@ -219,14 +219,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['users_count', 'users_registered', 'users_deleted'])
+    ...mapState('admin', ['users_count', 'users_registered', 'users_deleted'])
   },
   mounted() {
     this.$store
-      .dispatch('users_stat', this.date_range)
+      .dispatch('admin/users_stat', this.date_range)
       .then(console.log(this.users_count))
-    this.$store.dispatch('users_stat_deleted', this.date_range)
-    this.$store.dispatch('users_stat_registered', this.date_range)
+    this.$store.dispatch('admin/users_stat_deleted', this.date_range)
+    this.$store.dispatch('admin/users_stat_registered', this.date_range)
   },
   methods: {
     load_users_count() {
@@ -237,7 +237,7 @@ export default {
 
     load_users_active() {
       return this.$store
-        .dispatch('users_stat', this.date_range)
+        .dispatch('admin/users_stat', this.date_range)
         .then(this.map_chart())
     },
 
@@ -261,7 +261,7 @@ export default {
 
     load_users_registered: function() {
       return this.$store
-        .dispatch('users_stat_registered', this.date_range)
+        .dispatch('admin/users_stat_registered', this.date_range)
         .then(this.map_chart_registered())
     },
     map_chart_registered() {
@@ -291,7 +291,7 @@ export default {
     },
 
     load_users_deleted: function() {
-      return this.$store.dispatch('users_stat_deleted', this.date_range)
+      return this.$store.dispatch('admin/users_stat_deleted', this.date_range)
     }
   }
 }
