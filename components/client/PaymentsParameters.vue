@@ -1,5 +1,7 @@
-<template/>
-
+<template>
+  <div/>
+</template>
+  <div></div>
 <script>
 export default {
   name: 'PaymentsParameters'

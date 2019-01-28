@@ -1,55 +1,55 @@
 <template>
   <el-card class="box-card">
-    <div 
-      slot="header" 
+    <div
+      slot="header"
       class="clearfix">
       <h1>Новый рекламодатель: <label v-text="advertiser.username"/></h1>
     </div>
-    <el-form 
-      ref="advertiser" 
-      :model="advertiser" 
-      :rules="rules" 
-      label-width="120px" 
+    <el-form
+      ref="advertiser"
+      :model="advertiser"
+      :rules="rules"
+      label-width="120px"
       class="demo-ruleForm">
-      <el-form-item 
-        label="Название" 
+      <el-form-item
+        label="Название"
         prop="username">
         <el-input v-model="advertiser.username"/>
       </el-form-item>
-      <el-form-item 
-        label="Логин (email)" 
+      <el-form-item
+        label="Логин (email)"
         prop="email">
         <el-input v-model="advertiser.email"/>
       </el-form-item>
-      <el-form-item 
-        label="Пароль" 
+      <el-form-item
+        label="Пароль"
         prop="password">
         <el-input v-model="advertiser.password"/>
       </el-form-item>
-      <el-form-item 
-        label="Активен" 
+      <el-form-item
+        label="Активен"
         prop="isActive">
-        <el-switch 
-          v-model="advertiser.isActive" 
+        <el-switch
+          v-model="advertiser.isActive"
           active-color="#13ce66"/>
       </el-form-item>
-      <el-form-item 
-        label="Контактная информация" 
+      <el-form-item
+        label="Контактная информация"
         prop="contactInfo">
-        <el-input 
-          v-model="advertiser.contactInfo" 
+        <el-input
+          v-model="advertiser.contactInfo"
           type="textarea"/>
       </el-form-item>
-      <el-form-item 
-        label="Заметки" 
+      <el-form-item
+        label="Заметки"
         prop="notes">
-        <el-input 
-          v-model="advertiser.notes" 
+        <el-input
+          v-model="advertiser.notes"
           type="textarea"/>
       </el-form-item>
       <el-form-item>
-        <el-button 
-          type="primary" 
+        <el-button
+          type="primary"
           @click="submitForm('advertiser')">Добавить</el-button>
         <el-button @click="resetForm('advertiser')">Сбросить</el-button>
         <el-button @click="back">Назад</el-button>
@@ -114,10 +114,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['advertisers'])
+    ...mapState('admin', ['advertisers'])
   },
   mounted() {
-    if (this.$store.state.advertisers.length === 0) {
+    if (this.$store.state.admin.advertisers.length === 0) {
       this.$store.dispatch('load_advertisers')
     }
   },
@@ -138,7 +138,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$store
-            .dispatch('add_advertiser', this.advertiser)
+            .dispatch('admin/add_advertiser', this.advertiser)
             .then(() => {
               this.$router.push('/secure/admin')
               this.notify()

@@ -119,11 +119,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(['advertisers'])
+    ...mapState('admin', ['advertisers'])
   },
   mounted() {
-    if (this.$store.state.advertisers.length === 0) {
-      this.$store.dispatch('load_advertisers')
+    if (this.$store.state.admin.advertisers.length === 0) {
+      this.$store.dispatch('admin/load_advertisers')
     }
   },
   methods: {
@@ -151,7 +151,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$store
-            .dispatch('update_advertiser_total', this.advertiser)
+            .dispatch('admin/update_advertiser_total', this.advertiser)
             .then(() => {
               this.$router.push('/secure/admin')
               this.notify()

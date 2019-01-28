@@ -5,98 +5,14 @@
       <!--поля добавления расходов и доходяг-->
       <el-row>
         <el-card>
-          <ul class="flex-container">
-            <!--доход/расход-->
-            <li>
-              <p>{{ selectedState }}</p>
-              <el-switch
-                v-model="currentIncome.isIncome"
-                style="display: block"
-                active-color="#13ce66"
-                inactive-color="#ff4949"
-                active-text="Доход"
-                inactive-text="Расход"/>
-            </li>
-            <li
-              id="sum"
-              class="">
-              <p>Сумма</p>
-              <vue-numeric
-                v-validate="{ min_value:0.01, max_value:999999999999, required:true, decimal:true }"
-                v-model="currentIncome.amount"
-                :precision="2"
-                currency="₽"
-                separator="space"
-                class="form-control flex-item"
-                data-vv-as="сумма"
-                placeholder="сумма"
-                name="incomeSum"
-                value=""
-                decimal-separator="."/>
-            </li>
-            <li
-              id="reason"
-              class="">
-              <p>Источник</p>
-              <input
-                v-model="currentIncome.reason"
-                class="form-control flex-item"
-                name="sourceIncome"
-                placeholder="источник"
-                type="text">
-            </li>
-
-            <li
-              id="frequency"
-              class="">
-              <p>Количество периодов</p>
-              <vue-numeric
-                v-validate="{ numeric:true , max_value: 10000, min_value: 1, required:true }"
-                v-model="currentIncome.frequency"
-                class="form-control flex-item smalInt"
-                placeholder="Количество"
-                data-vv-as="количество"
-                name="frequency"
-                value="12"/>
-            </li>
-            <li
-              id="period"
-              class="">
-              <p>Период</p>
-              <select
-                v-validate="{ required:true }"
-                v-model="currentIncome.paymentPeriod"
-                class="form-control"
-                data-vv-as="период">
-                <option>Единовременный</option>
-                <option>День</option>
-                <option>Неделя</option>
-                <option>Месяц</option>
-                <option>Квартал</option>
-                <option>Год</option>
-              </select>
-            </li>
-            <li
-              id="date"
-              class="">
-              <p>Дата начала</p>
-              <el-date-picker
-                v-model="currentIncome.startDate"
-                type="date"
-                class="flex-item"/>
-            </li>
-            <li
-              id="add"
-              class="">
-              <input
-                class="btn btn-success flex-item"
-                title="Добавить"
-                value="+"
-                type="submit"
-                @click="addBtnClick">
-            </li>
-          </ul>
-          <span class="">{{ errors[0] }}</span>
+          <el-collapse >
+            <el-collapse-item>
+              <template slot="title">
+                <h2>Добавить</h2>
+              </template>
+              <income-expense-form-add :current-income="currentIncome" />
+            </el-collapse-item>
+          </el-collapse>
         </el-card>
       </el-row>
       <!--сумма доходов и расходов-->
@@ -226,19 +142,18 @@
 
 <script>
 import User from '../../models/user'
+import vueNumeric from 'vue-numeric'
+import ElCollapseTransition from 'element-ui/lib/transitions/collapse-transition'
+import incomeExpenseFormAdd from './incomeExpenseAddForm'
 // import Toggle from 'vue-libs-simple-toggle'
 
 export default {
   name: 'UserPage',
+  components: { ElCollapseTransition, vueNumeric, incomeExpenseFormAdd },
   data() {
     return {
       user: {},
       errors: [],
-      options: {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric'
-      },
       username: '',
       // true = income false = expense
       currentState: true,
@@ -340,73 +255,10 @@ export default {
 
 <style scoped>
 .el-row {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   &:last-child {
     margin-bottom: 0;
   }
-}
-
-.flex-item {
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-left: 8px;
-  padding-right: 8px;
-}
-
-.flex-container {
-  padding: 1px;
-  margin: 0px;
-  list-style: none;
-
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-
-  -webkit-flex-flow: row wrap;
-  justify-content: space-evenly;
-  align-items: flex-end;
-}
-
-th {
-  text-align: center;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.smalInt {
-  width: auto;
-  max-width: 120px;
-  min-width: 40px;
-}
-
-.collumnTable {
-  flex-wrap: wrap;
-}
-
-.my-table {
-  width: 100%; /* Ширина всей таблицы */
-}
-
-.leftColumn {
-  width: 50%; /* Ширина левой колонки */
-  padding-right: 2px;
-}
-
-.rightColumn {
-  width: 50%;
-  padding-left: 2px;
-}
-
-.sumColumn {
-  width: 20%;
-}
-
-.reasonColumn {
-  justify-self: auto;
 }
 
 .deleteRow {

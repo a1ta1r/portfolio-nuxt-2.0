@@ -10,13 +10,13 @@ export default {
     FormEditAdvertiser
   },
   computed: {
-    ...mapState(['singleAdvertiser'])
+    ...mapState('admin', ['singleAdvertiser'])
   },
   // mounted() {
   //   this.$store.dispatch('get_advertiser', this.$route.params.id)
   // },
   async fetch({ store, params }) {
-    await store.dispatch('get_advertiser', params.id)
+    await store.dispatch('admin/get_advertiser', params.id)
   }
 }
 </script>
