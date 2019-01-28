@@ -36,7 +36,7 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     { src: '@/plugins/vee-validate', ssr: false },
-    '@/plugins/vue-numeric'
+    'plugins/vue-numeric'
   ],
 
   /*

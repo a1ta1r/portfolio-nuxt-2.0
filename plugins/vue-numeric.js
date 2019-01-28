@@ -1,4 +1,4 @@
 import Vue from 'vue'
-import vueNumeric from 'vue-numeric'
+import VueNumeric from 'vue-numeric'
 
-Vue.use(vueNumeric)
+Vue.use(VueNumeric)

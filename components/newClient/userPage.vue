@@ -142,14 +142,14 @@
 
 <script>
 import User from '../../models/user'
-import vueNumeric from 'vue-numeric'
+// import VueNumeric from 'vue-numeric'
 import ElCollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import incomeExpenseFormAdd from './incomeExpenseAddForm'
 // import Toggle from 'vue-libs-simple-toggle'
 
 export default {
   name: 'UserPage',
-  components: { ElCollapseTransition, vueNumeric, incomeExpenseFormAdd },
+  components: { ElCollapseTransition, incomeExpenseFormAdd },
   data() {
     return {
       user: {},
