@@ -9,6 +9,9 @@
     <nuxt-link to="/signIn">
       sign in
     </nuxt-link>
+    <nuxt-link to="/signUp">
+      sign up
+    </nuxt-link>
   </nav>
 </template>
 

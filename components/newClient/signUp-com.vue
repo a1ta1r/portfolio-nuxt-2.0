@@ -16,7 +16,7 @@
               @click="hideAlert">&times;</el-button>
             <strong>Ошибка</strong> неверный логин или пароль
           </div>
-          <h1 align="center">Мир рекламы</h1>
+          <h1 align="center">Создать аккаунт</h1>
           <el-form
             ref="signInForm"
             :model="user"
@@ -51,7 +51,7 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'SignInCom',
+  name: 'SignUpCom',
   data: function() {
     return {
       user: {

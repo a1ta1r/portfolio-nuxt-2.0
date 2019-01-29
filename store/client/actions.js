@@ -14,11 +14,13 @@ export default {
       commit('SET_EXPENSES', result.data.user.expenses)
     })
   },
-  sign_in({ commit }, username, password) {
+  sign_in({ commit }, user) {
     return this.$axios
       .post('signin', {
-        username: username,
-        password: password
+        data: {
+          first: user.username,
+          second: user.password
+        }
       })
       .then(response => {
         if (response.status === 200) {
@@ -31,9 +33,19 @@ export default {
         }
         return false
       })
+      .catch(error => {
+        return error.response
+      })
   },
 
   update_user({ commit }, user) {
     return this.$axios.put('user', user)
+  },
+
+  set_username({ commit }, username) {
+    commit('SET_USERNAME', username)
+  },
+  set_password({ commit }, password) {
+    commit('SET_PASSWORD', password)
   }
 }
