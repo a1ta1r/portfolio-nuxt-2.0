@@ -53,7 +53,7 @@
           <el-col :span="12">
             <el-card>
               <el-table
-                :data="incomes"
+                :data="user.incomes"
                 class="myFavoriteTable table table-bordered"
               >
                 <el-table-column
