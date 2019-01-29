@@ -52,7 +52,13 @@
         <el-row :gutter="8">
           <el-col :span="12">
             <el-card>
-              <table class="myFavoriteTable table table-bordered">
+              <el-table
+                :data="incomes"
+                class="myFavoriteTable table table-bordered"
+              >
+                <el-table-column
+                  label="Сумма"
+                  prop="sum"/>
                 <thead>
                   <tr class="text-center" >
                     <th>Сумма</th>
@@ -61,34 +67,8 @@
                     <th>Дата начала</th>
                   </tr>
                 </thead>
-                <tr
-                  v-for="item in user.incomes"
-                  :key="item.id"
-                  class="form-control-static">
-                  <td>
-                    <vue-numeric
-                      :value="item.amount"
-                      :read-only="true"
-                      :precision="2"
-                      currency="₽"
-                      separator="space"
-                      decimal-separator="."/>
-                  </td>
-                  <td>{{ item.reason }}</td>
-                  <td><label v-if="item.isRepeatable === false" >[{{ item.frequency }}]</label> {{ item.paymentPeriod }}</td>
-                  <td>C {{ (new Date(item.startDate)).toLocaleDateString("ru", options) }}</td>
-                  <td class="deleteRow">
-                    <input
-                      type="button"
-                      name="deleteIncome"
-                      style="margin: 0px"
-                      class="btn btn-secondary btn-danger btn-sm"
-                      title="Удалить"
-                      value="—"
-                      @click="deleteIncome(item, $event)">
-                  </td>
-                </tr>
-              </table>
+
+              </el-table>
             </el-card>
           </el-col>
           <el-col :span="12">

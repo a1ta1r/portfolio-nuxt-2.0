@@ -1,5 +1,8 @@
 export default {
   username: '',
   password: '',
-  token: ''
+  token: '',
+  incomes: [],
+  expenses: [],
+  paymentPlan: []
 }
