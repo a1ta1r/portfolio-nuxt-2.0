@@ -89,16 +89,31 @@ export default {
     }
   },
   methods: {
-    signup: signup(formName) {
-  this.$refs[formName].validate((valid) => {
-    if (valid) {
-      alert('submit!');
-    } else {
-      console.log('error submit!!');
-      return false;
+    signup: function() {
+      this.$validator
+        .validateAll()
+        .then(success => {
+          if (success) {
+            let user = new User(
+              this.settings.username,
+              this.settings.password,
+              this.settings.email
+            )
+            user.save().then(status => {
+              console.log(status)
+              if (status === 201) {
+                signIn(user.username, user.password).then(() => {
+                  this.$router.push('/user/profile')
+                })
+              }
+            })
+          }
+        })
+        .catch(error => {
+          console.log('err ' + error.message)
+          this.errors.push(error)
+        })
     }
-  });
-},
   }
 }
 </script>

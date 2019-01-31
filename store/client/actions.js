@@ -25,13 +25,26 @@ export default {
       .then(response => {
         if (response.status === 200) {
           commit('SET_USER', {
-            username: username,
-            password: password,
+            username: user.username,
+            password: user.password,
             token: 'Bearer ' + response.data.token
           })
-          return true
+          return response
         }
         return false
+      })
+      .catch(error => {
+        return error.response
+      })
+  },
+
+  sign_up({ commit }, user) {
+    return this.$axios
+      .post('signup', {
+        data: user
+      })
+      .then(response => {
+        return true
       })
       .catch(error => {
         return error.response

@@ -91,9 +91,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.sign_in(this.user).then(result => {
-            if (result === true) {
-              console.log(this.username)
-              console.log(this.password)
+            if (result.data.code < 300) {
               this.$router.push({ name: 'index' })
             } else {
               this.invalidCredentials = true

@@ -6,16 +6,6 @@
     <el-col :span="10">
       <el-row class="card-center">
         <el-card>
-          <div
-            v-if="invalidCredentials"
-            class="alert alert-danger">
-            <el-button
-              class="close"
-              data-dismiss="alert"
-              aria-hidden="true"
-              @click="hideAlert">&times;</el-button>
-            <strong>Ошибка</strong> неверный логин или пароль
-          </div>
           <h1 align="center">Создать аккаунт</h1>
           <el-form
             ref="signInForm"
@@ -25,6 +15,13 @@
             label-width="100px"
             class="main-form">
             <el-form-item
+              prop="email"
+              label="Почта">
+              <el-input
+                v-model="user.email"
+                type="email" />
+            </el-form-item>
+            <el-form-item
               prop="username"
               label="Логин">
               <el-input v-model="user.username"/>
@@ -32,13 +29,15 @@
             <el-form-item
               prop="password"
               label="Пароль">
-              <el-input v-model="user.password"/>
+              <el-input
+                v-model="user.password"
+                type="password"/>
             </el-form-item>
             <el-form-item>
               <el-button
                 type="primary"
-                @click="signin('signInForm')">Вход</el-button>
-              <el-button >Регистрация?</el-button>
+                @click="signin('signInForm')">Регистрация</el-button>
+              <el-button >Уже есть аккаунт?</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -48,18 +47,31 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'SignUpCom',
   data: function() {
     return {
       user: {
+        email: '',
         username: '',
         password: ''
       },
       invalidCredentials: false,
       rules: {
+        email: [
+          {
+            required: true,
+            message: 'Введите электронную почту',
+            trigger: 'blur'
+          },
+          {
+            type: 'email',
+            message: 'Электронная почта не корректна',
+            trigger: 'blur'
+          }
+        ],
         username: [
           {
             required: true,
@@ -82,18 +94,13 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapState('client', ['username', 'password'])
-  },
   methods: {
-    ...mapActions('client', ['sign_in']),
+    ...mapActions('client', ['sign_up']),
     signin(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.sign_in(this.user).then(result => {
+          this.sign_up(this.user).then(result => {
             if (result === true) {
-              console.log(this.username)
-              console.log(this.password)
               this.$router.push({ name: 'index' })
             } else {
               this.invalidCredentials = true
@@ -105,9 +112,6 @@ export default {
           return false
         }
       })
-    },
-    hideAlert: function() {
-      this.invalidCredentials = false
     }
   }
 }

@@ -59,59 +59,39 @@
                 <el-table-column
                   label="Сумма"
                   prop="sum"/>
-                <thead>
-                  <tr class="text-center" >
-                    <th>Сумма</th>
-                    <th>Источник</th>
-                    <th>Периоды</th>
-                    <th>Дата начала</th>
-                  </tr>
-                </thead>
+                <el-table-column
+                  label="Источник"
+                  prop="reason"/>
+                <el-table-column
+                  label="Периоды"
+                  prop="paymentPeriod"/>
+                <el-table-column
+                  label="Дата начала"
+                  prop="startDate"/>
 
               </el-table>
             </el-card>
           </el-col>
           <el-col :span="12">
             <el-card>
-              <td>
-                <table class="table table-bordered">
-                  <thead>
-                    <tr >
-                      <th>Сумма</th>
-                      <th>Источник</th>
-                      <th>Периоды</th>
-                      <th>Дата начала</th>
-                    </tr>
-                  </thead>
-                  <tr
-                    v-for="item in user.expenses"
-                    :key="item.id"
-                    class="form-control-static">
-                    <td>
-                      <vue-numeric
-                        :value="item.amount"
-                        :read-only="true"
-                        :precision="2"
-                        currency="₽"
-                        separator="space"
-                        decimal-separator="."/>
-                    </td>
-                    <td>{{ item.reason }}</td>
-                    <td><label v-if="item.isRepeatable === false" >[{{ item.frequency }}]</label> {{ item.paymentPeriod }}</td>
-                    <td>C {{ (new Date(item.startDate)).toLocaleDateString("ru", options) }}</td>
-                    <td class="deleteRow">
-                      <input
-                        type="button"
-                        class="btn btn-secondary btn-sm btn-danger"
-                        style="margin: 0px"
-                        title="Удалить"
-                        value="—"
-                        name="deleteIncome"
-                        @click="deleteExpense(item, $event)">
-                    </td>
-                  </tr>
-                </table>
-              </td>
+              <el-table
+                :data="user.expenses"
+                class="myFavoriteTable table table-bordered"
+              >
+                <el-table-column
+                  label="Сумма"
+                  prop="sum"/>
+                <el-table-column
+                  label="Источник"
+                  prop="reason"/>
+                <el-table-column
+                  label="Периоды"
+                  prop="paymentPeriod"/>
+                <el-table-column
+                  label="Дата начала"
+                  prop="startDate"/>
+
+              </el-table>
             </el-card>
           </el-col>
         </el-row>
