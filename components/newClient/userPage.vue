@@ -53,12 +53,12 @@
           <el-col :span="12">
             <el-card>
               <el-table
-                :data="user.incomes"
+                :data="incomes"
                 class="myFavoriteTable table table-bordered"
               >
                 <el-table-column
                   label="Сумма"
-                  prop="sum"/>
+                  prop="amount"/>
                 <el-table-column
                   label="Источник"
                   prop="reason"/>
@@ -75,12 +75,12 @@
           <el-col :span="12">
             <el-card>
               <el-table
-                :data="user.expenses"
+                :data="expenses"
                 class="myFavoriteTable table table-bordered"
               >
                 <el-table-column
                   label="Сумма"
-                  prop="sum"/>
+                  prop="amount"/>
                 <el-table-column
                   label="Источник"
                   prop="reason"/>
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import User from '../../models/user'
+import { mapState } from 'vuex'
 import VueNumeric from 'vue-numeric'
 import ElCollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import incomeExpenseFormAdd from './incomeExpenseAddForm'
@@ -121,7 +121,7 @@ export default {
         isIncome: true,
         amount: '',
         reason: '',
-        paymentPeriod: '',
+        paymentPeriod: 'Единовременный',
         frequency: '',
         startDate: new Date(Date.now()),
         isRepeatable: false
@@ -129,27 +129,24 @@ export default {
     }
   },
   computed: {
+    ...mapState('client', ['incomes', 'expenses']),
     totalIncome: function() {
-      if (!this.user.incomes) {
+      if (!this.incomes) {
         return 0
       }
       let sum = 0
-      for (let i = 0; i < this.user.incomes.length; i++) {
-        sum += this.user.incomes[i].amount
+      for (let i = 0; i < this.incomes.length; i++) {
+        sum += this.incomes[i].amount
       }
       return sum
     },
     totalExpense: function() {
-      if (!this.user.expenses) {
+      if (!this.expenses) {
         return 0
       }
       let sum = 0
-      for (
-        let i = 0;
-        this.user !== null && i < this.user.expenses.length;
-        i++
-      ) {
-        sum += this.user.expenses[i].amount
+      for (let i = 0; i < this.expenses.length; i++) {
+        sum += this.expenses[i].amount
       }
       return sum
     },
@@ -158,14 +155,8 @@ export default {
       else return 'Расход'
     }
   },
-  created: function() {
-    let user = new User('', '', '')
-    // user.username = localStorage.getItem('username')
-    // user.fetch().then(() => {
-    //   if (user.expenses === null) user.expenses = []
-    //   if (user.incomes === null) user.incomes = []
-    //   this.user = user
-    // })
+  mounted() {
+    this.$store.dispatch('client/load_user')
   },
   methods: {
     addBtnClick: function() {

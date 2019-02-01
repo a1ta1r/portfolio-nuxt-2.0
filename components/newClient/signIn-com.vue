@@ -92,7 +92,7 @@ export default {
         if (valid) {
           this.sign_in(this.user).then(result => {
             if (result.data.code < 300) {
-              this.$router.push({ name: 'index' })
+              this.$router.push({ name: 'client' })
             } else {
               this.invalidCredentials = true
               alert(result.data.message)

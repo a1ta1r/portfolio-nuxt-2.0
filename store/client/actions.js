@@ -1,18 +1,14 @@
 export default {
-  load_advertisers({ commit }) {
+  load_user({ commit }) {
+    const token = this.state.client.token
     return this.$axios
-      .get('partners')
-      .then(result => result.data.advertisers)
-      .then(advertisers => {
-        commit('SET_ADVERTISERS', advertisers)
+      .get('user', { headers: { Authorization: token } })
+      .then(result => {
+        console.log(result)
+        // commit('SET_USER', result.data.user)
+        // commit('SET_INCOMES', result.data.user.incomes)
+        // commit('SET_EXPENSES', result.data.user.expenses)
       })
-  },
-  load_user({ commit }, user) {
-    return this.$axios.get('user', { params: user.token }).then(result => {
-      commit('SET_USER', result.data.user)
-      commit('SET_INCOMES', result.data.user.incomes)
-      commit('SET_EXPENSES', result.data.user.expenses)
-    })
   },
   sign_in({ commit }, user) {
     return this.$axios
@@ -60,5 +56,12 @@ export default {
   },
   set_password({ commit }, password) {
     commit('SET_PASSWORD', password)
+  },
+
+  add_income({ commit }, income) {
+    commit('ADD_INCOME', income)
+  },
+  add_expense({ commit }, expense) {
+    commit('ADD_EXPENSE', expense)
   }
 }

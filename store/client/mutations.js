@@ -15,5 +15,11 @@ export default {
   },
   SET_EXPENSES(state, expenses) {
     state.expenses = expenses
+  },
+  ADD_INCOME(state, income) {
+    state.incomes.push(income)
+  },
+  ADD_EXPENSE(state, expense) {
+    state.expenses.push(expense)
   }
 }
