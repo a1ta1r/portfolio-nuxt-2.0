@@ -81,15 +81,33 @@
               </el-form-item>
             </el-form>
           </el-card>
-          <el-card>
+          <el-card v-if="calcForm.paymentPlan.totalPaymentAmount">
+            <h5>
+              Итоговая сумма платежей:
+              <el-input
+                :value="calcForm.paymentPlan.totalPaymentAmount.toFixed(2)"
+                :read-only="true"
+                :precision="2"
+                currency="₽"
+                separator="space"
+                decimal-separator="."/>
+            </h5>
+            <h5>
+              Переплата по кредиту:
+              <el-input
+                :value="calcForm.paymentDifference.toFixed(2)"
+                :read-only="true"
+                :precision="2"
+                currency="₽"
+                separator="space"
+                decimal-separator="."/>
+            </h5>
             <PaymentsTable
-              v-if="calcForm.totalPaymentAmount"
               :payments="currentPayments"
               :page="calcForm.pagination.page"
               :my-payment-plan="getPaymentsAmount"
               :total="calcForm.paymentPlan.totalPaymentAmount"/>
             <paginator
-              v-if="calcForm.totalPaymentAmount"
               v-model="calcForm.pagination"
               :limit="calcForm.pagination.limit"
               :length="calcForm.paymentList.length"/>
@@ -186,17 +204,18 @@ export default {
   },
   computed: {
     currentPayments: function() {
-      let start = (this.pagination.page - 1) * this.pagination.limit
-      let end = start + this.pagination.limit
-      return this.paymentPlan.paymentList.slice(start, end)
+      let start =
+        (this.calcForm.pagination.page - 1) * this.calcForm.pagination.limit
+      let end = start + this.calcForm.pagination.limit
+      return this.calcForm.paymentPlan.paymentList.slice(start, end)
     },
     getPaymentsAmount: function() {
-      if (this.paymentPlan.paymentType === this.even) {
+      if (this.calcForm.paymentPlan.paymentType === this.calcForm.even) {
         return undefined
       } else {
         let result = []
-        for (let i = 0; i < this.paymentPlan.paymentList.length; i++) {
-          result.push(this.paymentPlan.paymentList[i].paymentAmount)
+        for (let i = 0; i < this.calcForm.paymentPlan.paymentList.length; i++) {
+          result.push(this.calcForm.paymentPlan.paymentList[i].paymentAmount)
         }
         return result
       }
@@ -251,4 +270,8 @@ export default {
 </script>
 
 <style scoped>
+/*он используется на самом деле*/
+.el-card {
+  margin-bottom: 12px;
+}
 </style>

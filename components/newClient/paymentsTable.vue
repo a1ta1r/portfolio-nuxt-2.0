@@ -2,50 +2,24 @@
   <div
     id="payemnts-table"
     class="form-group">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th
-            v-for="item in columnHeads"
-            :key="item">
-            {{ item }}
-          </th>
-        </tr>
-      </thead>
-      <tr
-        v-for="(item, index) in payments"
-        :key="item.paymentDate"
-        class="form-control-static">
-        <td>{{ (new Date(item.paymentDate)).toLocaleDateString("ru", options) }}</td>
-        <td>
-          <vue-numeric
-            :value="item.paymentAmount"
-            :read-only="true"
-            :precision="2"
-            currency="₽"
-            separator="space"
-            decimal-separator="."/>
-        </td>
-        <td v-if="myPaymentPlan">
-          <vue-numeric
-            :value="total - countRest(index, page)"
-            :read-only="true"
-            :precision="2"
-            currency="₽"
-            separator="space"
-            decimal-separator="."/>
-        </td>
-        <td v-if="!myPaymentPlan">
-          <vue-numeric
-            :value="total - item.paymentAmount * (index + 1 + ((page - 1) * 12))"
-            :read-only="true"
-            :precision="2"
-            currency="₽"
-            separator="space"
-            decimal-separator="."/>
-        </td>
-      </tr>
-    </table>
+    <el-table
+      :data="payments"
+      style="width: 100%">
+      <el-table-column
+        :formatter="dateFormatter"
+        prop="paymentDate"
+        label="Дата платежа"
+        width="180"/>
+      <el-table-column
+        :formatter="amountFormatter"
+        prop="paymentAmount"
+        label="Сумма платежа"
+        width="180"/>
+      <el-table-column
+        :formatter="amountFormatter"
+        prop="address"
+        label="Остаток задолженности"/>
+    </el-table>
   </div>
 </template>
 
@@ -85,6 +59,12 @@ export default {
     }
   },
   methods: {
+    dateFormatter(cellValue) {
+      return cellValue.paymentDate.toLocaleDateString('ru')
+    },
+    amountFormatter(cellValue) {
+      return cellValue.paymentAmount.toFixed(2)
+    },
     countRest: function(currNumb, currPage) {
       let result = 0
       let index = (currPage - 1) * 12 + currNumb + 1

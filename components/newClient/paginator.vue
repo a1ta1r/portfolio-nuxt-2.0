@@ -1,15 +1,16 @@
 <template>
-  <div class="form-group">
-    <button
-      :value="value.page"
-      class="btn btn-outline-primary"
-      @click="prevPage">Назад</button>
-    <label>{{ currentPage }} из {{ pages }}</label>
-    <button
-      :value="value.page"
-      class="btn btn-outline-primary"
-      @click="nextPage">Вперед</button>
-  </div>
+  <el-row>
+    <el-col :span="6"><p/></el-col>
+    <el-col :span="18">
+      <el-button
+        type="primary"
+        @click="prevPage">Назад</el-button>
+      <label>{{ currentPage }} из {{ pages }}</label>
+      <el-button
+        type="primary"
+        @click="nextPage">Вперед</el-button>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
