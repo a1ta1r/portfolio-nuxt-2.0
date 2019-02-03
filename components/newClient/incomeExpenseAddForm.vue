@@ -47,11 +47,13 @@
         controls-position="right"/>
     </el-form-item>
     <el-form-item
+      required
       label="Дата начала"
-      prop="date">
+      prop="startDate">
       <el-date-picker
         v-model="currentIncome.startDate"
         type="date"
+        format="dd-MM-yyyy"
         class="flex-item"/>
     </el-form-item>
     <el-form-item>

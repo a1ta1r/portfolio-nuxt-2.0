@@ -69,9 +69,9 @@
                   prop="paymentPeriod"
                   sortable/>
                 <el-table-column
+                  :formatter="dateFormatter"
                   label="Дата начала"
                   prop="startDate"
-                  type="date"
                   sortable/>
               </el-table>
             </el-card>
@@ -95,6 +95,7 @@
                   prop="paymentPeriod"
                   sortable/>
                 <el-table-column
+                  :formatter="dateFormatter"
                   label="Дата начала"
                   prop="startDate"
                   sortable/>
@@ -175,6 +176,15 @@ export default {
       let index = this.user.expenses.indexOf(expenseObj)
       this.user.expenses.splice(index, 1)
       this.user.update()
+    },
+    dateFormatter(cellValue) {
+      const date = cellValue.startDate
+      const d = date.getDate()
+      const m = date.getMonth() + 1 //Month from 0 to 11
+      const y = date.getFullYear()
+      return (
+        '' + (d <= 9 ? '0' + d : d) + '-' + (m <= 9 ? '0' + m : m) + '-' + y
+      )
     }
   }
 }
