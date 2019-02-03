@@ -13,10 +13,8 @@ export default {
   sign_in({ commit }, user) {
     return this.$axios
       .post('signin', {
-        data: {
-          first: user.username,
-          second: user.password
-        }
+        username: user.username,
+        password: user.password
       })
       .then(response => {
         if (response.status === 200) {
@@ -37,7 +35,9 @@ export default {
   sign_up({ commit }, user) {
     return this.$axios
       .post('signup', {
-        data: user
+        email: user.email,
+        username: user.username,
+        password: user.password
       })
       .then(response => {
         return true

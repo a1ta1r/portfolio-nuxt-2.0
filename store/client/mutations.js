@@ -2,7 +2,7 @@ export default {
   SET_USER(state, user) {
     state.username = user.username
     state.token = user.token
-    state.passive = user.password
+    state.password = user.password
   },
   SET_USERNAME(state, username) {
     state.username = username
