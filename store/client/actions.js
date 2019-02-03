@@ -63,5 +63,11 @@ export default {
   },
   add_expense({ commit }, expense) {
     commit('ADD_EXPENSE', expense)
+  },
+  remove_income({ commit }, income) {
+    commit('REMOVE_INCOME', income)
+  },
+  remove_expense({ commit }, expense) {
+    commit('REMOVE_EXPENSE', expense)
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column justify-content-center align-items-center">
     <el-card class="box-card">
-      <h3>{{ user.username }}</h3><br>
+      <h3>{{ username }}</h3><br>
       <!--поля добавления расходов и доходяг-->
       <el-row>
         <el-card>
@@ -52,54 +52,12 @@
         <el-row :gutter="8">
           <el-col :span="12">
             <el-card>
-              <el-table
-                :data="incomes"
-                class="myFavoriteTable table table-bordered"
-              >
-                <el-table-column
-                  label="Сумма"
-                  prop="amount"
-                  sortable/>
-                <el-table-column
-                  label="Источник"
-                  prop="reason"
-                  sortable/>
-                <el-table-column
-                  label="Периоды"
-                  prop="paymentPeriod"
-                  sortable/>
-                <el-table-column
-                  :formatter="dateFormatter"
-                  label="Дата начала"
-                  prop="startDate"
-                  sortable/>
-              </el-table>
+              <income-expense-table :current-incomes="incomes"/>
             </el-card>
           </el-col>
           <el-col :span="12">
             <el-card>
-              <el-table
-                :data="expenses"
-                class="myFavoriteTable table table-bordered"
-              >
-                <el-table-column
-                  label="Сумма"
-                  prop="amount"
-                  sortable/>
-                <el-table-column
-                  label="Источник"
-                  prop="reason"
-                  sortable/>
-                <el-table-column
-                  label="Периоды"
-                  prop="paymentPeriod"
-                  sortable/>
-                <el-table-column
-                  :formatter="dateFormatter"
-                  label="Дата начала"
-                  prop="startDate"
-                  sortable/>
-              </el-table>
+              <income-expense-table :current-incomes="expenses"/>
             </el-card>
           </el-col>
         </el-row>
@@ -113,11 +71,17 @@ import { mapState } from 'vuex'
 import VueNumeric from 'vue-numeric'
 import ElCollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import incomeExpenseFormAdd from './incomeExpenseAddForm'
+import incomeExpenseTable from './incomeExpenseTable'
 // import Toggle from 'vue-libs-simple-toggle'
 
 export default {
   name: 'UserPage',
-  components: { ElCollapseTransition, incomeExpenseFormAdd, VueNumeric },
+  components: {
+    ElCollapseTransition,
+    incomeExpenseTable,
+    incomeExpenseFormAdd,
+    VueNumeric
+  },
   data() {
     return {
       user: {},
@@ -137,7 +101,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['incomes', 'expenses']),
+    ...mapState('client', ['incomes', 'expenses', 'username']),
     totalIncome: function() {
       if (!this.incomes) {
         return 0
@@ -164,7 +128,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('client/load_user')
+    // this.$store.dispatch('client/load_user')
   },
   methods: {
     deleteIncome(incomeObj) {
@@ -176,16 +140,14 @@ export default {
       let index = this.user.expenses.indexOf(expenseObj)
       this.user.expenses.splice(index, 1)
       this.user.update()
-    },
-    dateFormatter(cellValue) {
-      const date = cellValue.startDate
-      const d = date.getDate()
-      const m = date.getMonth() + 1 //Month from 0 to 11
-      const y = date.getFullYear()
-      return (
-        '' + (d <= 9 ? '0' + d : d) + '-' + (m <= 9 ? '0' + m : m) + '-' + y
-      )
     }
   }
 }
 </script>
+
+<style scoped>
+/*он используется на самом деле*/
+.el-row {
+  margin-bottom: 12px;
+}
+</style>
