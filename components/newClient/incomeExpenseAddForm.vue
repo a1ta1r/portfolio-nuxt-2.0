@@ -3,24 +3,31 @@
     ref="currentIncomeForm"
     :model="currentIncome"
     :rules="rules"
-    label-width="120px"
+    label-width="150px"
     class="demo-ruleForm">
     <el-form-item
       label="Источник"
       prop="reason">
-      <el-input v-model="currentIncome.reason"/>
+      <el-input
+        v-model="currentIncome.reason"
+        style="width: 476px"/>
     </el-form-item>
     <el-form-item
       label="Сумма"
       prop="amount">
-      <el-input v-model="currentIncome.amount"/>
+      <el-input-number
+        v-model="currentIncome.amount"
+        :min="0.01"
+        controls-position="right"/>
     </el-form-item>
     <el-form-item
       label="Период"
       prop="paymentPeriod">
       <el-radio-group
+        ref="paymentPeriodRef"
         v-model="currentIncome.paymentPeriod"
-        size="small">
+        size="small"
+        @change="changePaymentPeriod('paymentPeriodRef')">
         <el-radio-button label="Единовременный"/>
         <el-radio-button label="День"/>
         <el-radio-button label="Неделя"/>
@@ -30,16 +37,21 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item
-      label="Срок"
+      label="Кол-во периодов"
       prop="frequency" >
-      <el-input v-model="currentIncome.frequency"/>
+      <el-input-number
+        ref="frequencyRef"
+        v-model="currentIncome.frequency"
+        :min="0"
+        :disabled="false"
+        controls-position="right"/>
     </el-form-item>
     <el-form-item
       label="Дата начала"
       prop="date">
       <el-date-picker
         v-model="currentIncome.startDate"
-        type="startDate"
+        type="date"
         class="flex-item"/>
     </el-form-item>
     <el-form-item>
@@ -61,7 +73,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   name: 'IncomeExpenseAddForm',
   props: {
@@ -70,7 +82,7 @@ export default {
       default: () => {
         return {
           isIncome: true,
-          amount: 0,
+          amount: 1000,
           reason: '',
           paymentPeriod: '',
           frequency: '',
@@ -86,7 +98,7 @@ export default {
         reason: [
           {
             required: true,
-            message: 'Введите что-то',
+            message: 'Введите источник',
             trigger: 'blur'
           }
         ],
@@ -99,7 +111,7 @@ export default {
         ],
         frequency: [
           {
-            required: true,
+            required: false,
             message: 'Требуется число',
             trigger: 'change'
           }
@@ -123,10 +135,15 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.currentIncome.amount = parseFloat(this.currentIncome.amount, 10)
-          this.currentIncome.frequency = parseInt(
-            this.currentIncome.frequency,
-            10
-          )
+
+          if (this.currentIncome.paymentPeriod === 'Единовременный') {
+            this.currentIncome.frequency = 0
+          } else {
+            this.currentIncome.frequency = parseInt(
+              this.currentIncome.frequency,
+              10
+            )
+          }
 
           this.currentIncome.isRepeatable =
             this.currentIncome.paymentPeriod === 'Единовременный'
@@ -158,6 +175,10 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
+    },
+    changePaymentPeriod(value) {
+      this.$refs['frequencyRef'].disabled =
+        this.$refs[value].value === 'Единовременный'
     }
   }
 }

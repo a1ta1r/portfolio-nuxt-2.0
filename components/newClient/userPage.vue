@@ -58,17 +58,21 @@
               >
                 <el-table-column
                   label="Сумма"
-                  prop="amount"/>
+                  prop="amount"
+                  sortable/>
                 <el-table-column
                   label="Источник"
-                  prop="reason"/>
+                  prop="reason"
+                  sortable/>
                 <el-table-column
                   label="Периоды"
-                  prop="paymentPeriod"/>
+                  prop="paymentPeriod"
+                  sortable/>
                 <el-table-column
                   label="Дата начала"
-                  prop="startDate"/>
-
+                  prop="startDate"
+                  type="date"
+                  sortable/>
               </el-table>
             </el-card>
           </el-col>
@@ -80,17 +84,20 @@
               >
                 <el-table-column
                   label="Сумма"
-                  prop="amount"/>
+                  prop="amount"
+                  sortable/>
                 <el-table-column
                   label="Источник"
-                  prop="reason"/>
+                  prop="reason"
+                  sortable/>
                 <el-table-column
                   label="Периоды"
-                  prop="paymentPeriod"/>
+                  prop="paymentPeriod"
+                  sortable/>
                 <el-table-column
                   label="Дата начала"
-                  prop="startDate"/>
-
+                  prop="startDate"
+                  sortable/>
               </el-table>
             </el-card>
           </el-col>
@@ -119,10 +126,10 @@ export default {
       currentState: true,
       currentIncome: {
         isIncome: true,
-        amount: '',
+        amount: '1000',
         reason: '',
-        paymentPeriod: 'Единовременный',
-        frequency: '',
+        paymentPeriod: 'Месяц',
+        frequency: '12',
         startDate: new Date(Date.now()),
         isRepeatable: false
       }
@@ -159,43 +166,12 @@ export default {
     this.$store.dispatch('client/load_user')
   },
   methods: {
-    addBtnClick: function() {
-      this.$validator.validateAll().then(success => {
-        if (success) {
-          this.currentIncome.amount = parseFloat(this.currentIncome.amount, 10)
-          this.currentIncome.frequency = parseInt(
-            this.currentIncome.frequency,
-            10
-          )
-          if (this.user.incomes == null) this.user.incomes = []
-          if (this.user.expenses == null) this.user.expenses = []
-
-          this.currentIncome.isRepeatable =
-            this.currentIncome.paymentPeriod === 'Единовременный'
-
-          if (this.currentIncome.isIncome)
-            this.user.incomes.push(this.currentIncome)
-          else this.user.expenses.push(this.currentIncome)
-          this.user.update()
-
-          this.currentIncome = {
-            isIncome: this.currentIncome.isIncome,
-            amount: this.amount,
-            reason: this.reason,
-            paymentPeriod: this.paymentPeriod,
-            frequency: this.frequency,
-            startDate: new Date(Date.now()),
-            isRepeatable: this.isRepeatable
-          }
-        }
-      })
-    },
-    deleteIncome(incomeObj, event) {
+    deleteIncome(incomeObj) {
       let index = this.user.incomes.indexOf(incomeObj)
       this.user.incomes.splice(index, 1)
       this.user.update()
     },
-    deleteExpense(expenseObj, event) {
+    deleteExpense(expenseObj) {
       let index = this.user.expenses.indexOf(expenseObj)
       this.user.expenses.splice(index, 1)
       this.user.update()
@@ -203,20 +179,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.el-row {
-  margin-bottom: 12px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.deleteRow {
-  width: 65px;
-}
-
-.dateColumn {
-  width: 180px;
-}
-</style>
