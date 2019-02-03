@@ -102,8 +102,8 @@
 </template>
 
 <script>
-import PaymentsTable from './PaymentsTable'
-import Paginator from './Paginator'
+import PaymentsTable from './paymentsTable'
+import Paginator from './paginator'
 import PaymentPlan from '../../models/paymentPlan'
 import Calculator from '../../services/calculator'
 import User from '../../models/user'
