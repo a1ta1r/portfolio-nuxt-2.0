@@ -6,6 +6,9 @@
     <nuxt-link to="/client">
       client
     </nuxt-link>
+    <nuxt-link to="/calculator">
+      calculator
+    </nuxt-link>
     <nuxt-link to="/signIn">
       sign in
     </nuxt-link>
