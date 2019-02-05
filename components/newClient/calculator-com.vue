@@ -7,8 +7,8 @@
       <el-row>
         <el-col
           :xs="1"
-          :sm="3"
-          :md="4"
+          :sm="4"
+          :md="5"
           :lg="7"
           :xl="8"><p/></el-col>
         <el-col
@@ -130,8 +130,8 @@
         </el-col>
         <el-col
           :xs="1"
-          :sm="3"
-          :md="4"
+          :sm="4"
+          :md="5"
           :lg="7"
           :xl="8"/>
       </el-row>
