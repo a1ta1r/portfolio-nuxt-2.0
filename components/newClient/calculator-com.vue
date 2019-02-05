@@ -5,8 +5,8 @@
         <el-col :span="24"><h2 align="center">Кредитный калькулятор</h2></el-col>
       </el-row>
       <el-row>
-        <el-col :span="7"><p/></el-col>
-        <el-col :span="10">
+        <el-col :span="5"><p/></el-col>
+        <el-col :span="14">
           <el-card class="box-card">
             <el-form
               ref="calcForm"
@@ -111,10 +111,10 @@
             <Paginator
               v-model="calcForm.pagination"
               :limit="calcForm.pagination.limit"
-              :length="calcForm.paymentList.length"/>
+              :length="calcForm.paymentPlan.paymentList.length"/>
           </el-card>
         </el-col>
-        <el-col :span="7"/>
+        <el-col :span="5"/>
       </el-row>
     </el-card>
   </div>
