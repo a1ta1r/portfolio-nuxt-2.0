@@ -27,7 +27,12 @@ export default class Calculator {
 
     for (let i = 0; i < paymentPlan.numberOfMonths; i++) {
       let currentMonth = date.setMonth(date.getMonth() + 1)
-      paymentPlan.paymentList[i] = new Payment(new Date(currentMonth), sum)
+      let remAmount = paymentPlan.totalPaymentAmount - sum * (i + 1)
+      paymentPlan.paymentList[i] = new Payment(
+        new Date(currentMonth),
+        sum,
+        remAmount
+      )
     }
 
     return paymentPlan

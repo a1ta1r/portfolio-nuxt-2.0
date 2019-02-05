@@ -18,7 +18,7 @@
                 prop="title">
                 <el-input
                   v-model="calcForm.title"
-                  style="text-align: center"/>
+                  style="width: 243px"/>
               </el-form-item>
               <el-form-item
                 label="Сумма кредита, ₽"
@@ -27,6 +27,7 @@
                   v-model="calcForm.paymentAmount"
                   :min="0.01"
                   :max="999999999"
+                  :step="1000"
                   style="width: 243px"
                   controls-position="right"/>
               </el-form-item>
@@ -107,7 +108,7 @@
               :page="calcForm.pagination.page"
               :my-payment-plan="getPaymentsAmount"
               :total="calcForm.paymentPlan.totalPaymentAmount"/>
-            <paginator
+            <Paginator
               v-model="calcForm.pagination"
               :limit="calcForm.pagination.limit"
               :length="calcForm.paymentList.length"/>
