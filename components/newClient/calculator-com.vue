@@ -5,8 +5,18 @@
         <el-col :span="24"><h2 align="center">Кредитный калькулятор</h2></el-col>
       </el-row>
       <el-row>
-        <el-col :span="5"><p/></el-col>
-        <el-col :span="14">
+        <el-col
+          :xs="1"
+          :sm="3"
+          :md="4"
+          :lg="7"
+          :xl="8"><p/></el-col>
+        <el-col
+          :xs="22"
+          :sm="16"
+          :md="14"
+          :lg="10"
+          :xl="8">
           <el-card class="box-card">
             <el-form
               ref="calcForm"
@@ -23,12 +33,16 @@
               <el-form-item
                 label="Сумма кредита, ₽"
                 prop="paymentAmount">
-                <el-input-number
+                <vue-numeric
                   v-model="calcForm.paymentAmount"
                   :min="0.01"
                   :max="999999999"
                   :step="1000"
                   style="width: 243px"
+                  class="el-input__inner"
+                  separator="space"
+                  currency="₽"
+                  currency-symbol-position="suffix"
                   controls-position="right"/>
               </el-form-item>
               <el-form-item
@@ -83,26 +97,28 @@
             </el-form>
           </el-card>
           <el-card v-if="calcForm.paymentPlan.totalPaymentAmount">
-            <h5>
-              Итоговая сумма платежей:
-              <el-input
-                :value="calcForm.paymentPlan.totalPaymentAmount.toFixed(2)"
-                :read-only="true"
-                :precision="2"
-                currency="₽"
-                separator="space"
-                decimal-separator="."/>
-            </h5>
-            <h5>
-              Переплата по кредиту:
-              <el-input
-                :value="calcForm.paymentDifference.toFixed(2)"
-                :read-only="true"
-                :precision="2"
-                currency="₽"
-                separator="space"
-                decimal-separator="."/>
-            </h5>
+            <el-form>
+              <el-form-item
+                label="Итоговая сумма платежей"
+                style="margin-bottom: 0px">
+                <vue-numeric
+                  :value="calcForm.paymentPlan.totalPaymentAmount"
+                  :precision="2"
+                  separator="space"
+                  currency-symbol-position="suffix"
+                  currency="₽"
+                  read-only/>
+              </el-form-item>
+              <el-form-item label="Переплата по кредиту">
+                <vue-numeric
+                  :value="calcForm.paymentDifference"
+                  :precision="2"
+                  separator="space"
+                  currency-symbol-position="suffix"
+                  currency="₽"
+                  read-only/>
+              </el-form-item>
+            </el-form>
             <PaymentsTable
               :payments="currentPayments"
               :page="calcForm.pagination.page"
@@ -114,13 +130,19 @@
               :length="calcForm.paymentPlan.paymentList.length"/>
           </el-card>
         </el-col>
-        <el-col :span="5"/>
+        <el-col
+          :xs="1"
+          :sm="3"
+          :md="4"
+          :lg="7"
+          :xl="8"/>
       </el-row>
     </el-card>
   </div>
 </template>
 
 <script>
+import VueNumeric from 'vue-numeric'
 import PaymentsTable from './paymentsTable'
 import Paginator from './paginator'
 import PaymentPlan from '../../models/paymentPlan'
@@ -129,7 +151,7 @@ import User from '../../models/user'
 
 export default {
   name: 'CalculatorCom',
-  components: { PaymentsTable, Paginator },
+  components: { PaymentsTable, Paginator, VueNumeric },
   data() {
     return {
       calcForm: {
