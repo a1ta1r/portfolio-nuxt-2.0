@@ -22,28 +22,22 @@
               ref="calcForm"
               :model="calcForm"
               :rules="rules"
-              label-width="200px">
+              :label-position="labelPosition"
+              label-width="160px">
               <el-form-item
                 label="Название кредита"
                 prop="title">
-                <el-input
-                  v-model="calcForm.title"
-                  style="width: 243px"/>
+                <el-input v-model="calcForm.title"/>
               </el-form-item>
               <el-form-item
                 label="Сумма кредита, ₽"
                 prop="paymentAmount">
                 <vue-numeric
                   v-model="calcForm.paymentAmount"
-                  :min="0.01"
-                  :max="999999999"
-                  :step="1000"
-                  style="width: 243px"
+                  :min="1"
+                  output-type="Number"
                   class="el-input__inner"
-                  separator="space"
-                  currency="₽"
-                  currency-symbol-position="suffix"
-                  controls-position="right"/>
+                  separator="space"/>
               </el-form-item>
               <el-form-item
                 label="Количество месяцев"
@@ -52,7 +46,6 @@
                   v-model="calcForm.numberOfMonths"
                   :min="1"
                   :max="600"
-                  style="width: 243px"
                   controls-position="right"/>
               </el-form-item>
               <el-form-item
@@ -62,25 +55,21 @@
                   v-model="calcForm.interestRate"
                   :min="0.01"
                   :max="100"
-                  style="width: 243px"
                   controls-position="right"/>
               </el-form-item>
               <el-form-item
-                label="Дата начала платежей"
+                label="Начало платежей"
                 prop="startDate">
                 <el-date-picker
                   v-model="calcForm.startDate"
-                  style="width: 243px">
                   type="date"
                   format="dd-MM-yyyy"
-                  class="flex-item"/>
-              </el-date-picker></el-form-item>
+                  class="flex-item"/></el-form-item>
               <el-form-item
                 label="Тип выплат"
                 prop="paymentType">
                 <el-select
-                  v-model="calcForm.paymentType"
-                  style="width: 243px">
+                  v-model="calcForm.paymentType">
                   <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -100,7 +89,7 @@
             <el-form>
               <el-form-item
                 label="Итоговая сумма платежей"
-                style="margin-bottom: 0px">
+                style="margin-bottom: 0">
                 <vue-numeric
                   :value="calcForm.paymentPlan.totalPaymentAmount"
                   :precision="2"
@@ -197,7 +186,7 @@ export default {
           {
             required: true,
             message: 'Введите размер кредита',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         numberOfMonths: [
@@ -242,6 +231,10 @@ export default {
         }
         return result
       }
+    },
+    labelPosition: function() {
+      if (this.$mq === 'sm') return 'top'
+      else return 'right'
     }
   },
   created: function() {

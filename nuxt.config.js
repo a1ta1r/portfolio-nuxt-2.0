@@ -35,7 +35,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    { src: '@/plugins/vee-validate', ssr: false }
+    { src: '@/plugins/vee-validate', ssr: false },
+    // { src: '@/plugins/nuxt-mq', ssr: false }
     // './plugins/vue-numeric'
   ],
 
@@ -45,7 +46,23 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
-    ['@nuxtjs/moment', ['ru']]
+    ['@nuxtjs/moment', ['ru']],
+    [
+      'nuxt-mq',
+      {
+        // Default breakpoint for SSR
+        breakpoints: {
+          sm: 450,
+          md: 1250,
+          lg: Infinity
+        },
+        defaultBreakpoint: {
+          sm: 450,
+          md: 1250,
+          lg: Infinity
+        }
+      }
+    ]
   ],
   /*
   ** Axios module configuration
