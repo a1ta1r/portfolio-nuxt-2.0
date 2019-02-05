@@ -27,7 +27,9 @@
               <el-form-item
                 label="Название кредита"
                 prop="title">
-                <el-input v-model="calcForm.title"/>
+                <el-input
+                  v-model="calcForm.title"
+                  style="width: 90%;"/>
               </el-form-item>
               <el-form-item
                 label="Сумма кредита, ₽"
@@ -37,7 +39,10 @@
                   :min="1"
                   output-type="Number"
                   class="el-input__inner"
-                  separator="space"/>
+                  separator="space"
+                  currency-symbol-position="suffix"
+                  currency="₽"
+                  style="width: 90%;"/>
               </el-form-item>
               <el-form-item
                 label="Количество месяцев"
@@ -46,7 +51,8 @@
                   v-model="calcForm.numberOfMonths"
                   :min="1"
                   :max="600"
-                  controls-position="right"/>
+                  controls-position="right"
+                  style="width: 45%;"/>
               </el-form-item>
               <el-form-item
                 label="Процент в год, %"
@@ -55,7 +61,8 @@
                   v-model="calcForm.interestRate"
                   :min="0.01"
                   :max="100"
-                  controls-position="right"/>
+                  controls-position="right"
+                  style="width: 45%;"/>
               </el-form-item>
               <el-form-item
                 label="Начало платежей"
@@ -64,12 +71,14 @@
                   v-model="calcForm.startDate"
                   type="date"
                   format="dd-MM-yyyy"
-                  class="flex-item"/></el-form-item>
+                  class="flex-item"
+                  style="width: 90%;"/></el-form-item>
               <el-form-item
                 label="Тип выплат"
                 prop="paymentType">
                 <el-select
-                  v-model="calcForm.paymentType">
+                  v-model="calcForm.paymentType"
+                  style="width: 90%;">
                   <el-option
                     v-for="item in options"
                     :key="item.value"

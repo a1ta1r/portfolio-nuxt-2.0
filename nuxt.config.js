@@ -52,12 +52,12 @@ module.exports = {
       {
         // Default breakpoint for SSR
         breakpoints: {
-          sm: 450,
+          sm: 550,
           md: 1250,
           lg: Infinity
         },
         defaultBreakpoint: {
-          sm: 450,
+          sm: 550,
           md: 1250,
           lg: Infinity
         }
