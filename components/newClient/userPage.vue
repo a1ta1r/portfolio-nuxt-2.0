@@ -4,61 +4,90 @@
       <h3>{{ username }}</h3><br>
       <!--поля добавления расходов и доходяг-->
       <el-row>
-        <el-card>
-          <el-collapse >
-            <el-collapse-item>
-              <template slot="title">
-                <h2>Добавить</h2>
-              </template>
-              <income-expense-form-add :current-income="currentIncome" />
-            </el-collapse-item>
-          </el-collapse>
-        </el-card>
-      </el-row>
-      <!--сумма доходов и расходов-->
-      <el-row :gutter="8">
-        <el-col :span="12">
-          <el-card class="">
-            <label class="form-control form-control-success">
-              Доходы:
-              <vue-numeric
-                :value="totalIncome"
-                :read-only="true"
-                :precision="2"
-                currency="₽"
-                separator="space"
-                decimal-separator="."/>
-            </label>
-          </el-card>
+        <el-col
+          :xs="0"
+          :sm="1"
+          :md="3"
+          :lg="5"
+          :xl="8">
+          <p>
+            ваша реклама
+            может быть тут
+          </p>
         </el-col>
-        <el-col :span="12">
-          <el-card class="">
-            <label class="form-control form-control-success">
-              Расходы:
-              <vue-numeric
-                :value="totalExpense"
-                :read-only="true"
-                :precision="2"
-                currency="₽"
-                separator="space"
-                decimal-separator="."/>
-            </label>
-
+        <el-col
+          :xs="24"
+          :sm="22"
+          :md="18"
+          :lg="14"
+          :xl="8">
+          <el-card>
+            <el-collapse >
+              <el-collapse-item>
+                <template slot="title">
+                  <h2>Добавить</h2>
+                </template>
+                <income-expense-form-add :current-income="currentIncome" />
+              </el-collapse-item>
+            </el-collapse>
           </el-card>
         </el-col>
       </el-row>
       <!--таблички с доходами и расходами на твое содержание-->
       <el-row>
         <el-row :gutter="8">
-          <el-col :span="12">
-            <el-card>
-              <income-expense-table :current-incomes="incomes"/>
-            </el-card>
+          <el-col
+            :xs="24"
+            :sm="24"
+            :md="12"
+            :lg="12"
+            :xl="12">
+            <el-row>
+              <el-card class="">
+                <label class="form-control form-control-success">
+                  Доходы:
+                  <vue-numeric
+                    :value="totalIncome"
+                    :read-only="true"
+                    :precision="2"
+                    currency="₽"
+                    separator="space"
+                    decimal-separator="."/>
+                </label>
+              </el-card>
+            </el-row>
+            <el-row>
+              <el-card>
+                <income-expense-table :current-incomes="incomes"/>
+              </el-card>
+            </el-row>
           </el-col>
-          <el-col :span="12">
-            <el-card>
-              <income-expense-table :current-incomes="expenses"/>
-            </el-card>
+          <el-col
+            :xs="24"
+            :sm="24"
+            :md="12"
+            :lg="12"
+            :xl="12">
+            <el-row>
+              <el-card class="">
+                <label class="form-control form-control-success">
+                  Расходы:
+                  <vue-numeric
+                    :value="totalExpense"
+                    :read-only="true"
+                    :precision="2"
+                    currency="₽"
+                    separator="space"
+                    decimal-separator="."/>
+                </label>
+
+              </el-card>
+            </el-row>
+            <el-row>
+              <el-card>
+                <income-expense-table :current-incomes="expenses"/>
+              </el-card>
+            </el-row>
           </el-col>
         </el-row>
       </el-row>
@@ -86,7 +115,6 @@ export default {
     return {
       user: {},
       errors: [],
-      username: '',
       // true = income false = expense
       currentState: true,
       currentIncome: {

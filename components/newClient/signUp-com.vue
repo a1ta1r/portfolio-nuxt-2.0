@@ -3,7 +3,12 @@
     type="flex"
     class="row-bg"
     justify="center">
-    <el-col :span="10">
+    <el-col
+      :xs="22"
+      :sm="18"
+      :md="16"
+      :lg="11"
+      :xl="8">
       <el-row class="card-center">
         <el-card>
           <h1 align="center">Создать аккаунт</h1>
@@ -11,7 +16,7 @@
             ref="signInForm"
             :model="user"
             :rules="rules"
-            label-position="right"
+            :label-position="labelPosition"
             label-width="100px"
             class="main-form">
             <el-form-item
@@ -92,6 +97,12 @@ export default {
           }
         ]
       }
+    }
+  },
+  computed: {
+    labelPosition: function() {
+      if (this.$mq === 'sm') return 'top'
+      else return 'right'
     }
   },
   methods: {

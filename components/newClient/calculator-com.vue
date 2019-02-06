@@ -6,13 +6,13 @@
       </el-row>
       <el-row>
         <el-col
-          :xs="1"
+          :xs="0"
           :sm="4"
           :md="5"
           :lg="7"
           :xl="8"><p/></el-col>
         <el-col
-          :xs="22"
+          :xs="24"
           :sm="16"
           :md="14"
           :lg="10"
@@ -129,7 +129,7 @@
           </el-card>
         </el-col>
         <el-col
-          :xs="1"
+          :xs="0"
           :sm="4"
           :md="5"
           :lg="7"

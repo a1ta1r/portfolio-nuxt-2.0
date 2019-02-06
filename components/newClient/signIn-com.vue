@@ -3,7 +3,12 @@
     type="flex"
     class="row-bg"
     justify="center">
-    <el-col :span="10">
+    <el-col
+      :xs="22"
+      :sm="18"
+      :md="16"
+      :lg="11"
+      :xl="8">
       <el-row class="card-center">
         <el-card>
           <div
@@ -21,7 +26,7 @@
             ref="signInForm"
             :model="user"
             :rules="rules"
-            label-position="right"
+            :label-position="labelPosition"
             label-width="100px"
             class="main-form">
             <el-form-item
@@ -83,7 +88,11 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['username', 'password'])
+    ...mapState('client', ['username', 'password', 'role']),
+    labelPosition: function() {
+      if (this.$mq === 'sm') return 'top'
+      else return 'right'
+    }
   },
   methods: {
     ...mapActions('client', ['sign_in']),
@@ -92,6 +101,7 @@ export default {
         if (valid) {
           this.sign_in(this.user).then(result => {
             if (result.data.code < 300) {
+              if (this.role > 0) this.$router.push({ name: 'admin' })
               this.$router.push({ name: 'client' })
             } else {
               this.invalidCredentials = true

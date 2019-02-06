@@ -4,6 +4,9 @@ export default {
     state.token = user.token
     state.password = user.password
   },
+  SET_ROLE(state, role) {
+    state.role = role
+  },
   SET_USERNAME(state, username) {
     state.username = username
   },

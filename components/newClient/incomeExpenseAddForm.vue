@@ -3,14 +3,14 @@
     ref="currentIncomeForm"
     :model="currentIncome"
     :rules="rules"
+    :label-position="labelPosition"
     label-width="150px"
     class="demo-ruleForm">
     <el-form-item
       label="Источник"
       prop="reason">
       <el-input
-        v-model="currentIncome.reason"
-        style="width: 476px"/>
+        v-model="currentIncome.reason"/>
     </el-form-item>
     <el-form-item
       label="Сумма"
@@ -24,10 +24,10 @@
       label="Период"
       prop="paymentPeriod">
       <el-radio-group
+        v-if="$mq !== 'sm'"
         ref="paymentPeriodRef"
         v-model="currentIncome.paymentPeriod"
-        size="small"
-        @change="changePaymentPeriod('paymentPeriodRef')">
+        size="small">
         <el-radio-button label="Единовременный"/>
         <el-radio-button label="День"/>
         <el-radio-button label="Неделя"/>
@@ -35,17 +35,35 @@
         <el-radio-button label="Квартал"/>
         <el-radio-button label="Год"/>
       </el-radio-group>
+      <el-radio-group
+        v-else
+        ref="paymentPeriodRef"
+        v-model="currentIncome.paymentPeriod"
+        size="small">
+        <el-radio label="Единовременный"/>
+        <el-radio label="День"/>
+        <el-radio label="Неделя"/>
+        <el-radio label="Месяц"/>
+        <el-radio label="Квартал"/>
+        <el-radio label="Год"/>
+      </el-radio-group>
+
     </el-form-item>
-    <el-form-item
-      label="Кол-во периодов"
-      prop="frequency" >
-      <el-input-number
-        ref="frequencyRef"
-        v-model="currentIncome.frequency"
-        :min="0"
-        :disabled="false"
-        controls-position="right"/>
-    </el-form-item>
+    <transition name="el-zoom-in-top">
+      <div v-show="currentIncome.paymentPeriod !== 'Единовременный'">
+        <el-form-item
+          label="Кол-во периодов"
+          prop="frequency" >
+          <el-input-number
+            ref="frequencyRef"
+            v-model="currentIncome.frequency"
+            :min="0"
+            :disabled="false"
+            controls-position="right"
+            class="transition-box"/>
+        </el-form-item>
+      </div>
+    </transition>
     <el-form-item
       required
       label="Дата начала"
@@ -75,7 +93,9 @@
 </template>
 
 <script>
+import 'element-ui/lib/theme-chalk/base.css'
 import { mapState } from 'vuex'
+
 export default {
   name: 'IncomeExpenseAddForm',
   props: {
@@ -130,7 +150,11 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['username', 'expenses', 'incomes'])
+    ...mapState('client', ['username', 'expenses', 'incomes']),
+    labelPosition: function() {
+      if (this.$mq === 'sm') return 'top'
+      else return 'right'
+    }
   },
   methods: {
     submitForm(formName) {

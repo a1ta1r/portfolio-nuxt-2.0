@@ -23,6 +23,8 @@ export default {
             password: user.password,
             token: 'Bearer ' + response.data.token
           })
+          let json = JSON.parse(atob(response.data.token.split('.')[1]))
+          commit('SET_ROLE', json.role)
           return response
         }
         return false
