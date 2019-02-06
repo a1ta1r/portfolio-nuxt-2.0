@@ -43,7 +43,7 @@
               <el-button
                 type="primary"
                 @click="signin('signInForm')">Вход</el-button>
-              <el-button >Регистрация?</el-button>
+              <el-button @click="registr" >Регистрация?</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -116,6 +116,9 @@ export default {
     },
     hideAlert: function() {
       this.invalidCredentials = false
+    },
+    registr: function() {
+      this.$router.push({ name: 'signUp' })
     }
   }
 }

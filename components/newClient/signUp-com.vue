@@ -42,7 +42,7 @@
               <el-button
                 type="primary"
                 @click="signin('signInForm')">Регистрация</el-button>
-              <el-button >Уже есть аккаунт?</el-button>
+              <el-button @click="gosignin" >Уже есть аккаунт?</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -123,6 +123,9 @@ export default {
           return false
         }
       })
+    },
+    gosignin: function() {
+      this.$router.push({ name: 'signIn' })
     }
   }
 }

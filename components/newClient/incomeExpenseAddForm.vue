@@ -40,12 +40,24 @@
         ref="paymentPeriodRef"
         v-model="currentIncome.paymentPeriod"
         size="small">
-        <el-radio label="Единовременный"/>
-        <el-radio label="День"/>
-        <el-radio label="Неделя"/>
-        <el-radio label="Месяц"/>
-        <el-radio label="Квартал"/>
-        <el-radio label="Год"/>
+        <el-radio
+          class="radio-sm"
+          label="Единовременный"/>
+        <el-radio
+          class="radio-sm"
+          label="День"/>
+        <el-radio
+          class="radio-sm"
+          label="Неделя"/>
+        <el-radio
+          class="radio-sm"
+          label="Месяц"/>
+        <el-radio
+          class="radio-sm"
+          label="Квартал"/>
+        <el-radio
+          class="radio-sm"
+          label="Год"/>
       </el-radio-group>
 
     </el-form-item>
@@ -201,14 +213,13 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
-    },
-    changePaymentPeriod(value) {
-      this.$refs['frequencyRef'].disabled =
-        this.$refs[value].value === 'Единовременный'
     }
   }
 }
 </script>
 
 <style scoped>
+.radio-sm {
+  margin-bottom: 8px;
+}
 </style>
