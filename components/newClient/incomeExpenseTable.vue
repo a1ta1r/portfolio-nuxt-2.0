@@ -67,11 +67,11 @@
 </template>
 
 <script>
-import IncomeExpenseEditDialog from './IncomeExpenseEditDialog'
+import incomeExpenseEditDialog from './incomeExpenseEditDialog'
 
 export default {
   name: 'IncomeExpenseTable',
-  components: { IncomeExpenseEditDialog },
+  components: { incomeExpenseEditDialog },
   props: {
     currentIncomes: {
       type: Array,

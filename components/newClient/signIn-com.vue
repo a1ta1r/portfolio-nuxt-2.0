@@ -101,8 +101,9 @@ export default {
         if (valid) {
           this.sign_in(this.user).then(result => {
             if (result.data.code < 300) {
-              if (this.role > 0) this.$router.push({ name: 'admin' })
-              this.$router.push({ name: 'client' })
+              if (this.username === 'admin' || this.role > 0)
+                this.$router.push({ name: 'secure-admin' })
+              else this.$router.push({ name: 'client' })
             } else {
               this.invalidCredentials = true
               alert(result.data.message)
