@@ -17,8 +17,8 @@
     <el-container>
       <el-card>Коротун Василиса Павловна</el-card>
       <el-main>
-        <el-tabs 
-          v-model="activeName" 
+        <el-tabs
+          v-model="activeName"
           type="border-card">
           <el-tab-pane name="advertisers"><span
             slot="label"
