@@ -156,7 +156,7 @@ export default {
     }
   },
   mounted() {
-    // this.$store.dispatch('client/load_user')
+    this.$store.dispatch('client/load_user')
   },
   methods: {
     deleteIncome(incomeObj) {

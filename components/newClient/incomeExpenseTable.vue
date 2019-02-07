@@ -23,18 +23,23 @@
     <el-table-column
       label="Операции">
       <template slot-scope="scope">
+        <el-dialog
+          :visible.sync="editable"
+          title="Изменения сохраняются автоматически">
+          <income-expense-edit-dialog :current-income="currentEditableIncome"/>
+        </el-dialog>
         <el-button-group>
           <el-button
             size="small"
             class="el-icon-edit"
             round
-            @click="$router.push({name: 'secure-partner-edit-id', params: { id:scope.row.id }})"/>
+            @click="editRow(scope)"/>
           <el-popover
             ref="popover"
             v-model="scope.row.show_del"
             trigger="click"
             placement="top">
-            <p align="left">Удалить {{ scope.row.username }}?</p>
+            <p align="left">Удалить {{ scope.row.reason }}?</p>
             <div style="text-align: center">
               <el-button
                 size="mini"
@@ -62,8 +67,11 @@
 </template>
 
 <script>
+import IncomeExpenseEditDialog from './IncomeExpenseEditDialog'
+
 export default {
   name: 'IncomeExpenseTable',
+  components: { IncomeExpenseEditDialog },
   props: {
     currentIncomes: {
       type: Array,
@@ -82,6 +90,12 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      editable: false,
+      currentEditableIncome: {}
+    }
+  },
   methods: {
     dateFormatter(cellValue) {
       return cellValue.startDate.toLocaleDateString('ru')
@@ -91,6 +105,10 @@ export default {
       let index = this.currentIncomes.indexOf(item.row)
       console.log('index ' + index)
       this.currentIncomes.splice(index, 1)
+    },
+    editRow(scope) {
+      this.editable = true
+      this.currentEditableIncome = scope.row
     }
   }
 }

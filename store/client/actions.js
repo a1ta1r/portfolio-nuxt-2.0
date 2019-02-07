@@ -2,7 +2,12 @@ export default {
   load_user({ commit }) {
     const token = this.state.client.token
     return this.$axios
-      .get('user', { headers: { Authorization: token } })
+      .get('user', {
+        headers: {
+          Authorization: token,
+          'content-type': 'application/json'
+        }
+      })
       .then(result => {
         console.log(result)
         // commit('SET_USER', result.data.user)

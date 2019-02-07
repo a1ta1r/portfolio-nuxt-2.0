@@ -35,7 +35,7 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    { src: '@/plugins/vee-validate', ssr: false },
+    { src: '@/plugins/vee-validate', ssr: false }
     // { src: '@/plugins/nuxt-mq', ssr: false }
     // './plugins/vue-numeric'
   ],
