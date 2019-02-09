@@ -1,23 +1,19 @@
 <template>
-  <nav>
-    <nuxt-link to="/secure/admin">
-      admin
-    </nuxt-link>
-    <nuxt-link to="/client">
-      client
-    </nuxt-link>
-    <nuxt-link to="/calculator">
-      calculator
-    </nuxt-link>
-    <nuxt-link to="/signIn">
-      sign in
-    </nuxt-link>
-    <nuxt-link to="/signUp">
-      sign up
-    </nuxt-link>
-  </nav>
+  <sign-in-com v-if="isAuth"/>
+  <user-page v-else/>
 </template>
-
 <script>
-export default {}
+import signInCom from '../components/newClient/signIn-com'
+import UserPage from '../components/newClient/userPage'
+import { mapState } from 'vuex'
+
+export default {
+  components: { UserPage, signInCom },
+  computed: {
+    ...mapState('client', ['token']),
+    isAuth: function() {
+      return this.token === ''
+    }
+  }
+}
 </script>
