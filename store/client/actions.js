@@ -14,6 +14,9 @@ export default {
         // commit('SET_INCOMES', result.data.user.incomes)
         // commit('SET_EXPENSES', result.data.user.expenses)
       })
+      .catch(error => {
+        // this.$router.push({ name: 'signIn' }) // TODO: Может можно сделать, чтоб не успевало отобразить страницу
+      })
   },
   sign_in({ commit }, user) {
     return this.$axios

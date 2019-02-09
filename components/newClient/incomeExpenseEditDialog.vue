@@ -46,11 +46,14 @@
         <el-radio
           class="radio-sm"
           label="Год"/>
+        <el-radio
+          class="radio-sm"
+          label="Бессрочный"/>
       </el-radio-group>
 
     </el-form-item>
     <transition name="el-zoom-in-top">
-      <div v-show="currentIncome.paymentPeriod !== 'Единовременный'">
+      <div v-show="(currentIncome.paymentPeriod !== 'Единовременный') && (currentIncome.paymentPeriod !== 'Бессрочный')">
         <el-form-item
           label="Кол-во периодов"
           prop="frequency" >

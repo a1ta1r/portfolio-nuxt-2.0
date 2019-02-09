@@ -1,7 +1,6 @@
 <template>
   <div class="d-flex flex-column justify-content-center align-items-center">
     <el-card class="box-card">
-      <h3>{{ username }}</h3><br>
       <!--поля добавления расходов и доходяг-->
       <el-row :gutter="8">
         <el-col
@@ -33,7 +32,7 @@
           :xl="8">
           <el-card>
             <el-collapse @change="moreAdvertisement = !moreAdvertisement">
-              <el-collapse-item :content-style="{ padding: '0px' }">
+              <el-collapse-item>
                 <template slot="title">
                   <h2>Добавить</h2>
                 </template>
@@ -67,6 +66,20 @@
       </el-row>
       <!--таблички с доходами и расходами на твое содержание-->
       <el-row>
+        <el-row>
+          <el-card :body-style="{ textAlign: 'center' }">
+            <label class="form-control form-control-success">
+              Баланс:
+              <vue-numeric
+                :value="totalIncome - totalExpense"
+                :read-only="true"
+                :precision="2"
+                currency="₽"
+                separator="space"
+                decimal-separator="."/>
+            </label>
+          </el-card>
+        </el-row>
         <el-row :gutter="8">
           <el-col
             :xs="24"
@@ -75,7 +88,7 @@
             :lg="12"
             :xl="12">
             <el-row>
-              <el-card class="">
+              <el-card :body-style="{ textAlign: 'center' }">
                 <label class="form-control form-control-success">
                   Доходы:
                   <vue-numeric
@@ -101,7 +114,7 @@
             :lg="12"
             :xl="12">
             <el-row>
-              <el-card class="">
+              <el-card :body-style="{ textAlign: 'center' }">
                 <label class="form-control form-control-success">
                   Расходы:
                   <vue-numeric
@@ -188,7 +201,7 @@ export default {
       else return 'Расход'
     }
   },
-  mounted() {
+  beforeCreate() {
     this.$store.dispatch('client/load_user')
   },
   methods: {
@@ -213,7 +226,7 @@ export default {
 }
 
 .bigAdvert {
-  height: 544px;
+  height: 520px;
 }
 
 .el-carousel__item:nth-child(1) {

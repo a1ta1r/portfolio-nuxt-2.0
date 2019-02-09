@@ -132,26 +132,36 @@
           </el-card>
           <el-card v-if="calcForm.paymentPlan.totalPaymentAmount">
             <el-form>
-              <el-form-item
-                label="Итоговая сумма платежей"
-                style="margin-bottom: 0">
-                <vue-numeric
-                  :value="calcForm.paymentPlan.totalPaymentAmount"
-                  :precision="2"
-                  separator="space"
-                  currency-symbol-position="suffix"
-                  currency="₽"
-                  read-only/>
-              </el-form-item>
-              <el-form-item label="Переплата по кредиту">
-                <vue-numeric
-                  :value="calcForm.paymentDifference"
-                  :precision="2"
-                  separator="space"
-                  currency-symbol-position="suffix"
-                  currency="₽"
-                  read-only/>
-              </el-form-item>
+              <el-row>
+                <el-col :span="18">
+                  <el-form-item
+                    label="Итоговая сумма платежей"
+                    style="margin-bottom: 0">
+                    <vue-numeric
+                      :value="calcForm.paymentPlan.totalPaymentAmount"
+                      :precision="2"
+                      separator="space"
+                      currency-symbol-position="suffix"
+                      currency="₽"
+                      read-only/>
+                  </el-form-item>
+                  <el-form-item label="Переплата по кредиту">
+                    <vue-numeric
+                      :value="calcForm.paymentDifference"
+                      :precision="2"
+                      separator="space"
+                      currency-symbol-position="suffix"
+                      currency="₽"
+                      read-only/>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <br>
+                  <el-button
+                    type="primary"
+                    @click="saveCredit()">Сохранить</el-button>
+                </el-col>
+              </el-row>
             </el-form>
             <PaymentsTable
               :payments="currentPayments"
@@ -342,6 +352,9 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
+    },
+    saveCredit() {
+      this.$router.push({ name: 'client' })
     }
   }
 }
