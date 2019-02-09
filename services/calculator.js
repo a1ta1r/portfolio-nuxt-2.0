@@ -57,6 +57,14 @@ export default class Calculator {
       paymentPlan.totalPaymentAmount += sum
     }
 
+    let tempTotalPaymentAmount = paymentPlan.totalPaymentAmount
+    for (let i = 0; i < paymentPlan.numberOfMonths; i++) {
+      paymentPlan.paymentList[i].remainingAmount =
+        tempTotalPaymentAmount - paymentPlan.paymentList[i].paymentAmount
+      tempTotalPaymentAmount =
+        tempTotalPaymentAmount - paymentPlan.paymentList[i].paymentAmount
+    }
+
     return paymentPlan
   }
 }

@@ -10,7 +10,8 @@
       label="Источник"
       prop="reason">
       <el-input
-        v-model="currentIncome.reason"/>
+        v-model="currentIncome.reason"
+        clearable/>
     </el-form-item>
     <el-form-item
       label="Сумма"

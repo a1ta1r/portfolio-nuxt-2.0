@@ -11,7 +11,7 @@
       prop="paymentAmount"
       label="Сумма платежа"/>
     <el-table-column
-      :formatter="amountFormatter"
+      :formatter="remainingFormatter"
       prop="remainingAmount"
       label="Остаток задолженности"/>
   </el-table>
@@ -54,6 +54,9 @@ export default {
     },
     amountFormatter(cellValue) {
       return cellValue.paymentAmount.toFixed(2)
+    },
+    remainingFormatter(cellValue) {
+      return cellValue.remainingAmount.toFixed(2)
     }
   }
 }

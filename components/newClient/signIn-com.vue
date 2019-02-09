@@ -32,12 +32,17 @@
             <el-form-item
               prop="username"
               label="Логин">
-              <el-input v-model="user.username"/>
+              <el-input
+                v-model="user.username"
+                clearable/>
             </el-form-item>
             <el-form-item
               prop="password"
               label="Пароль">
-              <el-input v-model="user.password"/>
+              <el-input
+                v-model="user.password"
+                type="password"
+                clearable/>
             </el-form-item>
             <el-form-item>
               <el-button

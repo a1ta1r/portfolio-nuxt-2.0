@@ -24,19 +24,23 @@
               label="Почта">
               <el-input
                 v-model="user.email"
-                type="email" />
+                type="email"
+                clearable/>
             </el-form-item>
             <el-form-item
               prop="username"
               label="Логин">
-              <el-input v-model="user.username"/>
+              <el-input
+                v-model="user.username"
+                clearable/>
             </el-form-item>
             <el-form-item
               prop="password"
               label="Пароль">
               <el-input
                 v-model="user.password"
-                type="password"/>
+                type="password"
+                clearable/>
             </el-form-item>
             <el-form-item>
               <el-button

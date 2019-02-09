@@ -44,7 +44,8 @@
                 prop="title">
                 <el-input
                   v-model="calcForm.title"
-                  style="width: 90%;"/>
+                  style="width: 90%;"
+                  clearable/>
               </el-form-item>
               <el-form-item
                 label="Сумма кредита, ₽"
