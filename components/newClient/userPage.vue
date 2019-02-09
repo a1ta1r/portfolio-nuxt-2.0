@@ -213,7 +213,7 @@ export default {
 }
 
 .bigAdvert {
-  height: 250px;
+  height: 544px;
 }
 
 .el-carousel__item:nth-child(1) {
