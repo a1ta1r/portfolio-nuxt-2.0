@@ -4,13 +4,28 @@
       <el-row>
         <el-col :span="24"><h2 align="center">Кредитный калькулятор</h2></el-col>
       </el-row>
-      <el-row>
+      <el-row :gutter="8">
         <el-col
           :xs="0"
           :sm="4"
           :md="5"
           :lg="7"
-          :xl="8"><p/></el-col>
+          :xl="8">
+          <el-card
+            :body-style="{ padding: '5px' }">
+            <el-carousel
+              :class="{ bigAdvert: moreAdvertisement }"
+              :interval="7000"
+              indicator-position="none"
+              arrow="never"
+              height="504px">
+              <el-carousel-item
+                v-for="item in 4"
+                :class="{ bigAdvert: moreAdvertisement }"
+                :key="item"/>
+            </el-carousel>
+          </el-card>
+        </el-col>
         <el-col
           :xs="24"
           :sm="16"
@@ -91,7 +106,27 @@
                   type="primary"
                   @click="submitForm('calcForm')">Рассчитать</el-button>
                 <el-button @click="resetForm('calcForm')">Сбросить</el-button>
+                <el-button
+                  type="info"
+                  icon="el-icon-document"
+                  circle
+                  @click="calcForm.showCreditDescription = !calcForm.showCreditDescription"/>
               </el-form-item>
+              <transition name="el-zoom-in-top">
+                <div v-show="calcForm.showCreditDescription">
+                  <div align="left">
+                    <div><strong>Аннуитетный:</strong> равные выплаты каждый месяц</div>
+                    <div><strong>Дифференцированный</strong> вычисляется следующим образом:
+                      <ul style="margin: 0">ДП = ОСЗ / ПП + ОСЗ х ПС , где
+                        <li>ДП - размер дифференцированного платежа</li>
+                        <li>ОСЗ - остаток ссудной задолженности</li>
+                        <li>ПП - количество периодов, оставшихся до погашения кредита</li>
+                        <li>ПС - месячная процентная ставка по кредитному договору, равная 1/12 годовой процентной ставки</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </transition>
             </el-form>
           </el-card>
           <el-card v-if="calcForm.paymentPlan.totalPaymentAmount">
@@ -133,7 +168,23 @@
           :sm="4"
           :md="5"
           :lg="7"
-          :xl="8"/>
+          :xl="8">
+          <el-card
+            :body-style="{ padding: '5px' }">
+            <el-carousel
+              :class="{ bigAdvert: moreAdvertisement }"
+              :interval="7000"
+              :initial-index = "2"
+              indicator-position="none"
+              arrow="never"
+              height="504px">
+              <el-carousel-item
+                v-for="item in 4"
+                :class="{ bigAdvert: moreAdvertisement }"
+                :key="item"/>
+            </el-carousel>
+          </el-card>
+        </el-col>
       </el-row>
     </el-card>
   </div>
@@ -171,7 +222,8 @@ export default {
           limit: 12,
           offset: 0
         },
-        paymentDifference: 0
+        paymentDifference: 0,
+        showCreditDescription: false
       },
       options: [
         {
@@ -298,5 +350,38 @@ export default {
 /*он используется на самом деле*/
 .el-card {
   margin-bottom: 12px;
+}
+
+.bigAdvert {
+  height: 250px;
+}
+
+.el-carousel__item:nth-child(1) {
+  background-image: url(https://www.pressfoto.ru/mediasample/s.pfst.net/2012.11/1656341880627316d171c8e1f98429118d40eba11c3_b.jpg?PressFoto_1656341.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 3px;
+}
+.el-carousel__item:nth-child(2) {
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3c26mj4YZG6BT6T-qqRwUBQBAqXyw8Uhccniij96NIL0aXtit);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 3px;
+}
+.el-carousel__item:nth-child(3) {
+  background-image: url(http://secondstreet.ru/uploads/images/00/50/88/2012/12/11/43c003.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 3px;
+}
+.el-carousel__item:nth-child(4) {
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStNZMG25i3Ot9s-JB1yqhnf97YKliY9_03qKOzn2qURGKd2cXIpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 3px;
 }
 </style>

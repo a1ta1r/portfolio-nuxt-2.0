@@ -106,7 +106,7 @@ export default {
               else this.$router.push({ name: 'client' })
             } else {
               this.invalidCredentials = true
-              alert(result.data.message)
+              alert(result.data.message) // TODO: Убрать перед встречей с Коротун
             }
           })
         } else {

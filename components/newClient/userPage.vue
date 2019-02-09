@@ -3,33 +3,65 @@
     <el-card class="box-card">
       <h3>{{ username }}</h3><br>
       <!--поля добавления расходов и доходяг-->
-      <el-row>
+      <el-row :gutter="8">
         <el-col
-          :xs="0"
-          :sm="1"
+          :xs="1"
+          :sm="2"
           :md="3"
           :lg="5"
           :xl="8">
-          <p>
-            ваша реклама
-            может быть тут
-          </p>
+          <el-card
+            :body-style="{ padding: '5px' }">
+            <el-carousel
+              :class="{ bigAdvert: moreAdvertisement }"
+              :interval="7000"
+              indicator-position="none"
+              arrow="never"
+              height="80px">
+              <el-carousel-item
+                v-for="item in 4"
+                :class="{ bigAdvert: moreAdvertisement }"
+                :key="item"/>
+            </el-carousel>
+          </el-card>
         </el-col>
         <el-col
-          :xs="24"
-          :sm="22"
+          :xs="22"
+          :sm="20"
           :md="18"
           :lg="14"
           :xl="8">
           <el-card>
-            <el-collapse >
-              <el-collapse-item>
+            <el-collapse @change="moreAdvertisement = !moreAdvertisement">
+              <el-collapse-item :content-style="{ padding: '0px' }">
                 <template slot="title">
                   <h2>Добавить</h2>
                 </template>
                 <income-expense-form-add :current-income="currentIncome" />
               </el-collapse-item>
             </el-collapse>
+          </el-card>
+        </el-col>
+        <el-col
+          :xs="1"
+          :sm="2"
+          :md="3"
+          :lg="5"
+          :xl="8">
+          <el-card
+            :body-style="{ padding: '5px' }">
+            <el-carousel
+              :class="{ bigAdvert: moreAdvertisement }"
+              :interval="7000"
+              :initial-index = "2"
+              indicator-position="none"
+              arrow="never"
+              height="80px">
+              <el-carousel-item
+                v-for="item in 4"
+                :class="{ bigAdvert: moreAdvertisement }"
+                :key="item"/>
+            </el-carousel>
           </el-card>
         </el-col>
       </el-row>
@@ -125,7 +157,8 @@ export default {
         frequency: '12',
         startDate: new Date(Date.now()),
         isRepeatable: false
-      }
+      },
+      moreAdvertisement: false
     }
   },
   computed: {
@@ -177,5 +210,38 @@ export default {
 /*он используется на самом деле*/
 .el-row {
   margin-bottom: 12px;
+}
+
+.bigAdvert {
+  height: 250px;
+}
+
+.el-carousel__item:nth-child(1) {
+  background-image: url(http://www.brd24.com/up/iblock/129/12956f0c2220c2a090d038422f43c966.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 3px;
+}
+.el-carousel__item:nth-child(2) {
+  background-image: url(http://secondstreet.ru/uploads/images/00/50/88/2012/12/11/43c003.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 3px;
+}
+.el-carousel__item:nth-child(3) {
+  background-image: url(http://riffberg.com.ua/files/uploads/Myagkiy-kojaniy-portfel-koricneviy-bel.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 3px;
+}
+.el-carousel__item:nth-child(4) {
+  background-image: url(https://st2.depositphotos.com/7375876/12353/i/950/depositphotos_123538046-stock-photo-leather-briefcase-in-his-hand.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 3px;
 }
 </style>

@@ -115,7 +115,7 @@ export default {
               this.$router.push({ name: 'index' })
             } else {
               this.invalidCredentials = true
-              alert(result.data.message)
+              alert(result.data.message) // TODO: Убрать перед встречей с Коротун
             }
           })
         } else {
