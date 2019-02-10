@@ -201,6 +201,11 @@ export default {
               'client/add_expense',
               Object.assign({}, this.currentIncome)
             )
+          let user = {
+            incomes: this.incomes,
+            expenses: this.expenses
+          }
+          this.$store.dispatch('client/update_user', user)
           this.currentIncome = {
             isIncome: this.currentIncome.isIncome,
             amount: this.amount,

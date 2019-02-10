@@ -103,7 +103,9 @@
             </el-row>
             <el-row>
               <el-card>
-                <income-expense-table :current-incomes="incomes"/>
+                <income-expense-table
+                  :current-incomes="incomes"
+                  :is-income="true"/>
               </el-card>
             </el-row>
           </el-col>
@@ -130,7 +132,9 @@
             </el-row>
             <el-row>
               <el-card>
-                <income-expense-table :current-incomes="expenses"/>
+                <income-expense-table
+                  :current-incomes="expenses"
+                  :is-income="false"/>
               </el-card>
             </el-row>
           </el-col>
@@ -203,6 +207,8 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch('client/load_user')
+    // this.$store.dispatch('client/load_incomes')
+    // this.$store.dispatch('client/load_expenses')
   },
   methods: {
     deleteIncome(incomeObj) {

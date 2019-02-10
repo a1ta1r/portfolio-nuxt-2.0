@@ -68,11 +68,16 @@
 
 <script>
 import incomeExpenseEditDialog from './incomeExpenseEditDialog'
+import { mapState } from 'vuex'
 
 export default {
   name: 'IncomeExpenseTable',
   components: { incomeExpenseEditDialog },
   props: {
+    isIncome: {
+      type: Boolean,
+      default: false
+    },
     currentIncomes: {
       type: Array,
       default: () => {
@@ -96,15 +101,21 @@ export default {
       currentEditableIncome: {}
     }
   },
+  computed: {
+    ...mapState('client', ['incomes', 'expenses'])
+  },
   methods: {
     dateFormatter(cellValue) {
-      return cellValue.startDate.toLocaleDateString('ru')
+      let value = new Date(cellValue.startDate)
+      return value.toLocaleDateString('ru')
     },
     removeItem(item) {
       // TODO mutations and actions
       let index = this.currentIncomes.indexOf(item.row)
-      console.log('index ' + index)
       this.currentIncomes.splice(index, 1)
+      if (this.isIncome) {
+        this.$store.dispatch('client/remove_income', item.row.id)
+      }
     },
     editRow(scope) {
       this.editable = true

@@ -1,8 +1,11 @@
 export default {
   SET_USER(state, user) {
     state.username = user.username
-    state.token = user.token
-    state.password = user.password
+    state.id = user.id
+    state.email = user.email
+    state.role = user.role
+    if (user.token != null) state.token = user.token
+    if (user.password != null) state.password = user.password
   },
   SET_ROLE(state, role) {
     state.role = role
@@ -14,9 +17,11 @@ export default {
     state.password = password
   },
   SET_INCOMES(state, incomes) {
+    if (incomes == null) incomes = []
     state.incomes = incomes
   },
   SET_EXPENSES(state, expenses) {
+    if (expenses == null) expenses = []
     state.expenses = expenses
   },
   ADD_INCOME(state, income) {

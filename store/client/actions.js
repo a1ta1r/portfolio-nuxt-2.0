@@ -9,13 +9,38 @@ export default {
         }
       })
       .then(result => {
-        console.log(result)
-        // commit('SET_USER', result.data.user)
-        // commit('SET_INCOMES', result.data.user.incomes)
-        // commit('SET_EXPENSES', result.data.user.expenses)
+        commit('SET_USER', result.data)
+        commit('SET_INCOMES', result.data.incomes)
+        commit('SET_EXPENSES', result.data.expenses)
       })
       .catch(error => {
         // this.$router.push({ name: 'signIn' }) // TODO: Может можно сделать, чтоб не успевало отобразить страницу
+      })
+  },
+  load_incomes({ commit }) {
+    const token = this.state.client.token
+    return this.$axios
+      .get('incomes', {
+        headers: {
+          Authorization: token,
+          'content-type': 'application/json'
+        }
+      })
+      .then(result => {
+        commit('SET_INCOMES', result.data.incomes)
+      })
+  },
+  load_expenses({ commit }) {
+    const token = this.state.client.token
+    return this.$axios
+      .get('expenses', {
+        headers: {
+          Authorization: token,
+          'content-type': 'application/json'
+        }
+      })
+      .then(result => {
+        commit('SET_EXPENSES', result.data.expenses)
       })
   },
   sign_in({ commit }, user) {
@@ -58,7 +83,12 @@ export default {
   },
 
   update_user({ commit }, user) {
-    return this.$axios.put('user', user)
+    return this.$axios.put('user', user, {
+      headers: {
+        Authorization: this.state.client.token,
+        'content-type': 'application/json'
+      }
+    })
   },
 
   set_username({ commit }, username) {
@@ -75,9 +105,16 @@ export default {
     commit('ADD_EXPENSE', expense)
   },
   remove_income({ commit }, income) {
-    commit('REMOVE_INCOME', income)
+    const token = this.state.client.token
+    this.$axios.delete(`incomes/${income}`, {
+      headers: {
+        Authorization: token
+      }
+    })
+    // commit('REMOVE_INCOME', income)
   },
   remove_expense({ commit }, expense) {
+    const token = this.state.client.token
     commit('REMOVE_EXPENSE', expense)
   }
 }

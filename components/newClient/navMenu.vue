@@ -1,22 +1,32 @@
 <template>
   <el-menu
     :default-active="activeIndex"
-    class="el-menu-demo"
+    :router="true"
     mode="horizontal"
     @select="handleSelect">
-    <el-menu-item index="secure-admin">
+    <el-menu-item
+      :route="{ name: 'secure-admin' }"
+      index="admin">
       {{ username }} вам сюда
     </el-menu-item>
-    <el-menu-item index="client">
+    <el-menu-item
+      :route="{ name: 'client' }"
+      index="client">
       Обычные люди сюда
     </el-menu-item>
-    <el-menu-item index="calculator">
+    <el-menu-item
+      :route="{ name: 'calculator' }"
+      index="calculator">
       Калькулятор кредита
     </el-menu-item>
-    <el-menu-item index="signIn">
+    <el-menu-item
+      :route="{ name: 'signIn' }"
+      index="signIn">
       Вход
     </el-menu-item>
-    <el-menu-item index="signUp">
+    <el-menu-item
+      :route="{ name: 'signUp' }"
+      index="signUp">
       Регистрация
     </el-menu-item>
   </el-menu>
@@ -36,7 +46,7 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
-      this.$router.push({ name: key })
+      // this.$router.push({ name: key })
     }
   }
 }
