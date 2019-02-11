@@ -159,6 +159,10 @@ export default {
           this.currentEditableIncome.paymentPeriod = -1
           break // TODO Заменить на корректные значения
       }
+      this.$store.dispatch('client/update_user', {
+        expenses: this.expenses,
+        incomes: this.incomes
+      })
       done()
     },
     removeItem(item) {

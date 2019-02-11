@@ -3,7 +3,6 @@ export default {
     state.processing = payload
   },
   SET_ROUTE(state, payload) {
-    console.log(payload)
     state.currentPage = payload
   }
 }
