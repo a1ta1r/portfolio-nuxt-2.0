@@ -2,6 +2,7 @@
   <div>
     <el-dialog
       :visible.sync="editable"
+      :before-close="handleClose"
       title="Изменения сохраняются автоматически">
       <income-expense-edit-dialog :current-income="currentEditableIncome"/>
     </el-dialog>
@@ -10,6 +11,7 @@
       class="myFavoriteTable table table-bordered"
     >
       <el-table-column
+        :formatter="amountFormatter"
         label="Сумма"
         prop="amount"
         sortable/>
@@ -18,6 +20,7 @@
         prop="reason"
         sortable/>
       <el-table-column
+        :formatter="periodFormatter"
         label="Периоды"
         prop="paymentPeriod"
         sortable/>
@@ -111,6 +114,53 @@ export default {
       let value = new Date(cellValue.startDate)
       return value.toLocaleDateString('ru')
     },
+    amountFormatter(cellValue) {
+      return cellValue.amount.toFixed(2)
+    },
+    periodFormatter(cellValue) {
+      switch (cellValue.paymentPeriod) {
+        case 0:
+          return 'День'
+        case 1:
+          return 'Неделя'
+        case 2:
+          return 'Месяц'
+        case 3:
+          return 'Квартал'
+        case 4:
+          return 'Год'
+        case 5:
+          return 'Единовременный' // TODO Заменить на корректные значения
+        case -1:
+          return 'Бессрочный' // TODO Заменить на корректные значения
+      }
+    },
+    handleClose(done) {
+      switch (this.currentEditableIncome.paymentPeriod) {
+        case 'День':
+          this.currentEditableIncome.paymentPeriod = 0
+          break
+        case 'Неделя':
+          this.currentEditableIncome.paymentPeriod = 1
+          break
+        case 'Месяц':
+          this.currentEditableIncome.paymentPeriod = 2
+          break
+        case 'Квартал':
+          this.currentEditableIncome.paymentPeriod = 3
+          break
+        case 'Год':
+          this.currentEditableIncome.paymentPeriod = 4
+          break
+        case 'Единовременный':
+          this.currentEditableIncome.paymentPeriod = 5
+          break // TODO Заменить на корректные значения
+        case 'Бессрочный':
+          this.currentEditableIncome.paymentPeriod = -1
+          break // TODO Заменить на корректные значения
+      }
+      done()
+    },
     removeItem(item) {
       // TODO mutations and actions
       let index = this.currentIncomes.indexOf(item.row)
@@ -120,8 +170,31 @@ export default {
       }
     },
     editRow(scope) {
-      this.editable = true
       this.currentEditableIncome = scope.row
+      switch (this.currentEditableIncome.paymentPeriod) {
+        case 0:
+          this.currentEditableIncome.paymentPeriod = 'День'
+          break
+        case 1:
+          this.currentEditableIncome.paymentPeriod = 'Неделя'
+          break
+        case 2:
+          this.currentEditableIncome.paymentPeriod = 'Месяц'
+          break
+        case 3:
+          this.currentEditableIncome.paymentPeriod = 'Квартал'
+          break
+        case 4:
+          this.currentEditableIncome.paymentPeriod = 'Год'
+          break
+        case 5: // TODO Заменить на корректные значения
+          this.currentEditableIncome.paymentPeriod = 'Единовременный'
+          break
+        case -1: // TODO Заменить на корректные значения
+          this.currentEditableIncome.paymentPeriod = 'Бессрочный'
+          break
+      }
+      this.editable = true
     }
   }
 }
