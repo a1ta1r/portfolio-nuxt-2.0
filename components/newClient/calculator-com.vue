@@ -202,6 +202,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import VueNumeric from 'vue-numeric'
 import PaymentsTable from './paymentsTable'
 import Paginator from './paginator'
@@ -287,6 +288,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('client', ['currentPage']),
     currentPayments: function() {
       let start =
         (this.calcForm.pagination.page - 1) * this.calcForm.pagination.limit
@@ -354,7 +356,34 @@ export default {
       this.$refs[formName].resetFields()
     },
     saveCredit() {
+      if (this.calcForm.paymentType === 'Аннуитетный') {
+        let expence = {
+          reason: this.calcForm.title,
+          amount: this.calcForm.paymentPlan.paymentList[0].paymentAmount,
+          startDate: this.calcForm.startDate,
+          isRepeatable: true,
+          frequency: this.calcForm.paymentPlan.paymentList.Count,
+          paymentPeriod: 2,
+          recurrentCount: 0
+        }
+        this.$store.dispatch('client/add_expense', Object.assign({}, expence))
+      } else {
+        for (let i = 0; i < this.calcForm.paymentPlan.paymentList.length; i++) {
+          console.dir(i)
+          let expence = {
+            reason: this.calcForm.title,
+            amount: this.calcForm.paymentPlan.paymentList[i].paymentAmount,
+            startDate: this.calcForm.paymentPlan.paymentList[i].paymentDate,
+            isRepeatable: false,
+            frequency: 1,
+            paymentPeriod: 2,
+            recurrentCount: 0
+          }
+          this.$store.dispatch('client/add_expense', Object.assign({}, expence))
+        }
+      }
       this.$router.push({ name: 'client' })
+      this.currentPage = 'client'
     }
   }
 }

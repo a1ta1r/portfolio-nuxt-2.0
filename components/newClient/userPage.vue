@@ -71,7 +71,7 @@
             <label class="form-control form-control-success">
               Баланс:
               <vue-numeric
-                :value="totalIncome - totalExpense"
+                :value="usersBalanse"
                 :read-only="true"
                 :precision="2"
                 currency="₽"
@@ -179,7 +179,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['incomes', 'expenses', 'username']),
+    ...mapState('client', ['incomes', 'expenses', 'username', 'currentPage']),
     totalIncome: function() {
       if (!this.incomes) {
         return 0
@@ -199,6 +199,9 @@ export default {
         sum += this.expenses[i].amount
       }
       return sum
+    },
+    usersBalanse: function() {
+      return this.totalIncome - this.totalExpense
     },
     selectedState: function() {
       if (this.currentIncome.isIncome) return 'Доход'

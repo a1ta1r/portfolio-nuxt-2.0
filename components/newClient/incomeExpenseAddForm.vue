@@ -174,6 +174,24 @@ export default {
     }
   },
   methods: {
+    translatePeriod(period) {
+      switch (period) {
+        case 'День':
+          return 0
+        case 'Неделя':
+          return 1
+        case 'Месяц':
+          return 2
+        case 'Квартал':
+          return 3
+        case 'Год':
+          return 4
+        case 'Единовременный':
+          return 5 // TODO Заменить на корректные значения
+        case 'Бессрочный':
+          return -1 // TODO Заменить на корректные значения
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -190,6 +208,10 @@ export default {
 
           this.currentIncome.isRepeatable =
             this.currentIncome.paymentPeriod === 'Единовременный'
+
+          this.currentIncome.paymentPeriod = this.translatePeriod(
+            this.currentIncome.paymentPeriod
+          )
 
           if (this.currentIncome.isIncome)
             this.$store.dispatch(

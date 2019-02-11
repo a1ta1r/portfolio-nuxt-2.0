@@ -98,6 +98,32 @@ export default {
         }
       }
     }
+  },
+  beforeDestroy() {
+    this.currentIncome.paymentPeriod = this.periodFormatter(
+      this.currentIncome.paymentPeriod
+    )
+    console.dir(this.currentIncome)
+  },
+  methods: {
+    periodFormatter(period) {
+      switch (period) {
+        case 'День':
+          return 0
+        case 'Неделя':
+          return 1
+        case 'Месяц':
+          return 2
+        case 'Квартал':
+          return 3
+        case 'Год':
+          return 4
+        case 'Единовременный':
+          return 5 // TODO Заменить на корректные значения
+        case 'Бессрочный':
+          return -1 // TODO Заменить на корректные значения
+      }
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    :default-active="activeIndex"
+    :default-active="client"
     :router="true"
     mode="horizontal"
     @select="handleSelect">
@@ -38,15 +38,16 @@ export default {
   name: 'NavMenu',
   data() {
     return {
-      activeIndex: '1'
+      activeIndex: this.currentPage
     }
   },
   computed: {
-    ...mapState('client', ['username', 'role'])
+    ...mapState('client', ['username', 'role', 'currentPage'])
   },
   methods: {
     handleSelect(key, keyPath) {
       // this.$router.push({ name: key })
+      this.currentPage = key
     }
   }
 }
