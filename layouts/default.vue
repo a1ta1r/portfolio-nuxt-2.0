@@ -10,7 +10,10 @@
 <script>
 import navMenu from '../components/newClient/navMenu'
 export default {
-  components: { navMenu }
+  components: { navMenu },
+  beforeMount() {
+    this.$store.dispatch('client/get_token')
+  }
 }
 </script>
 

@@ -116,7 +116,7 @@ export default {
       let index = this.currentIncomes.indexOf(item.row)
       this.currentIncomes.splice(index, 1)
       if (this.isIncome) {
-        this.$store.dispatch('client/update_user', { incomes: this.incomes })
+        this.$store.dispatch('client/remove_income', item.row.id)
       }
     },
     editRow(scope) {

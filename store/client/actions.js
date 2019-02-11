@@ -1,4 +1,10 @@
 export default {
+  get_token({ commit }) {
+    if (process.browser) {
+      let token = localStorage.getItem('authToken')
+      if (token) commit('SET_TOKEN', token)
+    }
+  },
   load_user({ commit }) {
     const token = this.state.client.token
     return this.$axios

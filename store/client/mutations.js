@@ -4,8 +4,16 @@ export default {
     state.id = user.id
     state.email = user.email
     state.role = user.role
-    if (user.token != null) state.token = user.token
+    if (user.token != null) {
+      state.token = user.token
+      if (process.browser) {
+        localStorage.setItem('authToken', user.token)
+      }
+    }
     if (user.password != null) state.password = user.password
+  },
+  SET_TOKEN(state, token) {
+    state.token = token
   },
   SET_ROLE(state, role) {
     state.role = role
