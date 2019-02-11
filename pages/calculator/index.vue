@@ -5,7 +5,10 @@
 import CalculatorCom from '../../components/newClient/calculator-com'
 export default {
   name: 'Calculator',
-  components: { CalculatorCom }
+  components: { CalculatorCom },
+  mounted() {
+    this.$store.dispatch('general/set_route', 'calculator')
+  }
 }
 </script>
 

@@ -6,7 +6,10 @@
 import signUpCom from '../components/newClient/signUp-com'
 export default {
   name: 'SignUp',
-  components: { signUpCom }
+  components: { signUpCom },
+  mounted() {
+    this.$store.dispatch('general/set_route', 'signUp')
+  }
 }
 </script>
 

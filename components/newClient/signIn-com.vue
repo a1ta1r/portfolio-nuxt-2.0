@@ -93,7 +93,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['username', 'password', 'role']),
+    ...mapState('client', ['username', 'password', 'role', 'currentPage']),
     labelPosition: function() {
       if (this.$mq === 'sm') return 'top'
       else return 'right'

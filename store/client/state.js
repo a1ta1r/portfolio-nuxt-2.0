@@ -7,6 +7,5 @@ export default {
   token: '',
   incomes: [],
   expenses: [],
-  paymentPlan: [],
-  currentPage: 'client'
+  paymentPlan: []
 }

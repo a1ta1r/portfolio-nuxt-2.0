@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    :default-active="client"
+    :default-active="currentPage"
     :router="true"
     mode="horizontal"
     @select="handleSelect">
@@ -42,12 +42,13 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['username', 'role', 'currentPage'])
+    ...mapState('client', ['username', 'role']),
+    ...mapState('general', ['currentPage'])
   },
   methods: {
     handleSelect(key, keyPath) {
       // this.$router.push({ name: key })
-      this.currentPage = key
+      this.$store.dispatch('general/set_route', key)
     }
   }
 }
