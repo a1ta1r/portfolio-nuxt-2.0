@@ -171,7 +171,7 @@ export default {
       this.currentIncomes.splice(index, 1)
       if (this.isIncome) {
         this.$store.dispatch('client/remove_income', item.row.id)
-      }
+      } else this.$store.dispatch('client/remove_expense', item.row.id)
     },
     editRow(scope) {
       this.currentEditableIncome = scope.row

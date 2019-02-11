@@ -121,6 +121,11 @@ export default {
   },
   remove_expense({ commit }, expense) {
     const token = this.state.client.token
-    commit('REMOVE_EXPENSE', expense)
+    this.$axios.delete(`expenses/${expense}`, {
+      headers: {
+        Authorization: token
+      }
+    })
+    // commit('REMOVE_EXPENSE', expense)
   }
 }
