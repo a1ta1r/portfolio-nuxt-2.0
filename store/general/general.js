@@ -7,5 +7,10 @@ export default {
   namespaced: true,
   state,
   actions,
-  mutations
+  mutations,
+  getters: {
+    Authorized: state => {
+      return state.isAuthorized
+    }
+  }
 }

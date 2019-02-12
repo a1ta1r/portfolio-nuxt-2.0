@@ -9,10 +9,18 @@
 
 <script>
 import navMenu from '../components/newClient/navMenu'
+import { mapState } from 'vuex'
+
 export default {
   components: { navMenu },
+  computed: {
+    ...mapState('client', ['role'])
+  },
   beforeMount() {
-    this.$store.dispatch('client/get_token')
+    this.$store.dispatch('client/get_token').then(() => {
+      this.$store.dispatch('client/load_user')
+      if (this.token) this.$store.dispatch('general/set_authorized', true)
+    })
   }
 }
 </script>

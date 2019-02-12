@@ -1,4 +1,5 @@
 export default {
   processing: false,
-  currentPage: '/'
+  currentPage: 'signIn',
+  isAuthorized: false
 }

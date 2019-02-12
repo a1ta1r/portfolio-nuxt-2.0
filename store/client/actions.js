@@ -1,8 +1,17 @@
 export default {
-  get_token({ commit }) {
+  get_token({ commit, dispatch }) {
     if (process.browser) {
       let token = localStorage.getItem('authToken')
-      if (token) commit('SET_TOKEN', token)
+      if (token) {
+        commit('SET_TOKEN', token)
+        dispatch('general/set_authorized', true)
+      }
+    }
+  },
+  log_out({ commit }) {
+    if (process.browser) {
+      localStorage.removeItem('authToken')
+      commit('REMOVE_TOKEN')
     }
   },
   load_user({ commit }) {

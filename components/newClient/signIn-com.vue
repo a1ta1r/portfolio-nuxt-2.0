@@ -109,6 +109,7 @@ export default {
               if (this.username === 'admin' || this.role > 0)
                 this.$router.push({ name: 'secure-admin' })
               else this.$router.push({ name: 'client' })
+              this.$store.dispatch('general/set_authorized', true)
             } else {
               this.invalidCredentials = true
             }

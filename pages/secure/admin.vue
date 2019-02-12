@@ -55,6 +55,9 @@ export default {
     return {
       activeName: 'advertisers'
     }
+  },
+  mounted() {
+    this.$store.dispatch('general/set_route', 'admin')
   }
 }
 </script>

@@ -15,6 +15,15 @@ export default {
   SET_TOKEN(state, token) {
     state.token = token
   },
+  REMOVE_TOKEN(state) {
+    state.token = ''
+    state.incomes = []
+    state.expenses = []
+    state.username = ''
+    state.id = ''
+    state.email = ''
+    state.role = ''
+  },
   SET_ROLE(state, role) {
     state.role = role
   },

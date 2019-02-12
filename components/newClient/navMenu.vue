@@ -5,11 +5,13 @@
     mode="horizontal"
     @select="handleSelect">
     <el-menu-item
+      v-if="isAuthorized && username === 'admin'"
       :route="{ name: 'secure-admin' }"
       index="admin">
       {{ username }} вам сюда
     </el-menu-item>
     <el-menu-item
+      v-if="isAuthorized"
       :route="{ name: 'client' }"
       index="client">
       Обычные люди сюда
@@ -20,14 +22,23 @@
       Калькулятор кредита
     </el-menu-item>
     <el-menu-item
+      v-if="!isAuthorized"
       :route="{ name: 'signIn' }"
       index="signIn">
       Вход
     </el-menu-item>
     <el-menu-item
+      v-if="!isAuthorized"
       :route="{ name: 'signUp' }"
       index="signUp">
       Регистрация
+    </el-menu-item>
+    <el-menu-item
+      v-if="isAuthorized"
+      :route="{ name: 'signIn' }"
+      index="logOut"
+      @click="log_out">
+      Выход
     </el-menu-item>
   </el-menu>
 </template>
@@ -43,12 +54,17 @@ export default {
   },
   computed: {
     ...mapState('client', ['username', 'role']),
-    ...mapState('general', ['currentPage'])
+    ...mapState('general', ['currentPage', 'isAuthorized'])
   },
   methods: {
     handleSelect(key, keyPath) {
       // this.$router.push({ name: key })
-      this.$store.dispatch('general/set_route', key)
+      // this.$store.dispatch('general/set_route', key)
+    },
+    log_out() {
+      this.$store.dispatch('client/log_out')
+      this.$store.dispatch('general/set_authorized', false)
+      this.$router.push({ name: 'signIn' })
     }
   }
 }
