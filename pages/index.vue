@@ -11,8 +11,9 @@ export default {
   components: { UserPage, signInCom },
   computed: {
     ...mapState('client', ['token']),
+    ...mapState('general', ['isAuthorized']),
     isAuth: function() {
-      return this.token === ''
+      return this.isAuthorized
     }
   }
 }

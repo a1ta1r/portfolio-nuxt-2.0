@@ -6,7 +6,6 @@ export default {
     commit('SET_PROCESSING', payload)
   },
   set_authorized({ commit }, payload) {
-    console.log('watafuck')
     commit('SET_AUTHORIZED', payload)
   }
 }

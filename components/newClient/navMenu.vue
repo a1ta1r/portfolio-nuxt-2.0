@@ -1,7 +1,7 @@
 <template>
   <el-menu
-    :default-active="currentPage"
     :router="true"
+    :default-active="activeIndex"
     mode="horizontal"
     @select="handleSelect">
     <el-menu-item
@@ -11,15 +11,15 @@
       {{ username }} вам сюда
     </el-menu-item>
     <el-menu-item
+      :route="{ name: 'calculator' }"
+      index="calculator">
+      Калькулятор кредита
+    </el-menu-item>
+    <el-menu-item
       v-if="isAuthorized"
       :route="{ name: 'client' }"
       index="client">
       Обычные люди сюда
-    </el-menu-item>
-    <el-menu-item
-      :route="{ name: 'calculator' }"
-      index="calculator">
-      Калькулятор кредита
     </el-menu-item>
     <el-menu-item
       v-if="!isAuthorized"
@@ -47,14 +47,12 @@
 import { mapState } from 'vuex'
 export default {
   name: 'NavMenu',
-  data() {
-    return {
-      activeIndex: this.currentPage
-    }
-  },
   computed: {
     ...mapState('client', ['username', 'role']),
-    ...mapState('general', ['currentPage', 'isAuthorized'])
+    ...mapState('general', ['currentPage', 'isAuthorized']),
+    activeIndex: function() {
+      return this.currentPage
+    }
   },
   methods: {
     handleSelect(key, keyPath) {

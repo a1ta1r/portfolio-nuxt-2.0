@@ -208,6 +208,9 @@ export default {
       else return 'Расход'
     }
   },
+  mounted() {
+    this.$store.dispatch('general/set_route', 'client')
+  },
   beforeCreate() {
     this.$store.dispatch('client/load_user')
     // this.$store.dispatch('client/load_incomes')
