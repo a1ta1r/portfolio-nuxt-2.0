@@ -373,7 +373,7 @@ export default {
           let expense = {
             reason: this.calcForm.title,
             amount: this.calcForm.paymentPlan.paymentList[i].paymentAmount,
-            startDate: new Date(this.calcForm.paymentPlan.paymentList[i]),
+            startDate: this.calcForm.paymentPlan.paymentList[i].paymentDate,
             isRepeatable: false,
             frequency: 1,
             paymentPeriod: 2,
