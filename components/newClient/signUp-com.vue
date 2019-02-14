@@ -10,7 +10,7 @@
       :lg="11"
       :xl="8">
       <el-row class="card-center">
-        <el-card>
+        <el-card shadow="hover">
           <h1 align="center">Создать аккаунт</h1>
           <el-form
             ref="signInForm"

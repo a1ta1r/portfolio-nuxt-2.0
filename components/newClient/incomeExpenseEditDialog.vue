@@ -57,12 +57,13 @@
           <el-input-number
             ref="frequencyRef"
             v-model="currentIncome.frequency"
-            :disabled="currentIncome.isForever"
+            :disabled="isForever"
             controls-position="right"
             class="transition-box"/>
           <el-checkbox
-            v-model="currentIncome.isForever"
-            style="margin-left: 20pt">Бессрочный</el-checkbox>
+            v-model="isForever"
+            style="margin-left: 20pt"
+            @change="checkClick">Бессрочный</el-checkbox>
         </el-form-item>
       </div>
     </transition>
@@ -91,12 +92,29 @@ export default {
           amount: 1000,
           reason: '',
           paymentPeriod: '',
-          frequency: '',
+          frequency: 0,
           startDate: new Date(Date.now()),
-          isRepeatable: false,
-          isForever: false
+          isRepeatable: false
         }
       }
+    }
+  },
+  data() {
+    return {
+      tempFrequency: 0
+    }
+  },
+  computed: {
+    isForever: function() {
+      return this.currentIncome.frequency < 0
+    }
+  },
+  methods: {
+    checkClick: function(value) {
+      if (value) {
+        this.tempFrequency = this.currentIncome.frequency
+        this.currentIncome.frequency = -1
+      } else this.currentIncome.frequency = this.tempFrequency
     }
   }
 }

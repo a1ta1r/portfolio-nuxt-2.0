@@ -68,22 +68,12 @@
       <el-row>
         <el-row>
           <el-card
-            :class="{ low_balance : usersBalanse < 0 }"
+            :class="{ low_balance : usersBalance < 0 }"
             :body-style="{ textAlign: 'center' }">
             <label class="form-control form-control-success">
               Баланс:
               <vue-numeric
-                v-if="usersBalanse < 0"
-                :value="usersBalanse"
-                :read-only="true"
-                :precision="2"
-                style="color: red"
-                currency="₽"
-                separator="space"
-                decimal-separator="."/>
-              <vue-numeric
-                v-else
-                :value="usersBalanse"
+                :value="usersBalance"
                 :read-only="true"
                 :precision="2"
                 currency="₽"
@@ -213,7 +203,7 @@ export default {
       }
       return sum
     },
-    usersBalanse: function() {
+    usersBalance: function() {
       return this.totalIncome - this.totalExpense
     },
     selectedState: function() {

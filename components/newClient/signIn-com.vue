@@ -10,7 +10,7 @@
       :lg="11"
       :xl="8">
       <el-row class="card-center">
-        <el-card>
+        <el-card shadow="hover">
           <div
             v-if="invalidCredentials"
             class="alert alert-danger">
