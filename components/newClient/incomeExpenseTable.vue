@@ -34,9 +34,9 @@
         <template slot-scope="scope">
           <el-button-group>
             <el-button
+              :round="roundBtn"
               size="small"
               class="el-icon-edit"
-              round
               @click="editRow(scope)"/>
             <el-popover
               ref="popover"
@@ -58,11 +58,11 @@
             </el-popover>
             <el-button
               v-popover:popover
+              :round="roundBtn"
               size="small"
               plain
               type="danger"
               class="el-icon-delete"
-              round
               @click="scope.row.show_del = true"/>
           </el-button-group>
         </template>
@@ -108,7 +108,10 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['incomes', 'expenses'])
+    ...mapState('client', ['incomes', 'expenses']),
+    roundBtn: function() {
+      return this.$mq !== 'md' && this.$mq !== 'sm'
+    }
   },
   methods: {
     dateFormatter(cellValue) {

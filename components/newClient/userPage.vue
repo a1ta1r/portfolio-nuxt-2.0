@@ -67,19 +67,78 @@
       <!--таблички с доходами и расходами на твое содержание-->
       <el-row>
         <el-row>
-          <el-card
-            :class="{ low_balance : usersBalance < 0 }"
-            :body-style="{ textAlign: 'center' }">
-            <label class="form-control form-control-success">
-              Баланс:
-              <vue-numeric
-                :value="usersBalance"
-                :read-only="true"
-                :precision="2"
-                currency="₽"
-                separator="space"
-                decimal-separator="."/>
-            </label>
+          <el-card :body-style="{ textAlign: 'center' }">
+            <el-row>
+              <el-col
+                :xs="24"
+                :sm="8"
+                :md="7"
+                :lg="7"
+                :xl="6">
+                <el-row>
+                  <el-button
+                    type="success"
+                    icon="el-icon-time"
+                    plain
+                    round
+                    @click="currentMonth = new Date().getMonth()">
+                    {{ (currentMonth === new Date().getMonth()? 'Сейчас ' : 'Вернуть ') + (months[new Date().getMonth()].toLowerCase()) }}
+                  </el-button>
+                </el-row>
+              </el-col>
+              <el-col
+                :xs="24"
+                :sm="16"
+                :md="10"
+                :lg="10"
+                :xl="12">
+                <el-row>
+                  <el-button-group>
+                    <el-button
+                      icon="el-icon-d-arrow-left"
+                      round
+                      @click="changeMonth(false)">
+                      {{ monthBefore }}</el-button>
+                    <el-button
+                      icon="el-icon-tickets"
+                      round>
+                      {{ showMonth }}
+                    </el-button>
+                    <el-button
+                      round
+                      @click="changeMonth(true)">{{ monthAfter }}
+                      <i class="el-icon-d-arrow el-icon-d-arrow-right"/>
+                    </el-button>
+                  </el-button-group>
+                </el-row>
+              </el-col>
+              <el-col
+                :xs="24"
+                :sm="24"
+                :md="7"
+                :lg="7"
+                :xl="6">
+                <el-popover
+                  ref="popover"
+                  :content="balanceMessage"
+                  placement="top-start"
+                  trigger="hover"/>
+                <el-row>
+                  <el-tag
+                    v-popover:popover
+                    :type="balanceType">
+                    {{ 'Баланс на ' + (months[currentMonth].toLowerCase()) }}
+                    <vue-numeric
+                      :value="usersBalance"
+                      :read-only="true"
+                      :precision="2"
+                      currency="₽"
+                      separator="space"
+                      decimal-separator="."/>
+                  </el-tag>
+                </el-row>
+              </el-col>
+            </el-row>
           </el-card>
         </el-row>
         <el-row :gutter="8">
@@ -106,7 +165,7 @@
             <el-row>
               <el-card>
                 <income-expense-table
-                  :current-incomes="incomes"
+                  :current-incomes="financeByMonth(incomes)"
                   :is-income="true"/>
               </el-card>
             </el-row>
@@ -135,7 +194,7 @@
             <el-row>
               <el-card>
                 <income-expense-table
-                  :current-incomes="expenses"
+                  :current-incomes="financeByMonth(expenses)"
                   :is-income="false"/>
               </el-card>
             </el-row>
@@ -178,28 +237,45 @@ export default {
         isRepeatable: false,
         isForever: false
       },
-      moreAdvertisement: false
+      moreAdvertisement: false,
+      currentMonth: new Date().getMonth(),
+      months: [
+        'Январь',
+        'Февраль',
+        'Март',
+        'Апрель',
+        'Май',
+        'Июнь',
+        'Июль',
+        'Август',
+        'Сентябрь',
+        'Октбрь',
+        'Ноябрь',
+        'Декабрь'
+      ]
     }
   },
   computed: {
     ...mapState('client', ['incomes', 'expenses', 'username', 'currentPage']),
     totalIncome: function() {
-      if (!this.incomes) {
+      let incomes = this.financeByMonth(this.incomes)
+      if (!incomes) {
         return 0
       }
       let sum = 0
-      for (let i = 0; i < this.incomes.length; i++) {
-        sum += this.incomes[i].amount
+      for (let i = 0; i < incomes.length; i++) {
+        sum += incomes[i].amount
       }
       return sum
     },
     totalExpense: function() {
-      if (!this.expenses) {
+      let expenses = this.financeByMonth(this.expenses)
+      if (!expenses) {
         return 0
       }
       let sum = 0
-      for (let i = 0; i < this.expenses.length; i++) {
-        sum += this.expenses[i].amount
+      for (let i = 0; i < expenses.length; i++) {
+        sum += expenses[i].amount
       }
       return sum
     },
@@ -209,6 +285,41 @@ export default {
     selectedState: function() {
       if (this.currentIncome.isIncome) return 'Доход'
       else return 'Расход'
+    },
+    showMonth: function() {
+      return this.months[this.currentMonth]
+    },
+    monthBefore: function() {
+      if (this.currentMonth === 0) return this.months[11]
+      return this.months[this.currentMonth - 1]
+    },
+    monthAfter: function() {
+      if (this.currentMonth === 11) return this.months[0]
+      return this.months[this.currentMonth + 1]
+    },
+    balanceType: function() {
+      if (this.usersBalance > 0) {
+        return 'success'
+      }
+      if ((this.totalIncome / this.totalExpense) * 100 < 50) {
+        return 'danger'
+      }
+      if (this.usersBalance < 0) {
+        return 'warning'
+      }
+      return 'info'
+    },
+    balanceMessage: function() {
+      if (this.usersBalance > 0) {
+        return 'С этим можно жить'
+      }
+      if ((this.totalIncome / this.totalExpense) * 100 < 50) {
+        return 'Ваших расходов в 2 раза больше чем доходов'
+      }
+      if (this.usersBalance < 0) {
+        return 'Вы тратите больше чем зарабатываете'
+      }
+      return 'Идеальный баланс доходов и расходов'
     }
   },
   mounted() {
@@ -220,6 +331,11 @@ export default {
     // this.$store.dispatch('client/load_expenses')
   },
   methods: {
+    financeByMonth: function(finance) {
+      return finance.filter(
+        value => new Date(value.startDate).getMonth() === this.currentMonth
+      )
+    },
     deleteIncome(incomeObj) {
       let index = this.user.incomes.indexOf(incomeObj)
       this.user.incomes.splice(index, 1)
@@ -229,6 +345,15 @@ export default {
       let index = this.user.expenses.indexOf(expenseObj)
       this.user.expenses.splice(index, 1)
       this.user.update()
+    },
+    changeMonth(forward = true) {
+      if (forward) {
+        if (this.currentMonth === 11) this.currentMonth = 0
+        else this.currentMonth++
+      } else {
+        if (this.currentMonth === 0) this.currentMonth = 11
+        else this.currentMonth--
+      }
     }
   }
 }
