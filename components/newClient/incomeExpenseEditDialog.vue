@@ -46,24 +46,23 @@
         <el-radio
           class="radio-sm"
           label="Год"/>
-        <el-radio
-          class="radio-sm"
-          label="Бессрочный"/>
       </el-radio-group>
 
     </el-form-item>
     <transition name="el-zoom-in-top">
-      <div v-show="(currentIncome.paymentPeriod !== 'Единовременный') && (currentIncome.paymentPeriod !== 'Бессрочный')">
+      <div v-show="currentIncome.paymentPeriod !== 'Единовременный'">
         <el-form-item
           label="Кол-во периодов"
           prop="frequency" >
           <el-input-number
             ref="frequencyRef"
             v-model="currentIncome.frequency"
-            :min="0"
-            :disabled="false"
+            :disabled="currentIncome.isForever"
             controls-position="right"
             class="transition-box"/>
+          <el-checkbox
+            v-model="currentIncome.isForever"
+            style="margin-left: 20pt">Бессрочный</el-checkbox>
         </el-form-item>
       </div>
     </transition>
@@ -94,34 +93,9 @@ export default {
           paymentPeriod: '',
           frequency: '',
           startDate: new Date(Date.now()),
-          isRepeatable: false
+          isRepeatable: false,
+          isForever: false
         }
-      }
-    }
-  },
-  beforeDestroy() {
-    this.currentIncome.paymentPeriod = this.periodFormatter(
-      this.currentIncome.paymentPeriod
-    )
-    console.dir(this.currentIncome)
-  },
-  methods: {
-    periodFormatter(period) {
-      switch (period) {
-        case 'День':
-          return 0
-        case 'Неделя':
-          return 1
-        case 'Месяц':
-          return 2
-        case 'Квартал':
-          return 3
-        case 'Год':
-          return 4
-        case 'Единовременный':
-          return 5 // TODO Заменить на корректные значения
-        case 'Бессрочный':
-          return -1 // TODO Заменить на корректные значения
       }
     }
   }

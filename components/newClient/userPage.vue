@@ -71,6 +71,16 @@
             <label class="form-control form-control-success">
               Баланс:
               <vue-numeric
+                v-if="usersBalanse < 0"
+                :value="usersBalanse"
+                :read-only="true"
+                :precision="2"
+                style="color: red"
+                currency="₽"
+                separator="space"
+                decimal-separator="."/>
+              <vue-numeric
+                v-else
                 :value="usersBalanse"
                 :read-only="true"
                 :precision="2"
@@ -173,7 +183,8 @@ export default {
         paymentPeriod: 'Месяц',
         frequency: '12',
         startDate: new Date(Date.now()),
-        isRepeatable: false
+        isRepeatable: false,
+        isForever: false
       },
       moreAdvertisement: false
     }

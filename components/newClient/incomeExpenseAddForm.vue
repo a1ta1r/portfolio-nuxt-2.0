@@ -35,7 +35,6 @@
         <el-radio-button label="Месяц"/>
         <el-radio-button label="Квартал"/>
         <el-radio-button label="Год"/>
-        <el-radio-button label="Бессрочный"/>
       </el-radio-group>
       <el-radio-group
         v-else
@@ -60,14 +59,11 @@
         <el-radio
           class="radio-sm"
           label="Год"/>
-        <el-radio
-          class="radio-sm"
-          label="Бессрочный"/>
       </el-radio-group>
 
     </el-form-item>
     <transition name="el-zoom-in-top">
-      <div v-show="(currentIncome.paymentPeriod !== 'Единовременный') && (currentIncome.paymentPeriod !== 'Бессрочный')">
+      <div v-show="currentIncome.paymentPeriod !== 'Единовременный'">
         <el-form-item
           label="Кол-во периодов"
           prop="frequency" >
@@ -75,9 +71,12 @@
             ref="frequencyRef"
             v-model="currentIncome.frequency"
             :min="0"
-            :disabled="false"
+            :disabled="currentIncome.isForever"
             controls-position="right"
             class="transition-box"/>
+          <el-checkbox
+            v-model="currentIncome.isForever"
+            style="margin-left: 20pt">Бессрочный</el-checkbox>
         </el-form-item>
       </div>
     </transition>
@@ -124,9 +123,10 @@ export default {
           amount: 1000,
           reason: '',
           paymentPeriod: '',
-          frequency: '',
+          frequency: 12,
           startDate: new Date(Date.now()),
-          isRepeatable: false
+          isRepeatable: true,
+          isForever: false
         }
       }
     }
@@ -187,9 +187,7 @@ export default {
         case 'Год':
           return 4
         case 'Единовременный':
-          return 5 // TODO Заменить на корректные значения
-        case 'Бессрочный':
-          return -1 // TODO Заменить на корректные значения
+          return 5
       }
     },
     submitForm(formName) {
@@ -207,11 +205,15 @@ export default {
           }
 
           this.currentIncome.isRepeatable =
-            this.currentIncome.paymentPeriod === 'Единовременный'
+            this.currentIncome.paymentPeriod !== 'Единовременный'
 
           this.currentIncome.paymentPeriod = this.translatePeriod(
             this.currentIncome.paymentPeriod
           )
+
+          if (this.currentIncome.isForever) {
+            this.currentIncome.frequency = -1
+          }
 
           if (this.currentIncome.isIncome)
             this.$store.dispatch(
@@ -235,8 +237,11 @@ export default {
             paymentPeriod: this.paymentPeriod,
             frequency: this.frequency,
             startDate: new Date(Date.now()),
-            isRepeatable: this.isRepeatable
+            isRepeatable: this.isRepeatable,
+            isForever: false
           }
+
+          this.$refs[formName].resetFields()
         } else {
           console.log('error submit!!')
           return false

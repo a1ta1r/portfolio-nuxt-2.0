@@ -94,7 +94,8 @@ export default {
             paymentPeriod: '',
             frequency: '',
             startDate: new Date(Date.now()),
-            isRepeatable: false
+            isRepeatable: false,
+            isForever: false
           }
         ]
       }
@@ -130,9 +131,7 @@ export default {
         case 4:
           return 'Год'
         case 5:
-          return 'Единовременный' // TODO Заменить на корректные значения
-        case -1:
-          return 'Бессрочный' // TODO Заменить на корректные значения
+          return 'Единовременный'
       }
     },
     handleClose(done) {
@@ -154,10 +153,10 @@ export default {
           break
         case 'Единовременный':
           this.currentEditableIncome.paymentPeriod = 5
-          break // TODO Заменить на корректные значения
-        case 'Бессрочный':
-          this.currentEditableIncome.paymentPeriod = -1
-          break // TODO Заменить на корректные значения
+          break
+      }
+      if (this.currentEditableIncome.isForever) {
+        this.currentEditableIncome.frequency = -1
       }
       this.$store.dispatch('client/update_user', {
         expenses: this.expenses,
@@ -175,6 +174,7 @@ export default {
     },
     editRow(scope) {
       this.currentEditableIncome = scope.row
+      console.dir(this.currentEditableIncome)
       switch (this.currentEditableIncome.paymentPeriod) {
         case 0:
           this.currentEditableIncome.paymentPeriod = 'День'
@@ -193,9 +193,6 @@ export default {
           break
         case 5: // TODO Заменить на корректные значения
           this.currentEditableIncome.paymentPeriod = 'Единовременный'
-          break
-        case -1: // TODO Заменить на корректные значения
-          this.currentEditableIncome.paymentPeriod = 'Бессрочный'
           break
       }
       this.editable = true
