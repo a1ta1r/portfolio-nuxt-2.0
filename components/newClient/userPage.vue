@@ -67,7 +67,9 @@
       <!--таблички с доходами и расходами на твое содержание-->
       <el-row>
         <el-row>
-          <el-card :body-style="{ textAlign: 'center' }">
+          <el-card
+            :class="{ low_balance : usersBalanse < 0 }"
+            :body-style="{ textAlign: 'center' }">
             <label class="form-control form-control-success">
               Баланс:
               <vue-numeric
@@ -235,6 +237,10 @@ export default {
 /*он используется на самом деле*/
 .el-row {
   margin-bottom: 12px;
+}
+
+.low_balance {
+  background-color: #e6a23c;
 }
 
 .bigAdvert {
