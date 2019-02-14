@@ -1,7 +1,7 @@
 <template>
   <el-menu
     :router="true"
-    :default-active="activeIndex"
+    :default-active="activeIndex2"
     mode="horizontal"
     @select="handleSelect">
     <el-menu-item
@@ -50,12 +50,13 @@ export default {
   computed: {
     ...mapState('client', ['username', 'role']),
     ...mapState('general', ['currentPage', 'isAuthorized']),
-    activeIndex: function() {
+    activeIndex2: function() {
       return this.currentPage
     }
   },
   methods: {
     handleSelect(key, keyPath) {
+      this.activeIndex = key
       // this.$router.push({ name: key })
       // this.$store.dispatch('general/set_route', key)
     },

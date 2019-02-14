@@ -1,25 +1,23 @@
 <template>
   <div>
-    <el-header>
-      <nav-menu/>
-    </el-header>
     <nuxt/>
   </div>
 </template>
 
 <script>
-import navMenu from '../components/newClient/navMenu'
 import { mapState } from 'vuex'
 
 export default {
-  components: { navMenu },
   computed: {
-    ...mapState('client', ['role'])
+    ...mapState('client', ['role', 'username', 'token'])
   },
-  beforeMount() {
+  mounted() {
     this.$store.dispatch('client/get_token').then(() => {
-      this.$store.dispatch('client/load_user')
-      if (this.token) this.$store.dispatch('general/set_authorized', true)
+      this.$store.dispatch('client/load_user').then(() => {
+        if (this.username) {
+          this.$store.dispatch('general/set_authorized', true)
+        }
+      })
     })
   }
 }
