@@ -98,12 +98,18 @@ export default {
   },
 
   update_user({ commit }, user) {
-    return this.$axios.put('user', user, {
-      headers: {
-        Authorization: this.state.client.token,
-        'content-type': 'application/json'
-      }
-    })
+    return this.$axios
+      .put('user', user, {
+        headers: {
+          Authorization: this.state.client.token,
+          'content-type': 'application/json'
+        }
+      })
+      .then(result => {
+        commit('SET_USER', result.data.user)
+        commit('SET_INCOMES', result.data.user.incomes)
+        commit('SET_EXPENSES', result.data.user.expenses)
+      })
   },
 
   set_username({ commit }, username) {
