@@ -11,16 +11,6 @@
       :xl="8">
       <el-row class="card-center">
         <el-card shadow="hover">
-          <div
-            v-if="invalidCredentials"
-            class="alert alert-danger">
-            <el-button
-              class="close"
-              data-dismiss="alert"
-              aria-hidden="true"
-              @click="hideAlert">&times;</el-button>
-            <strong>Ошибка</strong> неверный логин или пароль
-          </div>
           <h1 align="center">Мир рекламы</h1>
           <el-form
             ref="signInForm"
@@ -68,7 +58,6 @@ export default {
         username: '',
         password: ''
       },
-      invalidCredentials: false,
       rules: {
         username: [
           {
@@ -106,12 +95,19 @@ export default {
         if (valid) {
           this.sign_in(this.user).then(result => {
             if (result.data.code < 300) {
+              this.$notify.success({
+                title: 'Вход выполнен',
+                message: 'Вы вошли в кредитный портфель'
+              })
               if (this.username === 'admin' || this.role > 0)
                 this.$router.push({ name: 'secure-admin' })
               else this.$router.push({ name: 'client' })
               this.$store.dispatch('general/set_authorized', true)
             } else {
-              this.invalidCredentials = true
+              this.$notify.error({
+                title: 'Ошибка',
+                message: 'Неправильное имя пользователя или пароль'
+              })
             }
           })
         } else {
@@ -119,9 +115,6 @@ export default {
           return false
         }
       })
-    },
-    hideAlert: function() {
-      this.invalidCredentials = false
     },
     registr: function() {
       this.$router.push({ name: 'signUp' })

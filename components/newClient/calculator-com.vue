@@ -288,7 +288,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['currentPage', 'expenses']),
+    ...mapState('client', ['username', 'currentPage', 'expenses']),
     currentPayments: function() {
       let start =
         (this.calcForm.pagination.page - 1) * this.calcForm.pagination.limit
@@ -356,37 +356,56 @@ export default {
       this.$refs[formName].resetFields()
     },
     saveCredit() {
-      if (this.calcForm.paymentType === 'Аннуитетный') {
-        let expense = {
-          reason: this.calcForm.title,
-          amount: this.calcForm.paymentPlan.paymentList[0].paymentAmount,
-          startDate: new Date(this.calcForm.startDate),
-          isRepeatable: true,
-          frequency: this.calcForm.paymentPlan.paymentList.Count,
-          paymentPeriod: 2,
-          recurrentCount: 0
-        }
-        this.$store.dispatch('client/add_expense', Object.assign({}, expense))
-      } else {
-        for (let i = 0; i < this.calcForm.paymentPlan.paymentList.length; i++) {
-          console.dir(i)
+      if (this.username) {
+        if (this.calcForm.paymentType === 'Аннуитетный') {
           let expense = {
             reason: this.calcForm.title,
-            amount: this.calcForm.paymentPlan.paymentList[i].paymentAmount,
-            startDate: this.calcForm.paymentPlan.paymentList[i].paymentDate,
-            isRepeatable: false,
-            frequency: 1,
+            amount: this.calcForm.paymentPlan.paymentList[0].paymentAmount,
+            startDate: new Date(this.calcForm.startDate),
+            isRepeatable: true,
+            frequency: this.calcForm.paymentPlan.paymentList.Count,
             paymentPeriod: 2,
             recurrentCount: 0
           }
           this.$store.dispatch('client/add_expense', Object.assign({}, expense))
+        } else {
+          for (
+            let i = 0;
+            i < this.calcForm.paymentPlan.paymentList.length;
+            i++
+          ) {
+            console.dir(i)
+            let expense = {
+              reason: this.calcForm.title,
+              amount: this.calcForm.paymentPlan.paymentList[i].paymentAmount,
+              startDate: this.calcForm.paymentPlan.paymentList[i].paymentDate,
+              isRepeatable: false,
+              frequency: 1,
+              paymentPeriod: 2,
+              recurrentCount: 0
+            }
+            this.$store.dispatch(
+              'client/add_expense',
+              Object.assign({}, expense)
+            )
+          }
         }
+        let user = {
+          expenses: this.expenses
+        }
+        this.$store.dispatch('client/update_user', user)
+        this.$router.push({ name: 'client' })
+        this.$notify.success({
+          title: 'Кредит добавлен',
+          message: 'Вы добавили новый кредит'
+        })
+      } else {
+        this.$notify.error({
+          title: 'Ошибка',
+          message: 'Вы не выполнили вход'
+        })
+        return false
       }
-      let user = {
-        expenses: this.expenses
-      }
-      this.$store.dispatch('client/update_user', user)
-      this.$router.push({ name: 'client' })
     }
   }
 }

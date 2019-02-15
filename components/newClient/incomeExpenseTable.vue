@@ -26,7 +26,7 @@
         sortable/>
       <el-table-column
         :formatter="dateFormatter"
-        label="Дата начала"
+        label="Дата"
         prop="startDate"
         sortable/>
       <el-table-column
@@ -165,6 +165,13 @@ export default {
         expenses: this.expenses,
         incomes: this.incomes
       })
+
+      // TODO Сейчас тут не узнать, доход или расход изменён
+      this.$notify.success({
+        title: 'Данные изменены',
+        message: 'Вы изменили данные'
+      })
+
       done()
     },
     removeItem(item) {
@@ -173,11 +180,21 @@ export default {
       this.currentIncomes.splice(index, 1)
       if (this.isIncome) {
         this.$store.dispatch('client/remove_income', item.row.id)
-      } else this.$store.dispatch('client/remove_expense', item.row.id)
+        this.$notify.success({
+          title: 'Доход удалён',
+          message: 'Вы удалили доход'
+        })
+      } else {
+        this.$store.dispatch('client/remove_expense', item.row.id)
+        this.$notify.success({
+          title: 'Расход удалён',
+          message: 'Вы удалили расход'
+        })
+      }
     },
     editRow(scope) {
+      console.dir(scope)
       this.currentEditableIncome = scope.row
-      console.dir(this.currentEditableIncome)
       switch (this.currentEditableIncome.paymentPeriod) {
         case 0:
           this.currentEditableIncome.paymentPeriod = 'День'
@@ -194,7 +211,7 @@ export default {
         case 4:
           this.currentEditableIncome.paymentPeriod = 'Год'
           break
-        case 5: // TODO Заменить на корректные значения
+        case 5:
           this.currentEditableIncome.paymentPeriod = 'Единовременный'
           break
       }

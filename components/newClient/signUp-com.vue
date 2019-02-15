@@ -67,7 +67,6 @@ export default {
         username: '',
         password: ''
       },
-      invalidCredentials: false,
       rules: {
         email: [
           {
@@ -116,9 +115,16 @@ export default {
         if (valid) {
           this.sign_up(this.user).then(result => {
             if (result === true) {
+              this.$notify.success({
+                title: 'Успешная регистрация',
+                message: 'Вы зарегистрировались в кредитном портфеле'
+              })
               this.$router.push({ name: 'index' })
             } else {
-              this.invalidCredentials = true
+              this.$notify.error({
+                title: 'Ошибка',
+                message: 'Пользователь уже зарегистрирован'
+              })
             }
           })
         } else {

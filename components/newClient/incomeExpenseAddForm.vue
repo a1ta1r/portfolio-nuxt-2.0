@@ -215,16 +215,25 @@ export default {
             this.currentIncome.frequency = -1
           }
 
-          if (this.currentIncome.isIncome)
+          if (this.currentIncome.isIncome) {
             this.$store.dispatch(
               'client/add_income',
               Object.assign({}, this.currentIncome)
             )
-          else
+            this.$notify.success({
+              title: 'Доход добавлен',
+              message: 'Вы добавили новый доход'
+            })
+          } else {
             this.$store.dispatch(
               'client/add_expense',
               Object.assign({}, this.currentIncome)
             )
+            this.$notify.success({
+              title: 'Расход добавлен',
+              message: 'Вы добавили новый расход'
+            })
+          }
           let user = {
             incomes: this.incomes,
             expenses: this.expenses
