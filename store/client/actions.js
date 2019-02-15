@@ -73,7 +73,7 @@ export default {
           })
           let json = JSON.parse(atob(response.data.token.split('.')[1]))
           commit('SET_ROLE', json.role)
-          if (response.data.username === 'admin' || response.data.role > 0)
+          if (user.username === 'admin' || json.role > 0)
             this.$router.push({ name: 'secure-admin' })
           else this.$router.push({ name: 'client' })
           return response

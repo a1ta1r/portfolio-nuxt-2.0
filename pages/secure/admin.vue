@@ -14,8 +14,24 @@
     <!--</el-menu>-->
     <!--</el-aside>-->
 
+    <el-header>
+      <el-menu
+        mode="horizontal"
+        default-active="admin">
+        <el-menu-item
+          index="admin">
+          Коротун Василиса Павловна
+        </el-menu-item>
+        <el-menu-item
+          :route="{ name: 'signIn' }"
+          index="logOut"
+          @click="log_out">
+          Выход
+        </el-menu-item>
+      </el-menu>
+    </el-header>
+
     <el-container>
-      <el-card>Коротун Василиса Павловна</el-card>
       <el-main>
         <el-tabs
           v-model="activeName"
@@ -58,6 +74,13 @@ export default {
   },
   mounted() {
     this.$store.dispatch('general/set_route', 'admin')
+  },
+  methods: {
+    log_out: function() {
+      this.$store.dispatch('client/log_out')
+      this.$store.dispatch('general/set_authorized', false)
+      this.$router.push({ name: 'signIn' })
+    }
   }
 }
 </script>
