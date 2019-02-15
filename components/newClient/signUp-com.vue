@@ -44,6 +44,7 @@
             </el-form-item>
             <el-form-item>
               <el-button
+                :loading="processing"
                 type="primary"
                 @click="signin('signInForm')">Регистрация</el-button>
               <el-button @click="gosignin" >Уже есть аккаунт?</el-button>
@@ -56,7 +57,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'SignUpCom',
@@ -103,6 +104,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('general', ['processing']),
     labelPosition: function() {
       if (this.$mq === 'sm') return 'top'
       else return 'right'
@@ -113,13 +115,14 @@ export default {
     signin(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          this.$store.dispatch('general/set_processing', true)
           this.sign_up(this.user).then(result => {
+            this.$store.dispatch('general/set_processing', false)
             if (result === true) {
               this.$notify.success({
                 title: 'Успешная регистрация',
                 message: 'Вы зарегистрировались в кредитном портфеле'
               })
-              this.$router.push({ name: 'index' })
             } else {
               this.$notify.error({
                 title: 'Ошибка',
@@ -128,6 +131,7 @@ export default {
             }
           })
         } else {
+          this.$store.dispatch('general/set_processing', false)
           console.log('error submit!!')
           return false
         }

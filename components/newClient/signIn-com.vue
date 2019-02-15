@@ -36,6 +36,7 @@
             </el-form-item>
             <el-form-item>
               <el-button
+                :loading="processing"
                 type="primary"
                 @click="signin('signInForm')">Вход</el-button>
               <el-button @click="registr" >Регистрация?</el-button>
@@ -83,6 +84,7 @@ export default {
   },
   computed: {
     ...mapState('client', ['username', 'password', 'role', 'currentPage']),
+    ...mapState('general', ['processing']),
     labelPosition: function() {
       if (this.$mq === 'sm') return 'top'
       else return 'right'
@@ -93,17 +95,17 @@ export default {
     signin(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          this.$store.dispatch('general/set_processing', true)
           this.sign_in(this.user).then(result => {
             if (result.data.code < 300) {
+              this.$store.dispatch('general/set_processing', false)
               this.$notify.success({
                 title: 'Вход выполнен',
                 message: 'Вы вошли в кредитный портфель'
               })
-              if (this.username === 'admin' || this.role > 0)
-                this.$router.push({ name: 'secure-admin' })
-              else this.$router.push({ name: 'client' })
               this.$store.dispatch('general/set_authorized', true)
             } else {
+              this.$store.dispatch('general/set_processing', false)
               this.$notify.error({
                 title: 'Ошибка',
                 message: 'Неправильное имя пользователя или пароль'
@@ -111,6 +113,7 @@ export default {
             }
           })
         } else {
+          this.$store.dispatch('general/set_processing', false)
           console.log('error submit!!')
           return false
         }

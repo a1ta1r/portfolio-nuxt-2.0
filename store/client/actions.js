@@ -73,6 +73,9 @@ export default {
           })
           let json = JSON.parse(atob(response.data.token.split('.')[1]))
           commit('SET_ROLE', json.role)
+          if (response.data.username === 'admin' || response.data.role > 0)
+            this.$router.push({ name: 'secure-admin' })
+          else this.$router.push({ name: 'client' })
           return response
         }
         return false
@@ -82,7 +85,7 @@ export default {
       })
   },
 
-  sign_up({ commit }, user) {
+  sign_up({ commit, dispatch }, user) {
     return this.$axios
       .post('signup', {
         email: user.email,
@@ -90,6 +93,7 @@ export default {
         password: user.password
       })
       .then(response => {
+        dispatch('sign_in', user)
         return true
       })
       .catch(error => {
