@@ -12,6 +12,7 @@ export default class Calculator {
 
   static calculateEqual(paymentPlan) {
     let date = paymentPlan.startDate
+    date.setMonth(paymentPlan.startDate.getMonth() - 1) // костыль чтобы в цыкле первая дата прибавилась нормально
 
     let month = paymentPlan.numberOfMonths
     let percent = paymentPlan.interestRate / 12 / 100
@@ -40,6 +41,7 @@ export default class Calculator {
 
   static calculateDifferentiated(paymentPlan) {
     let date = paymentPlan.startDate
+    date.setMonth(paymentPlan.startDate.getMonth() - 1) // костыль чтобы в цыкле первая дата прибавилась нормально
 
     let baseFee = paymentPlan.paymentAmount / paymentPlan.numberOfMonths
 
