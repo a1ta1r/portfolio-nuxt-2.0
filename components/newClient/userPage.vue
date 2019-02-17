@@ -265,7 +265,13 @@ export default {
       }
       let sum = 0
       for (let i = 0; i < incomes.length; i++) {
-        sum += incomes[i].amount
+        if (incomes[i].dates.length > 0)
+          sum +=
+            incomes[i].amount *
+            incomes[i].dates.filter(
+              value => value.month() === this.currentMonth
+            ).length
+        else sum += incomes[i].amount
       }
       return sum
     },
@@ -276,7 +282,13 @@ export default {
       }
       let sum = 0
       for (let i = 0; i < expenses.length; i++) {
-        sum += expenses[i].amount
+        if (expenses[i].dates.length > 0)
+          sum +=
+            expenses[i].amount *
+            expenses[i].dates.filter(
+              value => value.month() === this.currentMonth
+            ).length
+        else sum += expenses[i].amount
       }
       return sum
     },

@@ -135,7 +135,6 @@ export default {
     }
   },
   methods: {
-    multiple_dates(cellValue) {},
     dates_filter(value) {
       return value.filter(value => value.month() === this.currentMonth)
     },
