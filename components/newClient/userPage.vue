@@ -263,7 +263,6 @@ export default {
       if (!incomes) {
         return 0
       }
-      console.log(incomes)
       let sum = 0
       for (let i = 0; i < incomes.length; i++) {
         sum += incomes[i].amount
@@ -367,7 +366,6 @@ export default {
         item.recurrentCount
       )
       item.dates = dates
-      console.log(item)
       return item
     },
     load_agenda() {

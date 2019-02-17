@@ -28,16 +28,17 @@ export default {
     ...mapState('client', ['paymentPlan']),
     loadAgenda: function() {
       let result = []
+      console.log(this.paymentPlan)
       for (let i = 0; i < this.paymentPlan.count; i++) {
         if (this.paymentPlan.elements[i].elementType === 'Income') {
           result.push({
             allDay: true,
             title:
               'Доход: ' +
-              this.paymentPlan.elements[i].amount.toFixed(2) +
+              this.paymentPlan.elements[i].paymentAmount.toFixed(2) +
               ' руб.\n Источник: ' +
               this.paymentPlan.elements[i].title,
-            start: this.paymentPlan.elements[i].startDate,
+            start: this.paymentPlan.elements[i].paymentDate,
             backgroundColor: '#409eff'
           })
         } else {
@@ -45,10 +46,10 @@ export default {
             allDay: true,
             title:
               'Расход: ' +
-              this.paymentPlan.elements[i].amount.toFixed(2) +
+              this.paymentPlan.elements[i].paymentAmount.toFixed(2) +
               ' руб.\n Источник: ' +
               this.paymentPlan.elements[i].title,
-            start: this.paymentPlan.elements[i].startDate,
+            start: this.paymentPlan.elements[i].paymentDate,
             backgroundColor: '#f56c6c'
           })
         }
