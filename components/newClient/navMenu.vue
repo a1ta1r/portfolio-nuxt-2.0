@@ -22,6 +22,12 @@
       Личный кабинет
     </el-menu-item>
     <el-menu-item
+      v-if="isAuthorized"
+      :route="{ name: 'agenda' }"
+      index="agenda">
+      Календарь
+    </el-menu-item>
+    <el-menu-item
       v-if="!isAuthorized"
       :route="{ name: 'signIn' }"
       index="signIn">
