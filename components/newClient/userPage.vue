@@ -254,7 +254,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['incomes', 'expenses', 'username']),
+    ...mapState('client', ['incomes', 'expenses', 'username', 'paymentPlan']),
     totalIncome: function() {
       let incomes = this.financeByMonth(true)
       if (!incomes) {
