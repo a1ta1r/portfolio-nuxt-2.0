@@ -33,6 +33,15 @@ export default {
       })
   },
   load_agenda({ commit }, range) {
+    if (!range) {
+      range = []
+      range[0] = this.$moment().date(1)
+      range[1] = range[0]
+        .clone()
+        .add(1, 'M')
+        .toISOString()
+      range[0] = range[0].toISOString()
+    }
     const token = this.state.client.token
     return this.$axios
       .get(`agenda?from=${range[0]}&to=${range[1]}`, {
@@ -43,7 +52,6 @@ export default {
       })
       .then(response => {
         if (response.status === 200) {
-          console.log(response.data)
           commit('SET_PAYMENT_PLAN', response.data)
         }
       })

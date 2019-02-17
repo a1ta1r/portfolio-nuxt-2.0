@@ -163,7 +163,7 @@
             <el-row>
               <el-card>
                 <income-expense-table
-                  :current-incomes="financeByMonth(incomes)"
+                  :current-incomes="financeByMonth(true)"
                   :is-income="true"/>
               </el-card>
             </el-row>
@@ -192,7 +192,7 @@
             <el-row>
               <el-card>
                 <income-expense-table
-                  :current-incomes="financeByMonth(expenses)"
+                  :current-incomes="financeByMonth(false)"
                   :is-income="false"/>
               </el-card>
             </el-row>
@@ -255,10 +255,11 @@ export default {
   computed: {
     ...mapState('client', ['incomes', 'expenses', 'username', 'paymentPlan']),
     totalIncome: function() {
-      let incomes = this.financeByMonth(this.incomes)
+      let incomes = this.financeByMonth(true)
       if (!incomes) {
         return 0
       }
+      console.log(incomes)
       let sum = 0
       for (let i = 0; i < incomes.length; i++) {
         sum += incomes[i].amount
@@ -266,7 +267,7 @@ export default {
       return sum
     },
     totalExpense: function() {
-      let expenses = this.financeByMonth(this.expenses)
+      let expenses = this.financeByMonth(false)
       if (!expenses) {
         return 0
       }
@@ -322,13 +323,22 @@ export default {
   mounted() {
     this.$store.dispatch('general/set_route', 'client')
   },
-  beforeCreate() {
-    this.$store.dispatch('client/load_user')
-    // this.$store.dispatch('client/load_incomes')
-    // this.$store.dispatch('client/load_expenses')
-  },
   methods: {
-    financeByMonth: function(finance) {
+    financeByMonth: function(income = true) {
+      let typeName = income ? 'Income' : 'Expense'
+      if (this.paymentPlan.length === 0) return []
+      return this.paymentPlan.elements
+        .filter(value => value.elementType === typeName)
+        .map(value => {
+          value.amount = value.paymentAmount
+          value.startDate = value.paymentDate
+          value.reason = value.title
+          return value
+        })
+    },
+    financeByMonth1: function(finance) {
+      if (finance) finance = this.incomes
+      else finance = this.expenses
       return finance.filter(
         value => new Date(value.startDate).getMonth() === this.currentMonth
       )
