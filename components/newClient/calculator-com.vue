@@ -367,9 +367,9 @@ export default {
             amount: this.calcForm.paymentPlan.paymentList[0].paymentAmount,
             startDate: new Date(this.calcForm.startDate),
             isRepeatable: true,
-            frequency: this.calcForm.paymentPlan.paymentList.Count,
+            frequency: 1,
             paymentPeriod: 2,
-            recurrentCount: 0
+            recurrentCount: this.calcForm.paymentPlan.paymentList.Count
           }
           this.$store.dispatch('client/add_expense', Object.assign({}, expense))
         } else {
@@ -385,7 +385,7 @@ export default {
               isRepeatable: false,
               frequency: 1,
               paymentPeriod: 2,
-              recurrentCount: 0
+              recurrentCount: 1
             }
             this.$store.dispatch(
               'client/add_expense',

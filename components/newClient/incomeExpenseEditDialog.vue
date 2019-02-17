@@ -52,10 +52,10 @@
       <div v-show="currentIncome.paymentPeriod !== 'Единовременный'">
         <el-form-item
           label="Кол-во периодов"
-          prop="frequency" >
+          prop="recurrentCount" >
           <el-input-number
-            ref="frequencyRef"
-            v-model="currentIncome.frequency"
+            ref="recurrentCountRef"
+            v-model="currentIncome.recurrentCount"
             :disabled="isForever"
             controls-position="right"
             class="transition-box"/>
@@ -92,7 +92,8 @@ export default {
           amount: 1000,
           reason: '',
           paymentPeriod: '',
-          frequency: 0,
+          frequency: 1,
+          recurrentCount: 12,
           startDate: new Date(Date.now()),
           isRepeatable: false
         }
@@ -101,7 +102,7 @@ export default {
   },
   data() {
     return {
-      tempFrequency: 0,
+      tempRecurrentCount: 0,
       pickerOptions: {
         firstDayOfWeek: 1
       }
@@ -109,15 +110,15 @@ export default {
   },
   computed: {
     isForever: function() {
-      return this.currentIncome.frequency < 0
+      return this.currentIncome.recurrentCount < 0
     }
   },
   methods: {
     checkClick: function(value) {
       if (value) {
-        this.tempFrequency = this.currentIncome.frequency
-        this.currentIncome.frequency = -1
-      } else this.currentIncome.frequency = this.tempFrequency
+        this.tempRecurrentCount = this.currentIncome.recurrentCount
+        this.currentIncome.recurrentCount = -1
+      } else this.currentIncome.recurrentCount = this.tempRecurrentCount
     }
   }
 }

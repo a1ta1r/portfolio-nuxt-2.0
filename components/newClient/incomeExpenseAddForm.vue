@@ -66,10 +66,10 @@
       <div v-show="currentIncome.paymentPeriod !== 'Единовременный'">
         <el-form-item
           label="Кол-во периодов"
-          prop="frequency" >
+          prop="recurrentCount" >
           <el-input-number
-            ref="frequencyRef"
-            v-model="currentIncome.frequency"
+            ref="recurrentCountRef"
+            v-model="currentIncome.recurrentCount"
             :min="0"
             :disabled="currentIncome.isForever"
             controls-position="right"
@@ -124,7 +124,8 @@ export default {
           amount: 1000,
           reason: '',
           paymentPeriod: '',
-          frequency: 12,
+          frequency: 1,
+          recurrentCount: 12,
           startDate: new Date(Date.now()),
           isRepeatable: true,
           isForever: false
@@ -150,7 +151,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        frequency: [
+        recurrentCount: [
           {
             required: false,
             message: 'Требуется число',
@@ -206,10 +207,10 @@ export default {
           )
 
           if (this.currentIncomeLocal.paymentPeriod === 'Единовременный') {
-            this.currentIncomeLocal.frequency = 0
+            this.currentIncomeLocal.recurrentCount = 0
           } else {
-            this.currentIncomeLocal.frequency = parseInt(
-              this.currentIncomeLocal.frequency,
+            this.currentIncomeLocal.recurrentCount = parseInt(
+              this.currentIncomeLocal.recurrentCount,
               10
             )
           }
@@ -222,7 +223,7 @@ export default {
           )
 
           if (this.currentIncomeLocal.isForever) {
-            this.currentIncomeLocal.frequency = -1
+            this.currentIncomeLocal.recurrentCount = -1
           }
 
           if (this.currentIncomeLocal.isIncome) {
@@ -254,7 +255,8 @@ export default {
             amount: this.amount,
             reason: this.reason,
             paymentPeriod: this.paymentPeriod,
-            frequency: this.frequency,
+            recurrentCount: this.recurrentCount,
+            frequency: 1,
             startDate: new Date(Date.now()),
             isRepeatable: this.isRepeatable,
             isForever: false

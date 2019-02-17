@@ -229,6 +229,7 @@ export default {
         amount: '1000',
         reason: '',
         paymentPeriod: 'Месяц',
+        recurrentCount: 12,
         frequency: '12',
         startDate: new Date(Date.now()),
         isRepeatable: false,
@@ -326,7 +327,7 @@ export default {
   methods: {
     financeByMonth: function(income = true) {
       let typeName = income ? 'Income' : 'Expense'
-      if (this.paymentPlan.length === 0) return []
+      if (!this.paymentPlan.elements || this.paymentPlan.length === 0) return []
       return this.paymentPlan.elements
         .filter(value => value.elementType === typeName)
         .map(value => {
