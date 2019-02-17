@@ -79,7 +79,6 @@
                   <el-button
                     type="success"
                     icon="el-icon-time"
-                    plain
                     round
                     @click="currentMonth = new Date().getMonth()">
                     {{ (currentMonth === new Date().getMonth()? 'Сейчас ' : 'Вернуть ') + (months[new Date().getMonth()].toLowerCase()) }}
@@ -123,20 +122,19 @@
                   :content="balanceMessage"
                   placement="top-start"
                   trigger="hover"/>
-                <el-row>
-                  <el-tag
-                    v-popover:popover
-                    :type="balanceType">
-                    {{ 'Баланс на ' + (months[currentMonth].toLowerCase()) }}
-                    <vue-numeric
-                      :value="usersBalance"
-                      :read-only="true"
-                      :precision="2"
-                      currency="₽"
-                      separator="space"
-                      decimal-separator="."/>
-                  </el-tag>
-                </el-row>
+                <el-button
+                  v-popover:popover
+                  :type="balanceType"
+                  round>
+                  {{ 'Баланс на ' + (months[currentMonth].toLowerCase()) }}
+                  <vue-numeric
+                    :value="usersBalance"
+                    :read-only="true"
+                    :precision="2"
+                    currency="₽"
+                    separator="space"
+                    decimal-separator="."/>
+                </el-button>
               </el-col>
             </el-row>
           </el-card>
