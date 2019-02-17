@@ -333,16 +333,6 @@ export default {
         value => new Date(value.startDate).getMonth() === this.currentMonth
       )
     },
-    deleteIncome(incomeObj) {
-      let index = this.user.incomes.indexOf(incomeObj)
-      this.user.incomes.splice(index, 1)
-      this.user.update()
-    },
-    deleteExpense(expenseObj) {
-      let index = this.user.expenses.indexOf(expenseObj)
-      this.user.expenses.splice(index, 1)
-      this.user.update()
-    },
     changeMonth(forward = true) {
       if (forward) {
         if (this.currentMonth === 11) this.currentMonth = 0

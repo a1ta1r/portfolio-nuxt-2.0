@@ -194,6 +194,8 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          this.currentIncomeLocal = this.currentIncome
+
           this.currentIncomeLocal.amount = parseFloat(
             this.currentIncomeLocal.amount,
             10
