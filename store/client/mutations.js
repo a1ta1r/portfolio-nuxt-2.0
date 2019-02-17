@@ -52,5 +52,8 @@ export default {
   },
   REMOVE_EXPENSE(state, expense) {
     state.expenses.splice(state.expenses.indexOf(expense), 1)
+  },
+  SET_PAYMENT_PLAN(state, plan) {
+    state.paymentPlan = plan
   }
 }

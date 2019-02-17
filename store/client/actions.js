@@ -32,6 +32,22 @@ export default {
         // this.$router.push({ name: 'signIn' }) // TODO: Может можно сделать, чтоб не успевало отобразить страницу
       })
   },
+  load_agenda({ commit }, range) {
+    const token = this.state.client.token
+    return this.$axios
+      .get(`agenda?from=${range[0]}&to=${range[1]}`, {
+        headers: {
+          Authorization: token,
+          'content-type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          console.log(response.data)
+          commit('SET_PAYMENT_PLAN', response.data)
+        }
+      })
+  },
   load_incomes({ commit }) {
     const token = this.state.client.token
     return this.$axios

@@ -253,7 +253,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['incomes', 'expenses', 'username', 'currentPage']),
+    ...mapState('client', ['incomes', 'expenses', 'username', 'paymentPlan']),
     totalIncome: function() {
       let incomes = this.financeByMonth(this.incomes)
       if (!incomes) {
@@ -333,6 +333,16 @@ export default {
         value => new Date(value.startDate).getMonth() === this.currentMonth
       )
     },
+    load_agenda() {
+      let from = this.$moment()
+        .month(this.currentMonth)
+        .date(1)
+      let to = from.clone().add(1, 'M')
+      this.$store.dispatch('client/load_agenda', [
+        from.toISOString(),
+        to.toISOString()
+      ])
+    },
     changeMonth(forward = true) {
       if (forward) {
         if (this.currentMonth === 11) this.currentMonth = 0
@@ -341,6 +351,7 @@ export default {
         if (this.currentMonth === 0) this.currentMonth = 11
         else this.currentMonth--
       }
+      this.load_agenda()
     }
   }
 }
