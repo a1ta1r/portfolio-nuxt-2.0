@@ -32,6 +32,7 @@
           <span v-popover:dates_popover >
             {{ dateFormatter(scope.row) }}
             <el-badge
+              v-if="dates_filter(scope.row.dates).length > 1"
               slot="reference"
               :value="dates_filter(scope.row.dates).length"
               class="mark"/></span>

@@ -369,7 +369,7 @@ export default {
             isRepeatable: true,
             frequency: 1,
             paymentPeriod: 2,
-            recurrentCount: this.calcForm.paymentPlan.paymentList.Count
+            recurrentCount: this.calcForm.paymentPlan.paymentList.length
           }
           this.$store.dispatch('client/add_expense', Object.assign({}, expense))
         } else {
