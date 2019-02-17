@@ -51,6 +51,7 @@ export default {
       date_from: 0,
       date_to: 0,
       quickDateRanges: {
+        firstDayOfWeek: 1,
         shortcuts: [
           {
             text: 'Неделя',

@@ -85,6 +85,7 @@
                 prop="startDate">
                 <el-date-picker
                   v-model="calcForm.startDate"
+                  :picker-options="pickerOptions"
                   type="date"
                   format="dd-MM-yyyy"
                   class="flex-item"
@@ -284,6 +285,9 @@ export default {
             trigger: 'blur'
           }
         ]
+      },
+      pickerOptions: {
+        firstDayOfWeek: 1
       }
     }
   },

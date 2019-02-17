@@ -86,6 +86,7 @@
       prop="startDate">
       <el-date-picker
         v-model="currentIncome.startDate"
+        :picker-options="pickerOptions"
         type="date"
         format="dd-MM-yyyy"
         class="flex-item"/>
@@ -164,6 +165,9 @@ export default {
             trigger: 'change'
           }
         ]
+      },
+      pickerOptions: {
+        firstDayOfWeek: 1
       }
     }
   },

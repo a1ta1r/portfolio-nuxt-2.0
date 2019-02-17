@@ -8,15 +8,15 @@
       unlink-panels
       start-placeholder="Дата начала"
       end-placeholder="Дата окончания"/>
-    <finance-chart 
+    <finance-chart
       :chart-data="currentDataset"
       :options="options"
-      :height="100" 
+      :height="100"
       class="Chart"/>
 
     <el-card class="box-card">
-      <div 
-        slot="header" 
+      <div
+        slot="header"
         class="clearfix">
         <span>Финансовая информация</span>
       </div>
@@ -96,6 +96,7 @@ export default {
       },
       dateRange: '',
       quickDateRanges: {
+        firstDayOfWeek: 1,
         shortcuts: [
           {
             text: 'Неделя',
