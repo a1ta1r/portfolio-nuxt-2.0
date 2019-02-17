@@ -8,7 +8,7 @@
           :sm="2"
           :md="3"
           :lg="5"
-          :xl="8">
+          :xl="7">
           <el-card
             :body-style="{ padding: '5px' }">
             <el-carousel
@@ -29,7 +29,7 @@
           :sm="20"
           :md="18"
           :lg="14"
-          :xl="8">
+          :xl="10">
           <el-card>
             <el-collapse @change="moreAdvertisement = !moreAdvertisement">
               <el-collapse-item>
@@ -46,7 +46,7 @@
           :sm="2"
           :md="3"
           :lg="5"
-          :xl="8">
+          :xl="7">
           <el-card
             :body-style="{ padding: '5px' }">
             <el-carousel
@@ -230,7 +230,7 @@ export default {
         reason: '',
         paymentPeriod: 'Месяц',
         recurrentCount: 12,
-        frequency: '12',
+        frequency: 1,
         startDate: new Date(Date.now()),
         isRepeatable: false,
         isForever: false
@@ -254,7 +254,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['incomes', 'expenses', 'username', 'paymentPlan']),
+    ...mapState('client', ['incomes', 'expenses', 'username']),
     totalIncome: function() {
       let incomes = this.financeByMonth(true)
       if (!incomes) {
@@ -340,6 +340,7 @@ export default {
     financeByMonth1: function(finance) {
       if (finance) finance = this.incomes
       else finance = this.expenses
+      console.log(finance)
       return finance.filter(
         value => new Date(value.startDate).getMonth() === this.currentMonth
       )
