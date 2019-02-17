@@ -360,8 +360,9 @@ export default {
         })
         .filter(
           value =>
-            this.currentMonth >= value.start_date.month() &&
-            this.currentMonth < value.end_date.month()
+            (this.currentMonth >= value.start_date.month() &&
+              this.currentMonth < value.end_date.month()) ||
+            this.currentMonth === value.start_date.month()
         )
     },
     calculate_dates: function(item) {

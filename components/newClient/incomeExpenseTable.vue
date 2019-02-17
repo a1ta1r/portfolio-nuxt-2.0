@@ -26,24 +26,27 @@
         sortable/>
       <el-table-column
         label="Дата"
-        prop="startDate"
-        sortable>
+        prop="startDate">
         <template slot-scope="scope">
-          <span v-popover:dates_popover >
-            {{ dateFormatter(scope.row) }}
-            <el-badge
-              slot="reference"
-              :value="dates_filter(scope.row.dates).length"
-              :hidden="dates_filter(scope.row.dates).length < 2"
-              class="mark"/></span>
           <el-popover
-            ref="dates_popover"
-            placement="right"
+            v-if="dates_filter(scope.row.dates).length > 1"
+            trigger="hover"
             width="280"
-            trigger="hover">
+            placement="right">
             <little-dates-table
               :grid-data="dates_filter(scope.row.dates)"/>
+            <div
+              slot="reference"
+              class="name-wrapper">
+              {{ dateFormatter(scope.row) }}
+              <el-badge
+                slot="reference"
+                :value="dates_filter(scope.row.dates).length"
+                :hidden="dates_filter(scope.row.dates).length < 2"
+                class="item"/>
+            </div>
           </el-popover>
+          <div v-else>{{ dateFormatter(scope.row) }}</div>
         </template>
       </el-table-column>
       <el-table-column
