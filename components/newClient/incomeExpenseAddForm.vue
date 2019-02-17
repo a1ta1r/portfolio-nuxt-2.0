@@ -133,6 +133,7 @@ export default {
   },
   data() {
     return {
+      currentIncomeLocal: this.currentIncome,
       rules: {
         reason: [
           {
@@ -193,32 +194,35 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.currentIncome.amount = parseFloat(this.currentIncome.amount, 10)
+          this.currentIncomeLocal.amount = parseFloat(
+            this.currentIncomeLocal.amount,
+            10
+          )
 
-          if (this.currentIncome.paymentPeriod === 'Единовременный') {
-            this.currentIncome.frequency = 0
+          if (this.currentIncomeLocal.paymentPeriod === 'Единовременный') {
+            this.currentIncomeLocal.frequency = 0
           } else {
-            this.currentIncome.frequency = parseInt(
-              this.currentIncome.frequency,
+            this.currentIncomeLocal.frequency = parseInt(
+              this.currentIncomeLocal.frequency,
               10
             )
           }
 
-          this.currentIncome.isRepeatable =
-            this.currentIncome.paymentPeriod !== 'Единовременный'
+          this.currentIncomeLocal.isRepeatable =
+            this.currentIncomeLocal.paymentPeriod !== 'Единовременный'
 
-          this.currentIncome.paymentPeriod = this.translatePeriod(
-            this.currentIncome.paymentPeriod
+          this.currentIncomeLocal.paymentPeriod = this.translatePeriod(
+            this.currentIncomeLocal.paymentPeriod
           )
 
-          if (this.currentIncome.isForever) {
-            this.currentIncome.frequency = -1
+          if (this.currentIncomeLocal.isForever) {
+            this.currentIncomeLocal.frequency = -1
           }
 
-          if (this.currentIncome.isIncome) {
+          if (this.currentIncomeLocal.isIncome) {
             this.$store.dispatch(
               'client/add_income',
-              Object.assign({}, this.currentIncome)
+              Object.assign({}, this.currentIncomeLocal)
             )
             this.$notify.success({
               title: 'Доход добавлен',
@@ -227,7 +231,7 @@ export default {
           } else {
             this.$store.dispatch(
               'client/add_expense',
-              Object.assign({}, this.currentIncome)
+              Object.assign({}, this.currentIncomeLocal)
             )
             this.$notify.success({
               title: 'Расход добавлен',
@@ -239,8 +243,8 @@ export default {
             expenses: this.expenses
           }
           this.$store.dispatch('client/update_user', user)
-          this.currentIncome = {
-            isIncome: this.currentIncome.isIncome,
+          this.currentIncomeLocal = {
+            isIncome: this.currentIncomeLocal.isIncome,
             amount: this.amount,
             reason: this.reason,
             paymentPeriod: this.paymentPeriod,

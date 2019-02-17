@@ -19,7 +19,7 @@
       v-if="isAuthorized"
       :route="{ name: 'client' }"
       index="client">
-      Обычные люди сюда
+      Личный кабинет
     </el-menu-item>
     <el-menu-item
       v-if="!isAuthorized"

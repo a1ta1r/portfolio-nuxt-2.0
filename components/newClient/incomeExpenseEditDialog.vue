@@ -3,7 +3,6 @@
     ref="currentIncomeForm"
     :model="currentIncome"
     :rules="rules"
-    :label-position="labelPosition"
     label-width="150px"
     class="demo-ruleForm">
     <el-form-item

@@ -14,15 +14,15 @@
           <el-card
             :body-style="{ padding: '5px' }">
             <el-carousel
-              :class="{ bigAdvert: moreAdvertisement }"
               :interval="7000"
+              style="height: 250px"
               indicator-position="none"
               arrow="never"
               height="504px">
               <el-carousel-item
                 v-for="item in 4"
-                :class="{ bigAdvert: moreAdvertisement }"
-                :key="item"/>
+                :key="item"
+                style="height: 250px"/>
             </el-carousel>
           </el-card>
         </el-col>
@@ -183,16 +183,16 @@
           <el-card
             :body-style="{ padding: '5px' }">
             <el-carousel
-              :class="{ bigAdvert: moreAdvertisement }"
               :interval="7000"
               :initial-index = "2"
+              style="height: 250px"
               indicator-position="none"
               arrow="never"
               height="504px">
               <el-carousel-item
                 v-for="item in 4"
-                :class="{ bigAdvert: moreAdvertisement }"
-                :key="item"/>
+                :key="item"
+                style="height: 250px"/>
             </el-carousel>
           </el-card>
         </el-col>
@@ -374,7 +374,6 @@ export default {
             i < this.calcForm.paymentPlan.paymentList.length;
             i++
           ) {
-            console.dir(i)
             let expense = {
               reason: this.calcForm.title,
               amount: this.calcForm.paymentPlan.paymentList[i].paymentAmount,
@@ -415,10 +414,6 @@ export default {
 /*он используется на самом деле*/
 .el-card {
   margin-bottom: 12px;
-}
-
-.bigAdvert {
-  height: 250px;
 }
 
 .el-carousel__item:nth-child(1) {

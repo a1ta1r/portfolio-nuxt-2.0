@@ -193,7 +193,6 @@ export default {
       }
     },
     editRow(scope) {
-      console.dir(scope)
       this.currentEditableIncome = scope.row
       switch (this.currentEditableIncome.paymentPeriod) {
         case 0:

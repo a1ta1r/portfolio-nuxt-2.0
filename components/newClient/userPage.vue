@@ -224,7 +224,6 @@ export default {
   data() {
     return {
       user: {},
-      errors: [],
       // true = income false = expense
       currentState: true,
       currentIncome: {
