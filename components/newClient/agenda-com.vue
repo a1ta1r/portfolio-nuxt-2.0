@@ -28,7 +28,6 @@ export default {
     ...mapState('client', ['paymentPlan']),
     loadAgenda: function() {
       let result = []
-      console.log(this.paymentPlan)
       for (let i = 0; i < this.paymentPlan.count; i++) {
         if (this.paymentPlan.elements[i].elementType === 'Income') {
           result.push({
@@ -58,6 +57,7 @@ export default {
     }
   },
   created: function() {
+    this.$store.dispatch('client/load_agenda')
     this.events = this.loadAgenda
   }
 }
