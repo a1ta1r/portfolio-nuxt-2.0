@@ -29,7 +29,20 @@
         prop="startDate"
         sortable>
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ dateFormatter(scope.row) }}</span>
+          <span v-popover:dates_popover >
+            {{ dateFormatter(scope.row) }}
+            <el-badge
+              slot="reference"
+              :value="dates_filter(scope.row.dates).length"
+              class="mark"/></span>
+          <el-popover
+            ref="dates_popover"
+            placement="right"
+            width="280"
+            trigger="click">
+            <little-dates-table
+              :grid-data="dates_filter(scope.row.dates)"/>
+          </el-popover>
         </template>
       </el-table-column>
       <el-table-column
@@ -76,11 +89,12 @@
 
 <script>
 import incomeExpenseEditDialog from './incomeExpenseEditDialog'
+import littleDatesTable from './littleDatesTable'
 import { mapState } from 'vuex'
 
 export default {
   name: 'IncomeExpenseTable',
-  components: { incomeExpenseEditDialog },
+  components: { incomeExpenseEditDialog, littleDatesTable },
   props: {
     currentMonth: {
       type: Number,
@@ -122,6 +136,9 @@ export default {
   },
   methods: {
     multiple_dates(cellValue) {},
+    dates_filter(value) {
+      return value.filter(value => value.month() === this.currentMonth)
+    },
     dateFormatter(cellValue) {
       let value = this.$moment(cellValue.startDate)
       for (let i = 0; i < cellValue.dates.length; i++) {
