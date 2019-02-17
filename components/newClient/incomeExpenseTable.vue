@@ -25,10 +25,13 @@
         prop="paymentPeriod"
         sortable/>
       <el-table-column
-        :formatter="dateFormatter"
         label="Дата"
         prop="startDate"
-        sortable/>
+        sortable>
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ dateFormatter(scope.row) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         label="Операции">
         <template slot-scope="scope">
@@ -79,6 +82,10 @@ export default {
   name: 'IncomeExpenseTable',
   components: { incomeExpenseEditDialog },
   props: {
+    currentMonth: {
+      type: Number,
+      default: new Date().getMonth()
+    },
     isIncome: {
       type: Boolean,
       default: false
@@ -114,9 +121,16 @@ export default {
     }
   },
   methods: {
+    multiple_dates(cellValue) {},
     dateFormatter(cellValue) {
-      let value = new Date(cellValue.startDate)
-      return value.toLocaleDateString('ru')
+      let value = this.$moment(cellValue.startDate)
+      for (let i = 0; i < cellValue.dates.length; i++) {
+        if (cellValue.dates[i].month() === this.currentMonth) {
+          value = cellValue.dates[i]
+          break
+        }
+      }
+      return value.toDate().toLocaleDateString('ru')
     },
     amountFormatter(cellValue) {
       return cellValue.amount.toFixed(2)

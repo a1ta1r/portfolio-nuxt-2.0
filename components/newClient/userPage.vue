@@ -163,6 +163,7 @@
             <el-row>
               <el-card>
                 <income-expense-table
+                  :current-month="currentMonth"
                   :current-incomes="financeByMonth(true)"
                   :is-income="true"/>
               </el-card>
@@ -192,6 +193,7 @@
             <el-row>
               <el-card>
                 <income-expense-table
+                  :current-month="currentMonth"
                   :current-incomes="financeByMonth(false)"
                   :is-income="false"/>
               </el-card>
@@ -250,7 +252,8 @@ export default {
         'Октбрь',
         'Ноябрь',
         'Декабрь'
-      ]
+      ],
+      periods: ['day', 'week', 'month', 'quarter', 'year']
     }
   },
   computed: {
@@ -325,7 +328,7 @@ export default {
     this.$store.dispatch('general/set_route', 'client')
   },
   methods: {
-    financeByMonth: function(income = true) {
+    financeByMonth1: function(income = true) {
       let typeName = income ? 'Income' : 'Expense'
       if (!this.paymentPlan.elements || this.paymentPlan.length === 0) return []
       return this.paymentPlan.elements
@@ -337,13 +340,35 @@ export default {
           return value
         })
     },
-    financeByMonth1: function(finance) {
+    financeByMonth: function(finance) {
       if (finance) finance = this.incomes
       else finance = this.expenses
-      console.log(finance)
-      return finance.filter(
-        value => new Date(value.startDate).getMonth() === this.currentMonth
+      return finance
+        .map(value => {
+          return this.calculate_dates(value)
+        })
+        .filter(
+          value =>
+            this.currentMonth >= value.start_date.month() &&
+            this.currentMonth <= value.end_date.month()
+        )
+    },
+    calculate_dates: function(item) {
+      let start_date = this.$moment(item.startDate)
+      let dates = []
+      for (let i = 0; i < item.recurrentCount; i++) {
+        dates.push(
+          this.$moment(item.startDate).add(this.periods[item.paymentPeriod], i)
+        )
+      }
+      item.start_date = start_date
+      item.end_date = this.$moment(item.startDate).add(
+        this.periods[item.paymentPeriod],
+        item.recurrentCount
       )
+      item.dates = dates
+      console.log(item)
+      return item
     },
     load_agenda() {
       let from = this.$moment()
@@ -363,7 +388,7 @@ export default {
         if (this.currentMonth === 0) this.currentMonth = 11
         else this.currentMonth--
       }
-      this.load_agenda()
+      // this.load_agenda()
     }
   }
 }
