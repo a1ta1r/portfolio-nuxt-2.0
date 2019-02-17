@@ -131,20 +131,30 @@ export default {
   },
   remove_income({ commit }, income) {
     const token = this.state.client.token
-    this.$axios.delete(`incomes/${income}`, {
-      headers: {
-        Authorization: token
-      }
-    })
-    // commit('REMOVE_INCOME', income)
+    return this.$axios
+      .delete(`incomes/${income.id}`, {
+        headers: {
+          Authorization: token
+        }
+      })
+      .then(result => {
+        if (result.status === 200) {
+          commit('REMOVE_INCOME', income)
+        }
+      })
   },
   remove_expense({ commit }, expense) {
     const token = this.state.client.token
-    this.$axios.delete(`expenses/${expense}`, {
-      headers: {
-        Authorization: token
-      }
-    })
-    // commit('REMOVE_EXPENSE', expense)
+    return this.$axios
+      .delete(`expenses/${expense.id}`, {
+        headers: {
+          Authorization: token
+        }
+      })
+      .then(result => {
+        if (result.status === 200) {
+          commit('REMOVE_EXPENSE', expense)
+        }
+      })
   }
 }

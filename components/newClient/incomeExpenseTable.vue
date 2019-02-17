@@ -179,17 +179,19 @@ export default {
       let index = this.currentIncomes.indexOf(item.row)
       this.currentIncomes.splice(index, 1)
       if (this.isIncome) {
-        this.$store.dispatch('client/remove_income', item.row.id)
-        this.$notify.success({
-          title: 'Доход удалён',
-          message: 'Вы удалили доход'
-        })
+        this.$store.dispatch('client/remove_income', item.row).then(
+          this.$notify.success({
+            title: 'Доход удалён',
+            message: 'Вы удалили доход'
+          })
+        )
       } else {
-        this.$store.dispatch('client/remove_expense', item.row.id)
-        this.$notify.success({
-          title: 'Расход удалён',
-          message: 'Вы удалили расход'
-        })
+        this.$store.dispatch('client/remove_expense', item.row).then(
+          this.$notify.success({
+            title: 'Расход удалён',
+            message: 'Вы удалили расход'
+          })
+        )
       }
     },
     editRow(scope) {

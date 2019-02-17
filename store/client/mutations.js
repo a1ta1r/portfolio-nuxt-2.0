@@ -46,5 +46,11 @@ export default {
   },
   ADD_EXPENSE(state, expense) {
     state.expenses.push(expense)
+  },
+  REMOVE_INCOME(state, income) {
+    state.incomes.splice(state.incomes.indexOf(income), 1)
+  },
+  REMOVE_EXPENSE(state, expense) {
+    state.expenses.splice(state.expenses.indexOf(expense), 1)
   }
 }
