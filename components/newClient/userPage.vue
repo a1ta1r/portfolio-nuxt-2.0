@@ -361,13 +361,13 @@ export default {
         .filter(
           value =>
             this.currentMonth >= value.start_date.month() &&
-            this.currentMonth <= value.end_date.month()
+            this.currentMonth < value.end_date.month()
         )
     },
     calculate_dates: function(item) {
       let start_date = this.$moment(item.startDate)
       let dates = []
-      for (let i = 0; i <= item.recurrentCount; i++) {
+      for (let i = 0; i < item.recurrentCount; i++) {
         dates.push(
           this.$moment(item.startDate).add(this.periods[item.paymentPeriod], i)
         )

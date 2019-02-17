@@ -40,7 +40,7 @@
             ref="dates_popover"
             placement="right"
             width="280"
-            trigger="click">
+            trigger="hover">
             <little-dates-table
               :grid-data="dates_filter(scope.row.dates)"/>
           </el-popover>
