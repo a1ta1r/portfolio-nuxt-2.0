@@ -1,5 +1,7 @@
 <template>
-  <el-table :data="gridData">
+  <el-table
+    :data="gridData"
+    max-height="400">
     <el-table-column
       prop="dates"
       label="Есть и другие даты в этом месяце">
