@@ -80,7 +80,7 @@
                     type="success"
                     icon="el-icon-time"
                     round
-                    @click="currentMonth = new Date().getMonth()">
+                    @click="resetTime">
                     {{ (currentMonth === new Date().getMonth()? 'Сейчас ' : 'Вернуть ') + (months[new Date().getMonth()].toLowerCase()) }}
                   </el-button>
                 </el-row>
@@ -239,6 +239,7 @@ export default {
       },
       moreAdvertisement: false,
       currentMonth: new Date().getMonth(),
+      currentYear: new Date().getFullYear(),
       months: [
         'Январь',
         'Февраль',
@@ -269,7 +270,9 @@ export default {
           sum +=
             incomes[i].amount *
             incomes[i].dates.filter(
-              value => value.month() === this.currentMonth
+              value =>
+                value.month() === this.currentMonth &&
+                value.year() === this.currentYear
             ).length
         else sum += incomes[i].amount
       }
@@ -286,7 +289,9 @@ export default {
           sum +=
             expenses[i].amount *
             expenses[i].dates.filter(
-              value => value.month() === this.currentMonth
+              value =>
+                value.month() === this.currentMonth &&
+                value.year() === this.currentYear
             ).length
         else sum += expenses[i].amount
       }
@@ -300,14 +305,16 @@ export default {
       else return 'Расход'
     },
     showMonth: function() {
-      return this.months[this.currentMonth]
+      return this.months[this.currentMonth] + ' ' + this.currentYear
     },
     monthBefore: function() {
-      if (this.currentMonth === 0) return this.months[11]
+      if (this.currentMonth === 0)
+        return this.months[11] + ' ' + (this.currentYear - 1).toString()
       return this.months[this.currentMonth - 1]
     },
     monthAfter: function() {
-      if (this.currentMonth === 11) return this.months[0]
+      if (this.currentMonth === 11)
+        return this.months[0] + ' ' + (this.currentYear + 1).toString()
       return this.months[this.currentMonth + 1]
     },
     balanceType: function() {
@@ -360,10 +367,24 @@ export default {
         })
         .filter(
           value =>
-            (this.currentMonth >= value.start_date.month() &&
-              this.currentMonth < value.end_date.month()) ||
-            this.currentMonth === value.start_date.month()
+            this.date_in_range(value) ||
+            (this.currentMonth === value.start_date.month() &&
+              this.currentYear === value.start_date.year())
         )
+    },
+    date_in_range: function(d) {
+      let range = d.dates
+      for (let i = 0; i < range.length; i++) {
+        if (
+          range[i].year() === this.currentYear &&
+          range[i].month() === this.currentMonth
+        ) {
+          console.log(d.start_date.format())
+          console.log(range[i].format())
+          return true
+        }
+      }
+      return false
     },
     calculate_dates: function(item) {
       let start_date = this.$moment(item.startDate)
@@ -393,13 +414,21 @@ export default {
     },
     changeMonth(forward = true) {
       if (forward) {
-        if (this.currentMonth === 11) this.currentMonth = 0
-        else this.currentMonth++
+        if (this.currentMonth === 11) {
+          this.currentMonth = 0
+          this.currentYear++
+        } else this.currentMonth++
       } else {
-        if (this.currentMonth === 0) this.currentMonth = 11
-        else this.currentMonth--
+        if (this.currentMonth === 0) {
+          this.currentMonth = 11
+          this.currentYear--
+        } else this.currentMonth--
       }
       // this.load_agenda()
+    },
+    resetTime: function() {
+      this.currentMonth = new Date().getMonth()
+      this.currentYear = new Date().getFullYear()
     }
   }
 }
