@@ -387,6 +387,7 @@ export default {
       return false
     },
     calculate_dates: function(item) {
+      if (item.recurrentCount < 0) return this.calculate_endless_dates(item)
       let start_date = this.$moment(item.startDate)
       let dates = []
       for (let i = 0; i < item.recurrentCount; i++) {
@@ -399,6 +400,25 @@ export default {
         this.periods[item.paymentPeriod],
         item.recurrentCount
       )
+      item.dates = dates
+      return item
+    },
+    calculate_endless_dates: function(item) {
+      let start_date = this.$moment(item.startDate)
+      let dates = []
+      let date = start_date.clone()
+      let counter = 0
+      while (date.year() <= this.currentYear && counter < 1000) {
+        dates.push(
+          this.$moment(item.startDate).add(
+            this.periods[item.paymentPeriod],
+            counter++
+          )
+        )
+        date = dates[dates.length - 1]
+      }
+      item.start_date = start_date
+      item.end_date = dates[dates.length - 1]
       item.dates = dates
       return item
     },
@@ -424,7 +444,14 @@ export default {
           this.currentYear--
         } else this.currentMonth--
       }
+      this.update_endless()
       // this.load_agenda()
+    },
+    update_endless: function() {
+      this.expenses.map(value => {
+        if (value.recurrentCount < 0) return this.calculate_endless_dates(value)
+        else return value
+      })
     },
     resetTime: function() {
       this.currentMonth = new Date().getMonth()
