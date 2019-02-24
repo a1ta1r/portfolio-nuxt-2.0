@@ -72,7 +72,7 @@
               <el-col
                 :xs="24"
                 :sm="8"
-                :md="7"
+                :md="6"
                 :lg="7"
                 :xl="6">
                 <el-row>
@@ -88,7 +88,7 @@
               <el-col
                 :xs="24"
                 :sm="16"
-                :md="10"
+                :md="11"
                 :lg="10"
                 :xl="12">
                 <el-row>
@@ -164,6 +164,7 @@
               <el-card>
                 <income-expense-table
                   :current-month="currentMonth"
+                  :current-year="currentYear"
                   :current-incomes="financeByMonth(true)"
                   :is-income="true"/>
               </el-card>
@@ -379,8 +380,6 @@ export default {
           range[i].year() === this.currentYear &&
           range[i].month() === this.currentMonth
         ) {
-          console.log(d.start_date.format())
-          console.log(range[i].format())
           return true
         }
       }

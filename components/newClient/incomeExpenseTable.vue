@@ -104,6 +104,10 @@ export default {
       type: Number,
       default: new Date().getMonth()
     },
+    currentYear: {
+      type: Number,
+      default: new Date().getFullYear()
+    },
     isIncome: {
       type: Boolean,
       default: false
@@ -140,7 +144,11 @@ export default {
   },
   methods: {
     dates_filter(value) {
-      return value.filter(value => value.month() === this.currentMonth)
+      return value.filter(
+        value =>
+          value.month() === this.currentMonth &&
+          value.year() === this.currentYear
+      )
     },
     dateFormatter(cellValue) {
       let value = this.$moment(cellValue.startDate)
