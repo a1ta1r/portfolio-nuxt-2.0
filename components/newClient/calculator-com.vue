@@ -15,14 +15,14 @@
             :body-style="{ padding: '5px' }">
             <el-carousel
               :interval="7000"
-              style="height: 250px"
+              style="height: 505px"
               indicator-position="none"
               arrow="never"
               height="504px">
               <el-carousel-item
                 v-for="item in 4"
                 :key="item"
-                style="height: 250px"/>
+                style="height: 505px"/>
             </el-carousel>
           </el-card>
         </el-col>
@@ -186,14 +186,14 @@
             <el-carousel
               :interval="7000"
               :initial-index = "2"
-              style="height: 250px"
+              style="height: 505px"
               indicator-position="none"
               arrow="never"
               height="504px">
               <el-carousel-item
                 v-for="item in 4"
                 :key="item"
-                style="height: 250px"/>
+                style="height: 505px"/>
             </el-carousel>
           </el-card>
         </el-col>
