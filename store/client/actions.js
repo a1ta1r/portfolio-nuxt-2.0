@@ -36,10 +36,10 @@ export default {
     if (!range) {
       range = []
       range[0] = this.$moment()
-        .subtract(50, 'y')
+        .subtract(5, 'y')
         .toISOString()
       range[1] = this.$moment()
-        .add(50, 'y')
+        .add(5, 'y')
         .toISOString()
     }
     const token = this.state.client.token
