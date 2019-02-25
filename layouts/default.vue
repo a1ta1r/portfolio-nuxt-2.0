@@ -14,9 +14,9 @@ export default {
   mounted() {
     this.$store.dispatch('client/get_token').then(() => {
       this.$store.dispatch('client/load_user').then(() => {
-        this.$store.dispatch('client/load_agenda', false)
         if (this.username) {
           this.$store.dispatch('general/set_authorized', true)
+          this.$store.dispatch('client/load_agenda', false)
         }
       })
     })

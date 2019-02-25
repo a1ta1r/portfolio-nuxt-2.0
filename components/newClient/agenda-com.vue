@@ -2,19 +2,16 @@
   <full-calendar
     ref="calendar"
     :config="config"
-    :events="events"/>
+    :events="loadAgenda"/>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { FullCalendar } from 'vue-full-calendar'
+// import { FullCalendar } from 'vue-full-calendar'
 import 'fullcalendar/dist/fullcalendar.css'
 
 export default {
   name: 'AgendaCom',
-  components: {
-    FullCalendar
-  },
   data() {
     return {
       events: [],
@@ -26,6 +23,7 @@ export default {
   },
   computed: {
     ...mapState('client', ['paymentPlan']),
+    ...mapState('general', ['isAuthorized']),
     loadAgenda: function() {
       let result = []
       for (let i = 0; i < this.paymentPlan.count; i++) {
@@ -56,9 +54,8 @@ export default {
       return result
     }
   },
-  created: function() {
-    this.$store.dispatch('client/load_agenda')
-    this.events = this.loadAgenda
+  mounted() {
+    if (this.isAuthorized) this.$store.dispatch('client/load_agenda')
   }
 }
 </script>

@@ -4,7 +4,7 @@ export default {
       let token = localStorage.getItem('authToken')
       if (token) {
         commit('SET_TOKEN', token)
-        dispatch('general/set_authorized', true)
+        dispatch('general/set_authorized', true, { root: true })
       }
     }
   },

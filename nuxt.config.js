@@ -35,7 +35,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    { src: '@/plugins/vee-validate', ssr: false }
+    { src: '@/plugins/vee-validate', ssr: false },
+    { src: '@/plugins/vue-full-calendar', ssr: false }
     // './plugins/vue-numeric'
   ],
 

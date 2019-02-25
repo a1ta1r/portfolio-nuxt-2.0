@@ -345,6 +345,12 @@ export default {
   },
   mounted() {
     this.$store.dispatch('general/set_route', 'client')
+    this.$store.dispatch('client/load_user').then(() => {
+      if (this.username) {
+        this.$store.dispatch('client/load_agenda', false)
+        this.$store.dispatch('general/set_authorized', true)
+      }
+    })
   },
   methods: {
     financeByMonth1: function(income = true) {
