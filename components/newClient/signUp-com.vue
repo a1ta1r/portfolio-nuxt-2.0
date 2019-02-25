@@ -123,6 +123,12 @@ export default {
                 title: 'Успешная регистрация',
                 message: 'Вы зарегистрировались в кредитном портфеле'
               })
+              this.$store.dispatch('client/sign_in', this.user).then(res => {
+                if (res.data.code < 300) {
+                  this.$store.dispatch('general/set_authorized', true)
+                  this.$router.push({ name: 'client' })
+                }
+              })
             } else {
               this.$notify.error({
                 title: 'Ошибка',
