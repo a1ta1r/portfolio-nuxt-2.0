@@ -46,6 +46,11 @@
       @click="log_out">
       Выход
     </el-menu-item>
+    <el-menu-item
+      :route="{ name: 'advertiser' }"
+      index="advertiser">
+      Рекламщик ты тут временно просто чтобы Никита не терялся
+    </el-menu-item>
   </el-menu>
 </template>
 
