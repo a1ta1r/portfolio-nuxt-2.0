@@ -22,7 +22,8 @@
               <el-carousel-item
                 v-for="item in 4"
                 :key="item"
-                style="height: 505px"/>
+                style="height: 505px">
+              <!--<advert-banner/>--></el-carousel-item>
             </el-carousel>
           </el-card>
         </el-col>
@@ -193,7 +194,9 @@
               <el-carousel-item
                 v-for="item in 4"
                 :key="item"
-                style="height: 505px"/>
+                style="height: 505px">
+                <!--<advert-banner/>-->
+              </el-carousel-item>
             </el-carousel>
           </el-card>
         </el-col>
@@ -209,11 +212,12 @@ import PaymentsTable from './paymentsTable'
 import Paginator from './paginator'
 import PaymentPlan from '../../models/paymentPlan'
 import Calculator from '../../services/calculator'
+import AdvertBanner from './advertBanner'
 import User from '../../models/user'
 
 export default {
   name: 'CalculatorCom',
-  components: { PaymentsTable, Paginator, VueNumeric },
+  components: { PaymentsTable, Paginator, VueNumeric, AdvertBanner },
   data() {
     return {
       calcForm: {
@@ -409,6 +413,9 @@ export default {
         })
         return false
       }
+    },
+    myClick(item) {
+      console.dir(item)
     }
   }
 }
