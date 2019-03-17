@@ -231,9 +231,11 @@ export default {
   },
   methods: {
     load_users_count() {
-      this.load_users_deleted()
-      this.load_users_registered()
-      this.load_users_active()
+      if (this.date_range) {
+        this.load_users_deleted()
+        this.load_users_registered()
+        this.load_users_active()
+      }
     },
 
     load_users_active() {
