@@ -6,5 +6,5 @@ export default {
       .then(advertiser => {
         commit('SET_SINGLE_ADVERTISER', advertiser)
       })
-  },
+  }
 }
