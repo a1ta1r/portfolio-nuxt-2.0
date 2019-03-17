@@ -55,5 +55,8 @@ export default {
   },
   SET_PAYMENT_PLAN(state, plan) {
     state.paymentPlan = plan
+  },
+  ADD_BANNER(state, banner) {
+    state.banners.push(banner)
   }
 }

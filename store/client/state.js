@@ -7,5 +7,7 @@ export default {
   token: '',
   incomes: [],
   expenses: [],
-  paymentPlan: []
+  paymentPlan: [],
+
+  banners: []
 }

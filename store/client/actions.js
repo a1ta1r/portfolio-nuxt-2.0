@@ -186,5 +186,13 @@ export default {
           commit('REMOVE_EXPENSE', expense)
         }
       })
+  },
+
+  rand_banner({ commit }) {
+    return this.$axios.get('rand_banner').then(result => {
+      if (result.status === 200) {
+        commit('ADD_BANNER', result.data)
+      }
+    })
   }
 }

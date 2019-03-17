@@ -1,1 +1,5 @@
-// Wait for Eugeniy
+export default {
+  id: 0,
+  advertisements: [],
+  banners: []
+}
