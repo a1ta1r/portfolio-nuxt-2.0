@@ -13,6 +13,7 @@
         sortable/>
       <el-table-column type="expand">
         <template slot-scope="props">
+          <h2>Баннеры</h2>
           <p>Название: {{ props.row.banners[0].text }}</p>
           <img
             :src="props.row.banners[0].pictureUrl"
