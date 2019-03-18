@@ -7,17 +7,20 @@ export default {
         commit('SET_SINGLE_ADVERTISER', advertiser)
       })
   },
+  set_id({ commit }, id) {
+    commit('SET_ID', id)
+  },
   load_advertisements({ commit }, id) {
     return this.$axios.get(`partners/${id}/promotions`).then(result => {
       if (result.status === 200) {
-        commit('SET_ADVERTISEMENTS', result.data)
+        commit('SET_ADVERTISEMENTS', result.data.advertisements)
       }
     })
   },
   load_banners({ commit }, id) {
     return this.$axios.get(`promotions/${id}/banners`).then(result => {
       if (result.status === 200) {
-        commit('SET_BANNERS', id, result.data)
+        commit('SET_BANNERS', result.data.banners)
       }
     })
   }

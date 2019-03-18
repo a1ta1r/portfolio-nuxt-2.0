@@ -6,54 +6,46 @@
       :default-sort="{prop: 'id', order: 'ascending'}"
       :row-class-name="tableRowClassName"
       style="width: 100%"
-      show-summary
       element-loading-text="Загрузка...">
-
       <el-table-column
         label="ID"
         prop="id"
         sortable/>
       <el-table-column type="expand">
         <template slot-scope="props">
-          <pre>
-                Успеем сегодня?
-    Пересланные сообщения
-    Никита
-    Никита сегодня в 20:43
-        А можем список разврнуть, как раньше в кабинете заказчика было?
-    Чтобы у Коротун понимание сформировалось
-
-Евгений Бурлаков
-Евгений Бурлаков 23:20
-
-    В списке будет реклама а если развернуть то там баннеры?
-
-Никита Бакулин
-Никита Бакулин 23:26
-
-    Инфа о них
-    Название - клики, просмотры
-    Дата создания
-          </pre>
+          <p>Название: {{ props.row.banners[0].text }}</p>
+          <img
+            :src="props.row.banners[0].pictureUrl"
+            alt="text"
+            class="banner-image">
+          <p>Создан: {{ new Date(props.row.banners[0].createdAt).toLocaleDateString('ru') }}</p>
+          <p>Кликов: {{ props.row.banners[0].clicks }}</p>
+          <p>Просмотров: {{ props.row.banners[0].views }}</p>
+          <a :href="props.row.banners[0].advertisementLink">ссылка на рекламу?</a>
         </template>
       </el-table-column>
       <el-table-column
-        label="Название кек, кому оно нужно"
-        prop="name"
+        label="Название"
+        prop="title"
         sortable/>
       <el-table-column
-        label="Просомотры"
-        prop="views"
-        sortable/>
-      <el-table-column
-        label="Зачем мы тут (деньги)"
-        prop="money"
-        sortable/>
+        label="Активно"
+        prop="isActive"
+        sortable>
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isActive"
+            active-color="#13ce66"/>
+          <span v-if="scope.row.isActive"> Активено</span>
+          <span v-else> Не активно</span>
+        </template>
+      </el-table-column>
     </el-table>
   </el-card>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'AdvertiserPage',
   data() {
@@ -62,23 +54,28 @@ export default {
     }
   },
   computed: {
+    ...mapState('advertiser', ['banners', 'advertisements', 'id']),
     searchResult: function() {
-      let result = []
-      for (let i = 0; i < 10; i++) {
-        result.push({
-          id: i,
-          name: 'youmim',
-          views: randomNumber(1, 100),
-          money: randomNumber(0.1, 10)
-        })
-      }
-      return result
+      // TODO search in advertisements and banners here
+      return this.advertisements
     }
   },
+  mounted() {
+    this.fetch_data()
+  },
   methods: {
+    fetch_data() {
+      this.$store
+        .dispatch('advertiser/load_advertisements', this.id)
+        .then(result => {
+          this.advertisements.forEach(x => {
+            console.dir(this.advertisements)
+            this.$store.dispatch('advertiser/load_banners', x.id)
+          })
+        })
+    },
     tableRowClassName({ row, rowIndex }) {
       if (row.views >= 50) {
-        console.log(row.views)
         return 'success-row'
       } else return ''
     }
@@ -96,5 +93,8 @@ function randomNumber(min, max) {
 }
 .el-table .el-table__body tr.success-row td {
   background-color: #72f952;
+}
+.banner-image {
+  width: 300px;
 }
 </style>
