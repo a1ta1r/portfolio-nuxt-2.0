@@ -41,13 +41,6 @@
       Регистрация
     </el-menu-item>
     <el-menu-item
-      v-if="isAuthorized"
-      :route="{ name: 'signIn' }"
-      index="logOut"
-      @click="log_out">
-      Выход
-    </el-menu-item>
-    <el-menu-item
       v-if="isAuthorized && isAdvertiser"
       :route="{ name: 'advertiser' }"
       index="advertiser">
@@ -58,6 +51,13 @@
       :route="{ name: 'supersecure' }"
       index="supersecure">
       модератор?
+    </el-menu-item>
+    <el-menu-item
+      v-if="isAuthorized"
+      :route="{ name: 'signIn' }"
+      index="logOut"
+      @click="log_out">
+      Выход
     </el-menu-item>
   </el-menu>
 </template>

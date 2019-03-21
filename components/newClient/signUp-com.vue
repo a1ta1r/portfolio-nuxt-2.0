@@ -25,14 +25,16 @@
               <el-input
                 v-model="user.email"
                 type="email"
-                clearable/>
+                clearable
+                @keyup.enter.native="signin('signInForm')"/>
             </el-form-item>
             <el-form-item
               prop="username"
               label="Логин">
               <el-input
                 v-model="user.username"
-                clearable/>
+                clearable
+                @keyup.enter.native="signin('signInForm')"/>
             </el-form-item>
             <el-form-item
               prop="password"
@@ -40,7 +42,8 @@
               <el-input
                 v-model="user.password"
                 type="password"
-                clearable/>
+                clearable
+                @keyup.enter.native="signin('signInForm')"/>
             </el-form-item>
             <el-form-item>
               <el-button
