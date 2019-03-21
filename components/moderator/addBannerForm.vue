@@ -114,25 +114,29 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.fileList.length !== 0) {
-            this.newBannerLocal = this.newBanner
+            if (this.checkUrl(this.newBanner.advertisementLink)) {
+              this.newBannerLocal = this.newBanner
 
-            this.newBannerLocal.isVisible = true
-            this.newBannerLocal.uniqueViewsRequired = 10
-            this.newBannerLocal.bannerPlaceId = 1 // Тут место под баннер захардкожено, они у нас сейчас не используются
-            this.newBannerLocal.pictureUrl = this.fileList[0].name
+              this.newBannerLocal.isVisible = true
+              this.newBannerLocal.uniqueViewsRequired = 10
+              this.newBannerLocal.bannerPlaceId = 1 // Тут место под баннер захардкожено, они у нас сейчас не используются
+              this.newBannerLocal.pictureUrl = this.fileList[0].name
 
-            this.$store.dispatch(
-              'moderator/add_banner',
-              Object.assign({}, this.newBannerLocal)
-            )
-            this.$notify.success({
-              title: 'Баннер добавлен',
-              message: 'Вы добавили новый баннер'
-            })
+              this.$store.dispatch(
+                'moderator/add_banner',
+                Object.assign({}, this.newBannerLocal)
+              )
+              this.$notify.success({
+                title: 'Баннер добавлен',
+                message: 'Вы добавили новый баннер'
+              })
 
-            this.$emit('success', Object.assign({}, this.newBannerLocal))
+              this.$emit('success', Object.assign({}, this.newBannerLocal))
 
-            this.$refs[formName].resetFields()
+              this.$refs[formName].resetFields()
+            } else {
+              this.$message.error('Введите корректную ссылку на рекламу!')
+            }
           } else {
             this.$message.error('Загрузите картинку!')
           }
@@ -147,6 +151,18 @@ export default {
     },
     upload: function(data) {
       let file = data.file
+    },
+    checkUrl(str) {
+      const pattern = new RegExp(
+        '^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + //port
+        '(\\?[;&amp;a-z\\d%_.~+=-]*)?' + // query string
+          '(\\#[-a-z\\d_]*)?$',
+        'i'
+      )
+      return pattern.test(str)
     }
   }
 }
