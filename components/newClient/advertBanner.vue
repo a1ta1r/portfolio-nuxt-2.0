@@ -27,12 +27,7 @@ export default {
   methods: {
     load_adv() {
       const adv = this.banners.pop()
-      if (adv.pictureUrl.charAt(0) === 'h') {
-        this.imageLink = adv.pictureUrl
-      } else {
-        console.dir(adv.pictureUrl)
-        this.imageLink = 'http://localhost:3000/' + adv.pictureUrl
-      }
+      this.imageLink = adv.pictureUrl
       this.link = adv.advertisementLink
       this.id = adv.id
 
