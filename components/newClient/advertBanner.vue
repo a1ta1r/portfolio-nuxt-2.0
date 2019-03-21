@@ -20,9 +20,6 @@ export default {
   computed: {
     ...mapState('client', ['banners'])
   },
-  created: function() {
-    this.$store.dispatch('client/rand_banner')
-  },
   mounted() {
     /*const adv = this.banners.pop()
     this.imageLink = adv.pictureUrl
@@ -30,8 +27,7 @@ export default {
     this.id = adv.id
 
     this.$store.dispatch('advertiser/view_banner', this.id)*/
-
-    this.load_adv()
+    this.$store.dispatch('client/rand_banner').then(this.load_adv)
   },
   methods: {
     load_adv() {
