@@ -130,7 +130,9 @@ export default {
               message: 'Вы добавили новый баннер'
             })
 
-            this.$refs[formName].resetFields() // Чёт не работает
+            this.$emit('success', Object.assign({}, this.newBannerLocal))
+
+            this.$refs[formName].resetFields()
           } else {
             this.$message.error('Загрузите картинку!')
           }
@@ -141,7 +143,7 @@ export default {
       })
     },
     resetForm(formName) {
-      this.$refs[formName].resetFields() // Тож не робит
+      this.$refs[formName].resetFields()
     },
     upload: function(data) {
       let file = data.file

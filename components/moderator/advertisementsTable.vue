@@ -3,7 +3,8 @@
     <el-dialog :visible.sync="show_form">
       <add-banner-form
         :new-banner="newBanner"
-        :show_dialog="show_form"/>
+        :show_dialog="show_form"
+        @success="close_banner_form"/>
     </el-dialog>
     <el-table
       v-loading="processing"
@@ -86,6 +87,10 @@ export default {
     add_banner: function(advertisement) {
       this.newBanner.advertisementId = advertisement.id
       this.show_form = !this.show_form
+    },
+    close_banner_form: function(data) {
+      this.show_form = !this.show_form
+      this.advertisements[0].banners.push(data) // Ументь бы тут норм вызывать, но пока так работает
     }
   }
 }

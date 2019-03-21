@@ -44,13 +44,13 @@
       v-if="isAuthorized && isAdvertiser"
       :route="{ name: 'advertiser' }"
       index="advertiser">
-      Рекламщик?
+      Рекламомадатель
     </el-menu-item>
     <el-menu-item
       v-if="isAuthorized && isAdmin"
       :route="{ name: 'supersecure' }"
       index="supersecure">
-      модератор?
+      Модератор
     </el-menu-item>
     <el-menu-item
       v-if="isAuthorized"
