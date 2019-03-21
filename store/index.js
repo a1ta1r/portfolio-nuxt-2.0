@@ -3,6 +3,7 @@ import admin from './admin/admin'
 import client from './client/client'
 import general from './general/general'
 import advertiser from './advertiser/advertiser'
+import moderator from './moderator/moderator'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -10,7 +11,8 @@ const createStore = () => {
       admin,
       client,
       general,
-      advertiser
+      advertiser,
+      moderator
     }
   })
 }

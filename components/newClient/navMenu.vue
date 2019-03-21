@@ -49,7 +49,12 @@
     <el-menu-item
       :route="{ name: 'advertiser' }"
       index="advertiser">
-      Рекламщик ты тут временно просто чтобы Никита не терялся
+      Рекламщик?
+    </el-menu-item>
+    <el-menu-item
+      :route="{ name: 'supersecure' }"
+      index="supersecure">
+      модератор?
     </el-menu-item>
   </el-menu>
 </template>
