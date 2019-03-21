@@ -2,8 +2,10 @@ export default {
   get_token({ commit, dispatch }) {
     if (process.browser) {
       let token = localStorage.getItem('authToken')
+      let json = JSON.parse(atob(token.split('.')[1]))
       if (token) {
         commit('SET_TOKEN', token)
+        commit('SET_ROLE', json.role)
         dispatch('general/set_authorized', true, { root: true })
       }
     }
@@ -14,23 +16,30 @@ export default {
       commit('REMOVE_TOKEN')
     }
   },
-  load_user({ commit }) {
+  load_user({ commit, dispatch }) {
     const token = this.state.client.token
-    return this.$axios
-      .get('user', {
-        headers: {
-          Authorization: token,
-          'content-type': 'application/json'
-        }
-      })
-      .then(result => {
-        commit('SET_USER', result.data)
-        commit('SET_INCOMES', result.data.incomes)
-        commit('SET_EXPENSES', result.data.expenses)
-      })
-      .catch(error => {
-        // this.$router.push({ name: 'signIn' }) // TODO: Может можно сделать, чтоб не успевало отобразить страницу
-      })
+
+    let json = JSON.parse(atob(token.split('.')[1]))
+    if (json.role === 2 || json.role === 'Advertiser') {
+      dispatch('advertiser/set_id', json.user_id, { root: true })
+      dispatch('advertiser/load_advertiser', json.user_id, { root: true })
+    } else if (json.role === 'Admin' || json.role === 1) {
+    } else
+      return this.$axios
+        .get('user', {
+          headers: {
+            Authorization: token,
+            'content-type': 'application/json'
+          }
+        })
+        .then(result => {
+          commit('SET_USER', result.data)
+          commit('SET_INCOMES', result.data.incomes)
+          commit('SET_EXPENSES', result.data.expenses)
+        })
+        .catch(error => {
+          // this.$router.push({ name: 'signIn' }) // TODO: Может можно сделать, чтоб не успевало отобразить страницу
+        })
   },
   load_agenda({ commit }, range) {
     if (!range) {
