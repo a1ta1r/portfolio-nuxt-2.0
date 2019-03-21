@@ -68,6 +68,11 @@ export default {
       return this.advertisements
     }
   },
+  watch: {
+    id: function() {
+      this.fetch_data()
+    }
+  },
   mounted() {
     this.fetch_data()
   },
@@ -77,7 +82,6 @@ export default {
         .dispatch('advertiser/load_advertisements', this.id)
         .then(result => {
           this.advertisements.forEach(x => {
-            console.dir(this.advertisements)
             this.$store.dispatch('advertiser/load_banners', x.id)
           })
         })

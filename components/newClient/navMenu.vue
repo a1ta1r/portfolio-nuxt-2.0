@@ -5,24 +5,25 @@
     mode="horizontal"
     @select="handleSelect">
     <el-menu-item
-      v-if="isAuthorized && username === 'admin'"
+      v-if="isAuthorized && isAdmin"
       :route="{ name: 'secure-admin' }"
       index="admin">
       {{ username }} вам сюда
     </el-menu-item>
     <el-menu-item
+      v-if="isClient || !isAuthorized"
       :route="{ name: 'calculator' }"
       index="calculator">
       Калькулятор кредита
     </el-menu-item>
     <el-menu-item
-      v-if="isAuthorized"
+      v-if="isAuthorized && isClient"
       :route="{ name: 'client' }"
       index="client">
       Личный кабинет
     </el-menu-item>
     <el-menu-item
-      v-if="isAuthorized"
+      v-if="isAuthorized && isClient"
       :route="{ name: 'agenda' }"
       index="agenda">
       Календарь
@@ -47,6 +48,7 @@
       Выход
     </el-menu-item>
     <el-menu-item
+      v-if="isAuthorized && isAdvertiser"
       :route="{ name: 'advertiser' }"
       index="advertiser">
       Рекламщик?
@@ -68,6 +70,15 @@ export default {
     ...mapState('general', ['currentPage', 'isAuthorized']),
     activeIndex2: function() {
       return this.currentPage
+    },
+    isAdmin: function() {
+      return this.role === 1 || this.role === 'Admin'
+    },
+    isAdvertiser: function() {
+      return this.role === 2 || this.role === 'Advertiser'
+    },
+    isClient: function() {
+      return this.role === 0 || this.role === 'Client'
     }
   },
   methods: {
