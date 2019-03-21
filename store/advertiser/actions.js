@@ -23,5 +23,15 @@ export default {
         commit('SET_BANNERS', result.data.banners)
       }
     })
+  },
+  view_banner({ commit }, id) {
+    return (this.$axios.put(`banners/${id}/views`).then = () => {
+      console.dir('Viewd!')
+    })
+  },
+  click_banner({ commit }, id) {
+    return (this.$axios.put(`banners/${id}/clicks`).then = () => {
+      console.dir('Clicked!')
+    })
   }
 }

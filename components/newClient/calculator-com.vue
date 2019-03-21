@@ -23,7 +23,7 @@
                 v-for="item in 4"
                 :key="item"
                 style="height: 505px">
-              <!--<advert-banner/>--></el-carousel-item>
+              <advert-banner/></el-carousel-item>
             </el-carousel>
           </el-card>
         </el-col>
@@ -195,7 +195,7 @@
                 v-for="item in 4"
                 :key="item"
                 style="height: 505px">
-                <!--<advert-banner/>-->
+                <advert-banner/>
               </el-carousel-item>
             </el-carousel>
           </el-card>
@@ -296,7 +296,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('client', ['username', 'currentPage', 'expenses']),
+    ...mapState('client', ['username', 'currentPage', 'expenses', 'banners']),
     currentPayments: function() {
       let start =
         (this.calcForm.pagination.page - 1) * this.calcForm.pagination.limit
