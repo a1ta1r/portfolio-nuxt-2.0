@@ -4,5 +4,8 @@ export default {
   },
   SET_ADVERTISEMENTS(state, payload) {
     state.advertisements = payload
+  },
+  ADD_BANNER(state, banner) {
+    state.advertisements.banners.push(banner.banner)
   }
 }

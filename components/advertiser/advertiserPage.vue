@@ -14,22 +14,31 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <h2>Баннеры</h2>
-          <div
-            v-for="banner of props.row.banners"
-            :key="banner.id">
-            <p>Название: {{ banner.text }}</p>
-            <img
-              :src="banner.pictureUrl"
-              alt="text"
-              class="banner-image">
-            <p>Создан: {{ new Date(banner.createdAt).toLocaleDateString('ru') }}</p>
-            <p>Кликов: {{ banner.clicks }}</p>
-            <p>Просмотров: {{ banner.views }}</p>
-            <a
-              :href="banner.advertisementLink"
-              target="_blank"
-              rel="noopener noreferrer">Cсылка на рекламу</a>
-          </div>
+          <el-row :gutter="8">
+            <el-col
+              v-for="item in props.row.banners"
+              :xs="24"
+              :sm="22"
+              :md="10"
+              :lg="8"
+              :xl="6"
+              :key="item.id">
+              <el-card class="advertisement-card">
+                <p>Название: {{ item.text }}</p>
+                <img
+                  :src="item.pictureUrl"
+                  alt="text"
+                  class="banner-image">
+                <p>Создан: {{ new Date(item.createdAt).toLocaleDateString('ru') }}</p>
+                <p>Кликов: {{ item.clicks }}</p>
+                <p>Просмотров: {{ item.views }}</p>
+                <a
+                  :href="item.advertisementLink"
+                  target="_blank"
+                  rel="noopener noreferrer">ссылка на рекламу</a>
+              </el-card>
+            </el-col>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column
@@ -44,7 +53,7 @@
           <el-switch
             v-model="scope.row.isActive"
             active-color="#13ce66"/>
-          <span v-if="scope.row.isActive"> Активено</span>
+          <span v-if="scope.row.isActive"> Активно</span>
           <span v-else> Не активно</span>
         </template>
       </el-table-column>
@@ -108,5 +117,8 @@ function randomNumber(min, max) {
 }
 .banner-image {
   width: 300px;
+}
+.advertisement-card {
+  margin-bottom: 8px;
 }
 </style>
