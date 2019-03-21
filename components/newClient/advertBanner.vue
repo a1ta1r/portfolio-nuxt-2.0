@@ -20,14 +20,15 @@ export default {
   computed: {
     ...mapState('client', ['banners'])
   },
-  mounted() {
+  async mounted() {
     /*const adv = this.banners.pop()
     this.imageLink = adv.pictureUrl
     this.link = adv.advertisementLink
     this.id = adv.id
 
     this.$store.dispatch('advertiser/view_banner', this.id)*/
-    this.$store.dispatch('client/rand_banner').then(this.load_adv)
+    await this.$store.dispatch('client/rand_banner')
+    this.load_adv()
   },
   methods: {
     load_adv() {
