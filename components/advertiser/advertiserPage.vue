@@ -14,18 +14,22 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <h2>Баннеры</h2>
-          <p>Название: {{ props.row.banners[0].text }}</p>
-          <img
-            :src="props.row.banners[0].pictureUrl"
-            alt="text"
-            class="banner-image">
-          <p>Создан: {{ new Date(props.row.banners[0].createdAt).toLocaleDateString('ru') }}</p>
-          <p>Кликов: {{ props.row.banners[0].clicks }}</p>
-          <p>Просмотров: {{ props.row.banners[0].views }}</p>
-          <a
-            :href="props.row.banners[0].advertisementLink"
-            target="_blank"
-            rel="noopener noreferrer">ссылка на рекламу?</a>
+          <div
+            v-for="banner of props.row.banners"
+            :key="banner.id">
+            <p>Название: {{ banner.text }}</p>
+            <img
+              :src="banner.pictureUrl"
+              alt="text"
+              class="banner-image">
+            <p>Создан: {{ new Date(banner.createdAt).toLocaleDateString('ru') }}</p>
+            <p>Кликов: {{ banner.clicks }}</p>
+            <p>Просмотров: {{ banner.views }}</p>
+            <a
+              :href="banner.advertisementLink"
+              target="_blank"
+              rel="noopener noreferrer">Cсылка на рекламу</a>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
