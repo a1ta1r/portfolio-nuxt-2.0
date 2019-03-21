@@ -94,6 +94,11 @@ export default {
           commit('SET_ROLE', json.role)
           if (json.role === 2 || json.role === 'Advertiser') {
             dispatch('advertiser/set_id', json.user_id, { root: true })
+            commit('SET_USER', {
+              username: user.username,
+              password: user.password,
+              token: 'Bearer ' + response.data.token
+            })
             this.$router.push({ name: 'advertiser' })
           } else if (
             user.username === 'admin' ||
