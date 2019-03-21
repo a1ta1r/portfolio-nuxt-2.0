@@ -120,7 +120,6 @@ export default {
             this.newBannerLocal.uniqueViewsRequired = 10
             this.newBannerLocal.bannerPlaceId = 1 // Тут место под баннер захардкожено, они у нас сейчас не используются
             this.newBannerLocal.pictureUrl = this.fileList[0].name
-            // this.newBannerLocal.advertisementId = 2 // Вот это нужно получить из advertisementsTable
 
             this.$store.dispatch(
               'moderator/add_banner',
@@ -130,19 +129,6 @@ export default {
               title: 'Баннер добавлен',
               message: 'Вы добавили новый баннер'
             })
-
-            // this.$store.dispatch('client/update_user', user)
-            /*this.newBannerLocal = {
-            isIncome: this.currentIncomeLocal.isIncome,
-            amount: this.amount,
-            reason: this.reason,
-            paymentPeriod: this.paymentPeriod,
-            recurrentCount: this.recurrentCount,
-            frequency: 1,
-            startDate: new Date(Date.now()),
-            isRepeatable: this.isRepeatable,
-            isForever: false
-          }*/
 
             this.$refs[formName].resetFields() // Чёт не работает
           } else {
