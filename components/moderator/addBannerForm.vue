@@ -1,11 +1,29 @@
 <template>
   <div>
-    <el-form>
+    <el-form
+      ref="currentBannerForm"
+      :model="newBanner"
+      :rules="rules">
+      <el-form-item
+        label="Название баннера"
+        prop="text">
+        <el-input
+          v-model="newBanner.text"
+          clearable/>
+      </el-form-item>
+      <el-form-item
+        label="Ссылка на рекламу"
+        prop="advertisementLink">
+        <el-input
+          v-model="newBanner.advertisementLink"
+          clearable/>
+      </el-form-item>
       <el-upload
-        :on-preview="handlePreview"
+        :on-change="handleChange"
         :on-remove="handleRemove"
         :file-list="fileList"
         :limit="1"
+        :before-upload="beforeUpload"
         class="upload-demo"
         drag
         show-file-list
@@ -16,17 +34,15 @@
         <div class="el-upload__text">Перетащите файл сюда или <em>щелкните для загрузки</em></div>
         <div
           slot="tip"
-          class="el-upload__tip">Изображения, размером менее 5 МБ</div>
+          class="el-upload__tip">Изображения, размером менее 2 МБ</div>
       </el-upload>
-      <span
-        slot="footer"
-        class="dialog-footer">
-        <el-button @click="show_dialog = false">Cancel</el-button>
+      <br>
+      <el-form-item>
         <el-button
           type="primary"
-          @click="show_dialog = false">Confirm</el-button>
-      </span>
-    </el-form>
+          @click="submitForm('currentBannerForm')">Сохранить</el-button>
+        <el-button @click="resetForm('currentBannerForm')">Сбросить</el-button>
+    </el-form-item></el-form>
   </div>
 </template>
 
@@ -37,7 +53,15 @@ export default {
     newBanner: {
       type: Object,
       default: () => {
-        return {}
+        return {
+          text: '',
+          pictureUrl: '',
+          uniqueViewsRequired: 10,
+          bannerPlaceId: 1,
+          advertisementId: '',
+          advertisementLink: '',
+          isVisible: true
+        }
       }
     },
     show_dialog: {
@@ -47,10 +71,92 @@ export default {
   },
   data() {
     return {
-      fileList: []
+      fileList: [],
+      newBannerLocal: this.newBanner,
+      rules: {
+        text: [
+          {
+            required: true,
+            message: 'Введите название',
+            trigger: 'blur'
+          }
+        ],
+        advertisementLink: [
+          {
+            required: true,
+            message: 'Введите ссылку',
+            trigger: 'blur'
+          }
+        ]
+      }
     }
   },
   methods: {
+    beforeUpload(file) {
+      const isImage = file.type === 'image/jpeg' || file.type === 'image/png'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isImage) {
+        this.$message.error('Изображение должно быть формата JPG или PNG!')
+      }
+      if (!isLt2M) {
+        this.$message.error('Размер изображения не должен превышать 2МБ!')
+      }
+      return isImage && isLt2M
+    },
+    handleRemove(file, fileList) {
+      this.fileList = fileList
+    },
+    handleChange(file, fileList) {
+      this.fileList = fileList
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          if (this.fileList.length !== 0) {
+            this.newBannerLocal = this.newBanner
+
+            this.newBannerLocal.isVisible = true
+            this.newBannerLocal.uniqueViewsRequired = 10
+            this.newBannerLocal.bannerPlaceId = 1 // Тут место под баннер захардкожено, они у нас сейчас не используются
+            this.newBannerLocal.pictureUrl = this.fileList[0].name
+            // this.newBannerLocal.advertisementId = 2 // Вот это нужно получить из advertisementsTable
+
+            this.$store.dispatch(
+              'moderator/add_banner',
+              Object.assign({}, this.newBannerLocal)
+            )
+            this.$notify.success({
+              title: 'Баннер добавлен',
+              message: 'Вы добавили новый баннер'
+            })
+
+            // this.$store.dispatch('client/update_user', user)
+            /*this.newBannerLocal = {
+            isIncome: this.currentIncomeLocal.isIncome,
+            amount: this.amount,
+            reason: this.reason,
+            paymentPeriod: this.paymentPeriod,
+            recurrentCount: this.recurrentCount,
+            frequency: 1,
+            startDate: new Date(Date.now()),
+            isRepeatable: this.isRepeatable,
+            isForever: false
+          }*/
+
+            this.$refs[formName].resetFields() // Чёт не работает
+          } else {
+            this.$message.error('Загрузите картинку!')
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields() // Тож не робит
+    },
     upload: function(data) {
       let file = data.file
     }

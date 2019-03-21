@@ -21,5 +21,12 @@ export default {
       }
       dispatch('general/set_processing', false, { root: true })
     })
+  },
+  add_banner({ commit }, banner) {
+    return this.$axios.post('banners', banner).then(result => {
+      if (result.status === 200) {
+        commit('ADD_BANNER', banner)
+      }
+    })
   }
 }

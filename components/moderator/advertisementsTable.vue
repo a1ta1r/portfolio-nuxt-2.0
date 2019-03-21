@@ -84,6 +84,7 @@ export default {
   },
   methods: {
     add_banner: function(advertisement) {
+      this.newBanner.advertisementId = this.advertisements[0].id
       this.show_form = !this.show_form
     }
   }

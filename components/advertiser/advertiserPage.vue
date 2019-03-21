@@ -14,9 +14,10 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <h2>Баннеры</h2>
-          <div
+          <el-card
             v-for="banner of props.row.banners"
-            :key="banner.id">
+            :key="banner.id"
+            class="advertisement-card">
             <p>Название: {{ banner.text }}</p>
             <img
               :src="banner.pictureUrl"
@@ -29,7 +30,7 @@
               :href="banner.advertisementLink"
               target="_blank"
               rel="noopener noreferrer">Cсылка на рекламу</a>
-          </div>
+          </el-card>
         </template>
       </el-table-column>
       <el-table-column
@@ -104,5 +105,8 @@ function randomNumber(min, max) {
 }
 .banner-image {
   width: 300px;
+}
+.advertisement-card {
+  margin-bottom: 8px;
 }
 </style>
