@@ -20,7 +20,9 @@
               <el-carousel-item
                 v-for="item in 4"
                 :class="{ bigAdvert: moreAdvertisement }"
-                :key="item"/>
+                :key="item">
+                <advert-banner/>
+              </el-carousel-item>
             </el-carousel>
           </el-card>
         </el-col>
@@ -52,14 +54,15 @@
             <el-carousel
               :class="{ bigAdvert: moreAdvertisement }"
               :interval="7000"
-              :initial-index = "2"
               indicator-position="none"
               arrow="never"
               height="80px">
               <el-carousel-item
                 v-for="item in 4"
                 :class="{ bigAdvert: moreAdvertisement }"
-                :key="item"/>
+                :key="item">
+                <advert-banner/>
+              </el-carousel-item>
             </el-carousel>
           </el-card>
         </el-col>
@@ -212,6 +215,7 @@ import VueNumeric from 'vue-numeric'
 import ElCollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import incomeExpenseFormAdd from './incomeExpenseAddForm'
 import incomeExpenseTable from './incomeExpenseTable'
+import AdvertBanner from './advertBanner'
 // import Toggle from 'vue-libs-simple-toggle'
 
 export default {
@@ -220,7 +224,8 @@ export default {
     ElCollapseTransition,
     incomeExpenseTable,
     incomeExpenseFormAdd,
-    VueNumeric
+    VueNumeric,
+    AdvertBanner
   },
   data() {
     return {
@@ -478,34 +483,5 @@ export default {
 
 .bigAdvert {
   height: 520px;
-}
-
-.el-carousel__item:nth-child(1) {
-  background-image: url(http://www.brd24.com/up/iblock/129/12956f0c2220c2a090d038422f43c966.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 3px;
-}
-.el-carousel__item:nth-child(2) {
-  background-image: url(http://secondstreet.ru/uploads/images/00/50/88/2012/12/11/43c003.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 3px;
-}
-.el-carousel__item:nth-child(3) {
-  background-image: url(http://riffberg.com.ua/files/uploads/Myagkiy-kojaniy-portfel-koricneviy-bel.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 3px;
-}
-.el-carousel__item:nth-child(4) {
-  background-image: url(https://st2.depositphotos.com/7375876/12353/i/950/depositphotos_123538046-stock-photo-leather-briefcase-in-his-hand.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 3px;
 }
 </style>

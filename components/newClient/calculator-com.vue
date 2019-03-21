@@ -186,7 +186,6 @@
             :body-style="{ padding: '5px' }">
             <el-carousel
               :interval="7000"
-              :initial-index = "2"
               style="height: 505px"
               indicator-position="none"
               arrow="never"
@@ -425,34 +424,5 @@ export default {
 /*он используется на самом деле*/
 .el-card {
   margin-bottom: 12px;
-}
-
-.el-carousel__item:nth-child(1) {
-  background-image: url(https://www.pressfoto.ru/mediasample/s.pfst.net/2012.11/1656341880627316d171c8e1f98429118d40eba11c3_b.jpg?PressFoto_1656341.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 3px;
-}
-.el-carousel__item:nth-child(2) {
-  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3c26mj4YZG6BT6T-qqRwUBQBAqXyw8Uhccniij96NIL0aXtit);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 3px;
-}
-.el-carousel__item:nth-child(3) {
-  background-image: url(http://secondstreet.ru/uploads/images/00/50/88/2012/12/11/43c003.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 3px;
-}
-.el-carousel__item:nth-child(4) {
-  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStNZMG25i3Ot9s-JB1yqhnf97YKliY9_03qKOzn2qURGKd2cXIpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 3px;
 }
 </style>

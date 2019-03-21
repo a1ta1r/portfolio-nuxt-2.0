@@ -12,21 +12,14 @@ export default {
   data() {
     return {
       id: 4,
-      imageLink:
-        'https://www.pressfoto.ru/mediasample/s.pfst.net/2012.11/1656341880627316d171c8e1f98429118d40eba11c3_b.jpg?PressFoto_1656341.jpg',
-      link: 'http://mobile-testing.ru/ne_stoit_brat_kredit/'
+      imageLink: 'https://i.gyazo.com/8ec4bd5b062f367172767b9ee887f39e.jpg',
+      link: ''
     }
   },
   computed: {
     ...mapState('client', ['banners'])
   },
   async mounted() {
-    /*const adv = this.banners.pop()
-    this.imageLink = adv.pictureUrl
-    this.link = adv.advertisementLink
-    this.id = adv.id
-
-    this.$store.dispatch('advertiser/view_banner', this.id)*/
     await this.$store.dispatch('client/rand_banner')
     this.load_adv()
   },
@@ -40,9 +33,11 @@ export default {
       this.$store.dispatch('advertiser/view_banner', this.id)
     },
     advertClick() {
-      this.$store.dispatch('advertiser/click_banner', this.id)
-      const win = window.open(this.link, '_blank')
-      win.focus()
+      if (this.link) {
+        this.$store.dispatch('advertiser/click_banner', this.id)
+        const win = window.open(this.link, '_blank')
+        win.focus()
+      }
     }
   }
 }
@@ -56,5 +51,6 @@ div {
   background-repeat: no-repeat;
   background-position: center center;
   border-radius: 3px;
+  cursor: pointer;
 }
 </style>
