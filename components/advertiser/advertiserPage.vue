@@ -22,7 +22,10 @@
           <p>Создан: {{ new Date(props.row.banners[0].createdAt).toLocaleDateString('ru') }}</p>
           <p>Кликов: {{ props.row.banners[0].clicks }}</p>
           <p>Просмотров: {{ props.row.banners[0].views }}</p>
-          <a :href="props.row.banners[0].advertisementLink">ссылка на рекламу?</a>
+          <a
+            :href="props.row.banners[0].advertisementLink"
+            target="_blank"
+            rel="noopener noreferrer">ссылка на рекламу?</a>
         </template>
       </el-table-column>
       <el-table-column
