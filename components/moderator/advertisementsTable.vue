@@ -1,10 +1,14 @@
 <template>
   <el-card>
+    <el-dialog :visible.sync="show_form">
+      <add-banner-form
+        :new-banner="newBanner"
+        :show_dialog="show_form"/>
+    </el-dialog>
     <el-table
       v-loading="processing"
       :data="advertisements"
       :default-sort="{prop: 'id', order: 'ascending'}"
-      :row-class-name="tableRowClassName"
       style="width: 100%"
       element-loading-text="Загрузка...">
       <el-table-column
@@ -13,7 +17,16 @@
         sortable/>
       <el-table-column type="expand">
         <template slot-scope="props">
-          <h2>Баннеры</h2>
+          <el-row>
+            <el-col :span="6">
+              <h2>Баннеры</h2>
+            </el-col>
+            <el-col
+              :span="6"
+              :offset="12">
+              <el-button @click="add_banner(props.row)">Добавить баннер</el-button>
+            </el-col>
+          </el-row>
           <el-card
             v-for="item in props.row.banners"
             :key="item.id"
@@ -55,11 +68,24 @@
 
 <script>
 import { mapState } from 'vuex'
+import AddBannerForm from './addBannerForm'
 export default {
   name: 'AdvertisementsTable',
+  components: { AddBannerForm },
+  data() {
+    return {
+      show_form: false,
+      newBanner: {}
+    }
+  },
   computed: {
     ...mapState('moderator', ['advertisements']),
     ...mapState('general', ['processing'])
+  },
+  methods: {
+    add_banner: function(advertisement) {
+      this.show_form = !this.show_form
+    }
   }
 }
 </script>
