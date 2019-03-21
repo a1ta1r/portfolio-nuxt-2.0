@@ -15,20 +15,7 @@
     <!--</el-aside>-->
 
     <el-header>
-      <el-menu
-        mode="horizontal"
-        default-active="admin">
-        <el-menu-item
-          index="admin">
-          Коротун Василиса Павловна
-        </el-menu-item>
-        <el-menu-item
-          :route="{ name: 'signIn' }"
-          index="logOut"
-          @click="log_out">
-          Выход
-        </el-menu-item>
-      </el-menu>
+      <nav-menu/>
     </el-header>
 
     <el-container>
@@ -64,9 +51,10 @@ import advertisers from '../../components/admin/advertisers'
 import Finance from '../../components/admin/finance'
 import systemActivity from '../../components/admin/systemActivity'
 import stats from '../../components/admin/stats'
+import NavMenu from '../../components/newClient/navMenu'
 
 export default {
-  components: { Finance, advertisers, systemActivity, stats },
+  components: { NavMenu, Finance, advertisers, systemActivity, stats },
   data() {
     return {
       activeName: 'advertisers'

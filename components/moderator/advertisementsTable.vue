@@ -42,7 +42,7 @@
             <a
               :href="item.advertisementLink"
               target="_blank"
-              rel="noopener noreferrer">ссылка на рекламу?</a>
+              rel="noopener noreferrer">ссылка на рекламу</a>
           </el-card>
         </template>
       </el-table-column>

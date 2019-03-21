@@ -54,6 +54,7 @@
       Рекламщик?
     </el-menu-item>
     <el-menu-item
+      v-if="isAuthorized && isAdmin"
       :route="{ name: 'supersecure' }"
       index="supersecure">
       модератор?
@@ -72,13 +73,17 @@ export default {
       return this.currentPage
     },
     isAdmin: function() {
-      return this.role === 1 || this.role === 'Admin'
+      return (
+        this.role === 1 || this.role === 'Admin' || this.username === 'admin'
+      )
     },
     isAdvertiser: function() {
       return this.role === 2 || this.role === 'Advertiser'
     },
     isClient: function() {
-      return this.role === 0 || this.role === 'Client'
+      return (
+        (this.role === 0 || this.role === 'User') && this.username !== 'admin'
+      )
     }
   },
   methods: {

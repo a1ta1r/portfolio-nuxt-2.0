@@ -2,12 +2,14 @@ export default {
   get_token({ commit, dispatch }) {
     if (process.browser) {
       let token = localStorage.getItem('authToken')
-      let json = JSON.parse(atob(token.split('.')[1]))
       if (token) {
+        let json = JSON.parse(atob(token.split('.')[1]))
         commit('SET_TOKEN', token)
-        commit('SET_ROLE', json.role)
+        let role = json.role
+        if (json.username === 'admin') role = 'Admin'
+        commit('SET_ROLE', role)
         dispatch('general/set_authorized', true, { root: true })
-      }
+      } else this.$router.push({ name: 'signIn' })
     }
   },
   log_out({ commit }) {
@@ -113,9 +115,14 @@ export default {
             user.username === 'admin' ||
             json.role === 1 ||
             json.role === 'Admin'
-          )
+          ) {
+            commit('SET_USER', {
+              username: user.username,
+              password: user.password,
+              token: 'Bearer ' + response.data.token
+            })
             this.$router.push({ name: 'secure-admin' })
-          else {
+          } else {
             commit('SET_USER', {
               username: user.username,
               password: user.password,
