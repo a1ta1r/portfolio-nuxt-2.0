@@ -44,6 +44,17 @@
               :href="item.advertisementLink"
               target="_blank"
               rel="noopener noreferrer">ссылка на рекламу</a>
+            <el-button
+              style="margin-left: 50px"
+              size="mini"
+              type="primary"
+              @click="editBanner(item)">Изменить
+            </el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="removeBanner(item)">Удалить
+            </el-button>
           </el-card>
         </template>
       </el-table-column>
@@ -70,14 +81,15 @@
 <script>
 import { mapState } from 'vuex'
 import AddBannerForm from './addBannerForm'
-//import EditBannerForm from './editBannerForm'
+// import EditBannerForm from './editBannerForm'
 export default {
   name: 'AdvertisementsTable',
   components: { AddBannerForm },
   data() {
     return {
       show_form: false,
-      newBanner: {}
+      newBanner: {},
+      editableBanner: {}
     }
   },
   computed: {
@@ -91,6 +103,17 @@ export default {
     },
     close_banner_form: function() {
       this.show_form = !this.show_form
+    },
+    removeBanner(item) {
+      this.$store.dispatch('moderator/remove_banner', item).then(
+        this.$notify.success({
+          title: 'Баннер удалён',
+          message: 'Вы удалили баннер'
+        })
+      )
+    },
+    editBanner(item) {
+      console.dir(item)
     }
   }
 }

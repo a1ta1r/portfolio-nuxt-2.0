@@ -28,5 +28,12 @@ export default {
         commit('ADD_BANNER', result.data.banner)
       }
     })
+  },
+  remove_banner({ commit }, banner) {
+    return this.$axios.delete(`banners/${banner.id}`).then(result => {
+      if (result.status === 200) {
+        commit('REMOVE_BANNER', banner)
+      }
+    })
   }
 }

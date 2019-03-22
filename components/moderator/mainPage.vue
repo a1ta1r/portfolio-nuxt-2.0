@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Вы модератор ха</h2>
+    <h2 class="asideHeader">Рекламодатели:</h2>
     <el-container class="aside">
       <el-aside>
         <advertisers-table/>
@@ -27,5 +27,8 @@ export default {
 <style scoped>
 .aside {
   height: 100vh;
+}
+.asideHeader {
+  margin-left: 23px;
 }
 </style>

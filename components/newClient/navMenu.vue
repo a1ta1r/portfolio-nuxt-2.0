@@ -8,7 +8,8 @@
       v-if="isAuthorized && isAdmin"
       :route="{ name: 'secure-admin' }"
       index="admin">
-      {{ username }} вам сюда
+      <!--{{ username }} -->
+      Администрирование
     </el-menu-item>
     <el-menu-item
       v-if="isClient || !isAuthorized"
