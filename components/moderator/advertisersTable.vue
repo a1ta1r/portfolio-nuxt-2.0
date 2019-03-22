@@ -5,7 +5,7 @@
       :key="item.id"
       class="advertiser-card"
       shadow="hover">
-      <div @click="card_click(item.id)">
+      <div @click="card_click(item)">
         <h2>{{ item.username }}</h2>
         <p>ID: {{ item.id }} </p>
         <p>Email: {{ item.email }}</p>
@@ -25,8 +25,9 @@ export default {
     this.$store.dispatch('moderator/load_advertisers')
   },
   methods: {
-    card_click: function(id) {
-      this.$store.dispatch('moderator/load_advertisements', id)
+    card_click: function(advertiser) {
+      this.$store.dispatch('moderator/load_advertisements', advertiser.id)
+      this.$store.dispatch('moderator/set_advertiser', advertiser)
     }
   }
 }

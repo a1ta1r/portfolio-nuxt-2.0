@@ -81,10 +81,7 @@ export default {
             this.newBannerLocal.bannerPlaceId = 1 // Тут место под баннер захардкожено, они у нас сейчас не используются
             */
 
-            this.$store.dispatch(
-              'moderator/update_banner',
-              Object.assign({}, this.newBannerLocal)
-            )
+            this.$store.dispatch('moderator/update_banner', this.newBannerLocal)
             this.$notify.success({
               title: 'Баннер изменён',
               message: 'Вы изменили баннер'
@@ -92,7 +89,7 @@ export default {
 
             this.$emit('success_edit', Object.assign({}, this.newBannerLocal))
 
-            this.$refs[formName].resetFields()
+            // this.$refs[formName].resetFields()
           } else {
             this.$message.error('Введите корректную ссылку на рекламу!')
           }

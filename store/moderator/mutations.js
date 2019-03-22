@@ -15,9 +15,14 @@ export default {
     ) // Мне стыдно, да
   },
   UPDATE_BANNER(state, banner) {
-    console.dir(state.advertisements[0].banners.findIndex(x => x.id === banner.id))
+    console.dir(
+      state.advertisements[0].banners.findIndex(x => x.id === banner.id)
+    )
     state.advertisements[0].banners[
       state.advertisements[0].banners.findIndex(x => x.id === banner.id)
     ] = banner // Мне стыдно, да
+  },
+  SET_ADVERTISER(state, payload) {
+    state.advertiser = payload
   }
 }

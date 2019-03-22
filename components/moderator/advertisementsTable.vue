@@ -12,6 +12,7 @@
         :show_dialog="show_edit_form"
         @success_edit="close_edit_banner_form"/>
     </el-dialog>
+    <el-button @click="add_advertisements">Добавить рекламу</el-button>
     <el-table
       v-loading="processing"
       :data="advertisements"
@@ -95,6 +96,7 @@ export default {
     return {
       show_add_form: false,
       show_edit_form: false,
+      show_advertisement_form: false,
       newBanner: {},
       editableBanner: {}
     }
@@ -125,6 +127,9 @@ export default {
     },
     close_edit_banner_form: function() {
       this.show_edit_form = !this.show_edit_form
+    },
+    add_advertisements() {
+      console.dir(this.advertisements)
     }
   }
 }

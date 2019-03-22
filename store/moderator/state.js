@@ -1,4 +1,5 @@
 export default {
   advertisers: [],
-  advertisements: []
+  advertisements: [],
+  advertiser: {}
 }

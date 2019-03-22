@@ -6,6 +6,9 @@ export default {
       }
     })
   },
+  set_advertiser({ commit }, advertiser) {
+    commit('SET_ADVERTISER', advertiser)
+  },
   load_advertisements({ commit, dispatch }, id) {
     dispatch('general/set_processing', true, { root: true })
     return this.$axios.get(`partners/${id}/promotions`).then(result => {
