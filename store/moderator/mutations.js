@@ -6,6 +6,6 @@ export default {
     state.advertisements = payload
   },
   ADD_BANNER(state, banner) {
-    state.advertisements.banners.push(banner.banner)
+    state.advertisements[0].banners.push(banner) // Мне стыдно, да
   }
 }

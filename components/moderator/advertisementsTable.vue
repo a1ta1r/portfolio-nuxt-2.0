@@ -59,7 +59,7 @@
           <el-switch
             v-model="scope.row.isActive"
             active-color="#13ce66"/>
-          <span v-if="scope.row.isActive"> Активено</span>
+          <span v-if="scope.row.isActive"> Активно</span>
           <span v-else> Не активно</span>
         </template>
       </el-table-column>
@@ -70,9 +70,10 @@
 <script>
 import { mapState } from 'vuex'
 import AddBannerForm from './addBannerForm'
+import EditBannerForm from './editBannerForm'
 export default {
   name: 'AdvertisementsTable',
-  components: { AddBannerForm },
+  components: { AddBannerForm, EditBannerForm },
   data() {
     return {
       show_form: false,
@@ -88,9 +89,8 @@ export default {
       this.newBanner.advertisementId = advertisement.id
       this.show_form = !this.show_form
     },
-    close_banner_form: function(data) {
+    close_banner_form: function() {
       this.show_form = !this.show_form
-      this.advertisements[0].banners.push(data) // Ументь бы тут норм вызывать, но пока так работает
     }
   }
 }

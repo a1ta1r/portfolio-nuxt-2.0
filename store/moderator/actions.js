@@ -24,8 +24,8 @@ export default {
   },
   add_banner({ commit }, banner) {
     return this.$axios.post('banners', banner).then(result => {
-      if (result.status === 200) {
-        commit('ADD_BANNER', banner)
+      if (result.status === 201) {
+        commit('ADD_BANNER', result.data.banner)
       }
     })
   }

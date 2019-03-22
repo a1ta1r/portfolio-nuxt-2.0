@@ -131,7 +131,7 @@ export default {
                 message: 'Вы добавили новый баннер'
               })
 
-              this.$emit('success', Object.assign({}, this.newBannerLocal))
+              this.$emit('success')
 
               this.$refs[formName].resetFields()
             } else {
