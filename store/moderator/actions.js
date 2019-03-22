@@ -25,6 +25,13 @@ export default {
       dispatch('general/set_processing', false, { root: true })
     })
   },
+  add_advertisement({ commit, dispatch }, adv) {
+    return this.$axios.post('promotions', adv).then(result => {
+      if (result.status < 300) {
+        dispatch('load_advertisements', adv.advertiserId)
+      }
+    })
+  },
   add_banner({ commit }, banner) {
     return this.$axios.post('banners', banner).then(result => {
       if (result.status === 201) {

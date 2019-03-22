@@ -1,5 +1,8 @@
 <template>
   <el-card>
+    <el-dialog :visible.sync="show_advertisement_form">
+      <add-advertisement-form :show_dialog="show_advertisement_form"/>
+    </el-dialog>
     <el-dialog :visible.sync="show_add_form">
       <add-banner-form
         :new-banner="newBanner"
@@ -89,9 +92,11 @@
 import { mapState } from 'vuex'
 import AddBannerForm from './addBannerForm'
 import EditBannerForm from './editBannerForm'
+import AddAdvertisementForm from './addAdvertisementForm'
+
 export default {
   name: 'AdvertisementsTable',
-  components: { AddBannerForm, EditBannerForm },
+  components: { AddAdvertisementForm, AddBannerForm, EditBannerForm },
   data() {
     return {
       show_add_form: false,
@@ -102,7 +107,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('moderator', ['advertisements']),
+    ...mapState('moderator', ['advertisements', 'advertiser']),
     ...mapState('general', ['processing'])
   },
   methods: {
@@ -129,7 +134,7 @@ export default {
       this.show_edit_form = !this.show_edit_form
     },
     add_advertisements() {
-      console.dir(this.advertisements)
+      this.show_advertisement_form = !this.show_advertisement_form
     }
   }
 }
