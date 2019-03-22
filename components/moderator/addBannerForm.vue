@@ -1,7 +1,8 @@
 <template>
   <div>
+    <h2>Добавить баннер</h2>
     <el-form
-      ref="currentBannerForm"
+      ref="addBannerForm"
       :model="newBanner"
       :rules="rules">
       <el-form-item
@@ -40,8 +41,8 @@
       <el-form-item>
         <el-button
           type="primary"
-          @click="submitForm('currentBannerForm')">Сохранить</el-button>
-        <el-button @click="resetForm('currentBannerForm')">Сбросить</el-button>
+          @click="submitForm('addBannerForm')">Сохранить</el-button>
+        <el-button @click="resetForm('addBannerForm')">Сбросить</el-button>
     </el-form-item></el-form>
   </div>
 </template>

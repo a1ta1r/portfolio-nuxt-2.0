@@ -13,5 +13,11 @@ export default {
       state.advertisements[0].banners.indexOf(banner),
       1
     ) // Мне стыдно, да
+  },
+  UPDATE_BANNER(state, banner) {
+    console.dir(state.advertisements[0].banners.findIndex(x => x.id === banner.id))
+    state.advertisements[0].banners[
+      state.advertisements[0].banners.findIndex(x => x.id === banner.id)
+    ] = banner // Мне стыдно, да
   }
 }

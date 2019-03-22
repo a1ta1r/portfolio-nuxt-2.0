@@ -35,5 +35,12 @@ export default {
         commit('REMOVE_BANNER', banner)
       }
     })
+  },
+  update_banner({ commit }, banner) {
+    return this.$axios.put(`banners/${banner.id}`, banner).then(result => {
+      if (result.status === 200) {
+        commit('UPDATE_BANNER', banner)
+      }
+    })
   }
 }

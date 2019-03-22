@@ -1,10 +1,16 @@
 <template>
   <el-card>
-    <el-dialog :visible.sync="show_form">
+    <el-dialog :visible.sync="show_add_form">
       <add-banner-form
         :new-banner="newBanner"
-        :show_dialog="show_form"
+        :show_dialog="show_add_form"
         @success="close_banner_form"/>
+    </el-dialog>
+    <el-dialog :visible.sync="show_edit_form">
+      <edit-banner-form
+        :new-banner="editableBanner"
+        :show_dialog="show_edit_form"
+        @success_edit="close_edit_banner_form"/>
     </el-dialog>
     <el-table
       v-loading="processing"
@@ -81,13 +87,14 @@
 <script>
 import { mapState } from 'vuex'
 import AddBannerForm from './addBannerForm'
-// import EditBannerForm from './editBannerForm'
+import EditBannerForm from './editBannerForm'
 export default {
   name: 'AdvertisementsTable',
-  components: { AddBannerForm },
+  components: { AddBannerForm, EditBannerForm },
   data() {
     return {
-      show_form: false,
+      show_add_form: false,
+      show_edit_form: false,
       newBanner: {},
       editableBanner: {}
     }
@@ -99,10 +106,10 @@ export default {
   methods: {
     add_banner: function(advertisement) {
       this.newBanner.advertisementId = advertisement.id
-      this.show_form = !this.show_form
+      this.show_add_form = !this.show_add_form
     },
     close_banner_form: function() {
-      this.show_form = !this.show_form
+      this.show_add_form = !this.show_add_form
     },
     removeBanner(item) {
       this.$store.dispatch('moderator/remove_banner', item).then(
@@ -113,7 +120,11 @@ export default {
       )
     },
     editBanner(item) {
-      console.dir(item)
+      this.editableBanner = item
+      this.show_edit_form = !this.show_edit_form
+    },
+    close_edit_banner_form: function() {
+      this.show_edit_form = !this.show_edit_form
     }
   }
 }
