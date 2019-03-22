@@ -70,10 +70,10 @@
 <script>
 import { mapState } from 'vuex'
 import AddBannerForm from './addBannerForm'
-import EditBannerForm from './editBannerForm'
+//import EditBannerForm from './editBannerForm'
 export default {
   name: 'AdvertisementsTable',
-  components: { AddBannerForm, EditBannerForm },
+  components: { AddBannerForm },
   data() {
     return {
       show_form: false,
