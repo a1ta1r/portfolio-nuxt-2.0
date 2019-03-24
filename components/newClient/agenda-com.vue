@@ -35,9 +35,7 @@ export default {
               this.paymentPlan.elements[i].paymentAmount.toFixed(2) +
               ' руб.\n Источник: ' +
               this.paymentPlan.elements[i].title,
-            start: new Date(
-              this.paymentPlan.elements[i].paymentDate
-            ).toLocaleDateString(),
+            start: new Date(this.paymentPlan.elements[i].paymentDate),
             backgroundColor: '#409eff'
           })
         } else {
@@ -48,9 +46,7 @@ export default {
               this.paymentPlan.elements[i].paymentAmount.toFixed(2) +
               ' руб.\n Источник: ' +
               this.paymentPlan.elements[i].title,
-            start: new Date(
-              this.paymentPlan.elements[i].paymentDate
-            ).toLocaleDateString(),
+            start: new Date(this.paymentPlan.elements[i].paymentDate),
             backgroundColor: '#f56c6c'
           })
         }
