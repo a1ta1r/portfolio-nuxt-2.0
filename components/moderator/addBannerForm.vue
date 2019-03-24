@@ -137,6 +137,7 @@ export default {
 
               this.$emit('success')
 
+              this.fileList = []
               this.$refs[formName].resetFields()
             } else {
               this.$message.error('Введите корректную ссылку на рекламу!')
