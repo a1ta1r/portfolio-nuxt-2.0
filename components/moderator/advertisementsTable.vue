@@ -152,10 +152,9 @@ export default {
 <style scoped>
 .advertisement-card {
   margin-bottom: 8px;
-  height: 517px;
 }
 .banner-image {
   height: 250px;
-  width: 100%;
+  max-width: 100%;
 }
 </style>

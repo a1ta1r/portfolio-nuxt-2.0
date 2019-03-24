@@ -117,10 +117,9 @@ function randomNumber(min, max) {
 }
 .banner-image {
   height: 250px;
-  width: 100%;
+  max-width: 100%;
 }
 .advertisement-card {
   margin-bottom: 8px;
-  height: 435px;
 }
 </style>
