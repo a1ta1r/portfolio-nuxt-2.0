@@ -94,7 +94,10 @@ export default {
   },
   methods: {
     beforeUpload(file) {
-      const isImage = file.type === 'image/jpeg' || file.type === 'image/png'
+      const isImage =
+        file.type === 'image/jpeg' ||
+        file.type === 'image/png' ||
+        file.type === 'image/gif'
       const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isImage) {
