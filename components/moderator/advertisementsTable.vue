@@ -1,7 +1,9 @@
 <template>
   <el-card>
     <el-dialog :visible.sync="show_advertisement_form">
-      <add-advertisement-form :show_dialog="show_advertisement_form"/>
+      <add-advertisement-form
+        :show_dialog="show_advertisement_form"
+        @add_advertisements="add_advertisements"/>
     </el-dialog>
     <el-dialog :visible.sync="show_add_form">
       <add-banner-form
