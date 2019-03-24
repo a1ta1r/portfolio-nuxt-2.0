@@ -38,34 +38,43 @@
               <el-button @click="add_banner(props.row)">Добавить баннер</el-button>
             </el-col>
           </el-row>
-          <el-card
-            v-for="item in props.row.banners"
-            :key="item.id"
-            class="advertisement-card">
-            <p>Название: {{ item.text }}</p>
-            <img
-              :src="item.pictureUrl"
-              alt="text"
-              class="banner-image">
-            <p>Создан: {{ new Date(item.createdAt).toLocaleDateString('ru') }}</p>
-            <p>Кликов: {{ item.clicks }}</p>
-            <p>Просмотров: {{ item.views }}</p>
-            <a
-              :href="item.advertisementLink"
-              target="_blank"
-              rel="noopener noreferrer">ссылка на рекламу</a>
-            <el-button
-              style="margin-left: 50px"
-              size="mini"
-              type="primary"
-              @click="editBanner(item)">Изменить
-            </el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="removeBanner(item)">Удалить
-            </el-button>
-          </el-card>
+          <el-row :gutter="8">
+            <el-col
+              v-for="item in props.row.banners"
+              :xs="24"
+              :sm="22"
+              :md="10"
+              :lg="8"
+              :xl="6"
+              :key="item.id">
+              <el-card
+                class="advertisement-card">
+                <p>Название: {{ item.text }}</p>
+                <img
+                  :src="item.pictureUrl"
+                  class="banner-image">
+                <p>Создан: {{ new Date(item.createdAt).toLocaleDateString('ru') }}</p>
+                <p>Кликов: {{ item.clicks }}</p>
+                <p>Просмотров: {{ item.views }}</p>
+                <p>
+                  <a
+                    :href="item.advertisementLink"
+                    target="_blank"
+                    rel="noopener noreferrer">ссылка на рекламу</a>
+                </p>
+                <el-button
+                  size="mini"
+                  type="primary"
+                  @click="editBanner(item)">Изменить
+                </el-button>
+                <el-button
+                  size="mini"
+                  type="danger"
+                  @click="removeBanner(item)">Удалить
+                </el-button>
+              </el-card>
+            </el-col>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column
@@ -143,5 +152,10 @@ export default {
 <style scoped>
 .advertisement-card {
   margin-bottom: 8px;
+  height: 517px;
+}
+.banner-image {
+  height: 250px;
+  width: 100%;
 }
 </style>

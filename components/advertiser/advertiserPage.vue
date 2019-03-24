@@ -116,9 +116,11 @@ function randomNumber(min, max) {
   background-color: #72f952;
 }
 .banner-image {
-  width: 300px;
+  height: 250px;
+  width: 100%;
 }
 .advertisement-card {
   margin-bottom: 8px;
+  height: 435px;
 }
 </style>
