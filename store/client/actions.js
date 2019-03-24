@@ -6,7 +6,10 @@ export default {
         let json = JSON.parse(atob(token.split('.')[1]))
         commit('SET_TOKEN', token)
         let role = json.role
-        if (json.username === 'admin') role = 'Admin'
+        if (json.username === 'admin') {
+          role = 'Admin'
+          this.$router.push({ name: 'secure-admin' })
+        }
         commit('SET_ROLE', role)
         dispatch('general/set_authorized', true, { root: true })
       } else this.$router.push({ name: 'signIn' })
@@ -26,6 +29,7 @@ export default {
       dispatch('advertiser/set_id', json.user_id, { root: true })
       dispatch('advertiser/load_advertiser', json.user_id, { root: true })
     } else if (json.role === 'Admin' || json.role === 1) {
+      this.$router.push({ name: 'secure-admin' })
     } else
       return this.$axios
         .get('user', {
